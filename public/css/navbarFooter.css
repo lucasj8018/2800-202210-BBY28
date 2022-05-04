@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'on_my_wayregular';
+    src: url('../font/on_my_way/on_my_way_free_version-webfont.woff2') format('woff2'),
+         url('../font/on_my_way/on_my_way_free_version-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.bg-info {
+    background-color: #DE2007 !important;
+}
+
+.navbar-brand {
+    color: #FFF3DF !important;
+    font-family: 'on_my_wayregular';
+    font-size: 24pt;
+}
+
+.bg-light {
+    background-color: #DE2007 !important;
+}
+
+li > a {
+    color: #FFF3DF !important;
+}
+
+li > a:hover {
+    background-color: #FFF3DF !important;
+    color: black !important;     
+}
+
+.text-muted {
+    color: #FFF3DF !important;
+    font-size: 14pt;
+}
+
+.btn-outline-info {
+    color: #FFF3DF !important;
+    border-color: #DE2007 !important;
+}
+
+.btn-outline-info:hover {
+    color: #DE2007 !important;
+    background-color: #FFF3DF !important;
+}

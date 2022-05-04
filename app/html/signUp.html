@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up for A Bite of Home!</title>
+
+  <!-------------------------------------------------------->
+  <!-- Related CSS, JS, JQuery go here -->
+  <!-------------------------------------------------------->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/signUp.css">
+  <link rel="stylesheet" href="./css/navbarFooter.css">
+  <link rel="stylesheet" href="./css/font.css">
+
+</head>
+
+<body>
+  <!-- our own navbar goes here -->
+  <div id="login_navbar"></div>
+
+  <img src="./img/spices.jpg" alt="spices" id="spices"/>
+
+  <div class="container" id="logo">
+    <h1 style="text-align: center; margin: 5%"><b>Logo goes here</b></h1>
+  </div>
+
+  <form id="login">
+    <div class="row mb-3" id="email">
+      <label for="inputEmail" class="col-sm-2 col-form-label"><b>Email</b></label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="inputEmail">
+      </div>
+    </div>
+    <div class="row mb-3" id="password">
+      <label for="inputPassword" class="col-sm-2 col-form-label"><b>Password</b></label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="inputPassword">
+      </div>
+    </div>
+    <div class="row mb-3" id="fName">
+        <label for="inputFName" class="col-sm-2 col-form-label"><b>First Name</b></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputFName">
+        </div>
+      </div>
+      <div class="row mb-3" id="lName">
+        <label for="inputLName" class="col-sm-2 col-form-label"><b>Last Name</b></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputLName">
+        </div>
+      </div>
+      <div class="row mb-3" id="address">
+        <label for="inputAddress" class="col-sm-2 col-form-label"><b>Address</b></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputAddress">
+        </div>
+      </div>
+    <a href="#" id="createAccountButton"><p id="createAccountButtonLabel">Create Account</p></a>
+    <a href="/login" id="backButton"><p id="backButtonLabel">Back</p></a>
+  </form>
+
+  <!-- our own footer goes here-->
+  <div id="footer"></div>
+
+  <!---------------------------------------------->
+  <!-- Our JavaScript functions go here    -->
+  <!---------------------------------------------->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+  <script src="/js/client.js"></script>
+  <script src="./js/loginSkeleton.js"></script>
+
+
+</body>
+
+</html>

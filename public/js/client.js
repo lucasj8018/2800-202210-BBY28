@@ -60,7 +60,7 @@ ready(function () {
       "email": email,
       "password": password
     }
-    ajaxPOST("/logining", function (data) {
+    ajaxPOST("/login", function (data) {
 
       if (data) {
         let dataParsed = JSON.parse(data);

@@ -1,7 +1,7 @@
 // Loads the skeleton into html docs. 
-function loadSkeleton() {
-    console.log($('#navbar-container').load('/text/nav.html'));
-    console.log($('#footer-container').load('/text/footer.html'));
+function loadLoginSkeleton() {
+    console.log($('#navbar').load('/text/nav.html'));
+    console.log($('#footer').load('/text/footer.html'));
 }
 
-loadSkeleton();
+loadLoginSkeleton();

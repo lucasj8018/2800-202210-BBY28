@@ -1,0 +1,107 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 4% 92% 4%;
+    grid-template-rows: 7% 8% 20% 8% 60% 20% 8%;
+    font-family: 'latolight';
+    font-size: 16pt;
+}
+
+#login_navbar {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+}
+
+#spices {
+    grid-column: 1 / span 3;
+    grid-row: 2 / span 5;
+    width: 100%;
+    height: 100%;
+}
+
+#logo {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+}
+
+#login {
+    grid-column: 2 / span 1;
+    grid-row: 5 / span 1;
+    display: grid;
+    grid-template-columns: 4% 8% 76% 8% 4%;
+    grid-template-rows: 2% 20% 8% 20% 6% 6% 6% 12% 4% 10% 10%;
+    backdrop-filter: blur(10px);
+    backdrop-filter: brightness(60%);
+    border-radius: 8%;
+}
+
+#email {
+    grid-column: 2 / span 3;
+    grid-row: 2 / span 1;
+}
+
+#password {
+    grid-column: 2 / span 3;
+    grid-row: 4 / span 1;
+}
+
+div label  {
+    color: #FFF3DF;
+}
+
+#inputEmail, #inputPassword {
+    font-size: 14pt;
+}
+
+#invalidUser {
+    grid-column: 2 / span 3;
+    grid-row: 6 / span 1;
+    text-align: center;
+}
+
+#loginButton {
+    grid-column: 3 / span 1;
+    grid-row: 8 / span 1;
+    text-align: center;
+    background-color: #DE2007;
+    height: 100%;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+#loginButton:hover {
+    background-color: #BB1B05;
+}
+
+#loginButtonLabel {
+    margin-top: 8px;
+    color: #FFF3DF;
+}
+
+#signUpButton {
+    grid-column: 3 / span 1;
+    grid-row: 10 / span 1;
+    text-align: center;
+    background-color: #FFF3DF;
+    height: 100%;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+#signUpButton:hover {
+    background-color: #E4D1B1;
+}
+
+#signUpButtonLabel {
+    margin-top: 5px;
+    color: black;
+}
+
+#footer {
+    grid-column: 1 / span 3;
+    grid-row: 7 / span 1;
+}

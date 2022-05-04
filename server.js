@@ -5,7 +5,7 @@ const mysql = require('mysql2/promise');
 const app = express();
 app.use(express.json());
 const fs = require("fs");
-const {JSDOM} = require('jsdom');
+const { JSDOM } = require('jsdom');
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -13,7 +13,7 @@ app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
 app.use("/img", express.static("./public/img"));
 // app.use("/icon", express.static("./public/icon"));
-// app.use("/font", express.static("./public/font"));
+app.use("/font", express.static("./public/font"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,7 +30,7 @@ app.use(session({
 app.get("/", function (req, res) {
 
   if (req.session.loggedIn) {
-    res.redirect("/home");
+    res.redirect("/profile");
 
   } else {
     // retrieve and send the index.html document from the file system
@@ -40,16 +40,21 @@ app.get("/", function (req, res) {
 
 });
 
+app.get("/signUp", function (req, res) {
+  let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
+  res.send(signUp);
+});
+
 // Directing to home page
 app.get("/login", function (req, res) {
 
   if (req.session.loggedIn) {
-    res.redirect("/home");
+    res.redirect("/profile");
     connectToMySQL(req, res);
 
   } else {
-      // If users not logged in, rediret to login page
-      res.redirect("/");
+    // If users not logged in, rediret to login page
+    res.redirect("/");
   }
 });
 
@@ -61,8 +66,8 @@ app.get("/profile", function (req, res) {
     checkUsers(req, res);
 
   } else {
-      // not logged in - no session and no access, redirect to login page
-      res.redirect("/");
+    // not logged in - no session and no access, redirect to login page
+    res.redirect("/");
   }
 
 });
@@ -101,8 +106,8 @@ async function checkAuthetication(req, res) {
   });
 
   db.connect();
-  const [results1, fields1] = await db.execute("SELECT * FROM reg_user WHERE email = ? AND password = ?", [email, password]); 
-  const [results2, fields2] = await db.execute("SELECT * FROM admin_user WHERE email = ? AND password = ?", [email, password]); 
+  const [results1, fields1] = await db.execute("SELECT * FROM reg_user WHERE email = ? AND password = ?", [email, password]);
+  const [results2, fields2] = await db.execute("SELECT * FROM admin_user WHERE email = ? AND password = ?", [email, password]);
   console.log(results1 + results2);
   var dbEmail = "";
   var dbPassword = "";
@@ -129,7 +134,7 @@ async function checkAuthetication(req, res) {
     });
     res.send({ status: "success", msg: "Logged in." });
   } else {
-      res.send({ status: "fail", msg: "Invalid credentials." });
+    res.send({ status: "fail", msg: "Invalid credentials." });
   }
 }
 
@@ -145,7 +150,7 @@ async function checkUsers(req, res) {
   });
 
   db.connect();
-  
+
   var userEmail = req.session.email;
   var userPassword = req.session.password;
   var userId = req.session.userId;
@@ -183,7 +188,7 @@ async function checkUsers(req, res) {
 
 // Receives ajaxPOST call from the client side. Call the checkAuthetication(req, res)
 // function to validate the form entry information from the user.
-app.post("/logining", function (req, res) {
+app.post("/login", function (req, res) {
 
   checkAuthetication(req, res);
 });
@@ -196,5 +201,5 @@ app.use(function (req, res, next) {
 // Run the local server on port 8000
 let port = 8000;
 app.listen(port, function () {
-  console.log("Bite of Home listening on port " + port + "!");
+  console.log("A Bite of Home listening on port " + port + "!");
 });
