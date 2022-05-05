@@ -96,14 +96,14 @@ async function checkAuthetication(req, res) {
     host: "localhost",
     user: "root",
     password: "",
-    database: "comp2800_test",
+    database: "comp2800",
     multipleStatements: true
   });
 
   db.connect();
-  const [results1, fields1] = await db.execute("SELECT * FROM reg_user WHERE email = ? AND password = ?", [email, password]); 
-  const [results2, fields2] = await db.execute("SELECT * FROM admin_user WHERE email = ? AND password = ?", [email, password]); 
-  console.log(results1 + results2);
+  const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE email = ? AND password = ?", [email, password]);
+
+  console.log(results1);
   var dbEmail = "";
   var dbPassword = "";
   var dbUserId = "";
@@ -111,12 +111,8 @@ async function checkAuthetication(req, res) {
   if (results1.length == 1) {
     dbEmail = results1[0].email;
     dbPassword = results1[0].password;
-    dbUserId = results1[0].userId;
+    dbUserId = results1[0].id;
 
-  } else if (results2.length == 1) {
-    dbEmail = results2[0].email;
-    dbPassword = results2[0].password;
-    dbUserId = results2[0].userId;
   }
 
   if (req.body.email == dbEmail && req.body.password == dbPassword) {
@@ -140,7 +136,7 @@ async function checkUsers(req, res) {
     host: "localhost",
     user: "root",
     password: "",
-    database: "comp2800_test",
+    database: "comp2800",
     multipleStatements: true
   });
 
@@ -149,23 +145,20 @@ async function checkUsers(req, res) {
   var userEmail = req.session.email;
   var userPassword = req.session.password;
   var userId = req.session.userId;
-  console.log(userEmail + userPassword + userId);
 
-  const [regUser, fields] = await db.execute("SELECT * FROM reg_user WHERE userId = ? AND email = ?", [userId, userEmail]);
-  const [adminUser, fields2] = await db.execute("SELECT * FROM admin_user WHERE userId = ? AND email = ?", [userId, userEmail]);
+  const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND email = ?", [userId, userEmail]);
   var msg = "";
   var userFirstName = "";
   var userLastName = "";
 
   if (regUser.length == 1) {
-    userFirstName = regUser[0].firstName;
-    userLastName = regUser[0].lastName;
-    msg = "Regular user: " + userFirstName + " " + userLastName;
-
-  } else if (adminUser.length == 1) {
-    userFirstName = adminUser[0].firstName;
-    userLastName = adminUser[0].lastName;
-    msg = "Admin user: " + userFirstName + " " + userLastName;
+    userFirstName = regUser[0].fName;
+    userLastName = regUser[0].lName;
+    if (regUser[0].isAdmin){
+      msg = "Admin user: " + userFirstName + " " + userLastName;
+    } else {
+      msg = "Regular user: " + userFirstName + " " + userLastName;
+    }
   }
 
   await db.end();
@@ -193,8 +186,50 @@ app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
 });
 
+
+async function connectToMySQL(req, res){
+  const mysql = require("mysql2/promise");
+		const connection = await mysql.createConnection({
+			host: "localhost",
+			user: "root",
+			password: "",
+			database: "comp2800",
+			multipleStatements: true
+		});
+		connection.connect();
+		await connection.end();
+}
+
+async function init(){
+
+	const mysql = require("mysql2/promise");
+	const connection = await mysql.createConnection({
+		host: "localhost",
+		user: "root",
+		password: "",
+		multipleStatements: true
+	});
+
+	const createDBAndTables = fs.readFileSync("./sql/comp2800.sql").toString();
+
+	await connection.query(createDBAndTables);
+
+	// Adding users to database.
+	// let BBY_28_UserRecords = "insert into BBY_28_User (email, password, fName, lName, location, isPrivateKitchenOwner, isAdmin) values ?";
+	// let recordValues = [
+	// 	["ogeorge5@my.bcit.ca", "password", "Owen", "George", "Surrey, B.C.", false, true],
+  //   ["owengeorge@outlook.com", "password", "Owen", "George", "Surrey, B.C.", false, false]
+	// ];
+
+  const addUsers = fs.readFileSync("./sql/addUsers.sql").toString();
+
+	await connection.query(addUsers);
+
+	connection.end();
+}
 // Run the local server on port 8000
 let port = 8000;
 app.listen(port, function () {
   console.log("Bite of Home listening on port " + port + "!");
+  init();
 });
