@@ -92,10 +92,10 @@ app.get("/logout", function (req, res) {
 // the user record in the database and creates a session if a signed up user is found.
 //------------------------------------------------------------------------------------
 async function checkAuthetication(req, res) {
-  var email = req.body.email;
+  var username = req.body.username;
   var password = req.body.password;
   // res.setHeader("Content-Type", "application/json");
-  console.log("What was sent", email, password);
+  console.log("What was sent", username, password);
 
   const db = await mysql.createConnection({
     host: "localhost",
@@ -106,24 +106,24 @@ async function checkAuthetication(req, res) {
   });
 
   db.connect();
-  const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE email = ? AND password = ?", [email, password]);
+  const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE username = ? AND password = ?", [username, password]);
 
   console.log(results1);
-  var dbEmail = "";
+  var dbUsername = "";
   var dbPassword = "";
   var dbUserId = "";
 
   if (results1.length == 1) {
-    dbEmail = results1[0].email;
+    dbUsername = results1[0].username;
     dbPassword = results1[0].password;
     dbUserId = results1[0].id;
 
   }
 
-  if (req.body.email == dbEmail && req.body.password == dbPassword) {
+  if (req.body.username == dbUsername && req.body.password == dbPassword) {
     // user authenticated, create a session
     req.session.loggedIn = true;
-    req.session.email = dbEmail;
+    req.session.username = dbUsername;
     req.session.password = dbPassword;
     req.session.userId = dbUserId;
     req.session.save(function (err) {
@@ -147,11 +147,10 @@ async function checkUsers(req, res) {
 
   db.connect();
 
-  var userEmail = req.session.email;
-  var userPassword = req.session.password;
+  var userUsername = req.session.username;
   var userId = req.session.userId;
 
-  const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND email = ?", [userId, userEmail]);
+  const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
   var msg = "";
   var userFirstName = "";
   var userLastName = "";
@@ -165,12 +164,13 @@ async function checkUsers(req, res) {
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
 
       // Creating table
-      let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>email</th><th scope='col'>password</th><th scope='col'>Admin</th><th scope ='col'></th></tr>"
+      let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
 
+      // For loops that appends to the table the users username, password and their avatar
       for (let i = 0; i < results.length; i++) {
-          table += "</td><td>" + results[i].email
+          table += "</td><td>" + results[i].username
           + "</td><td>" + results[i].password
-          + "</td><td>" + results[i].isAdmin
+          + "</td><td><img src='./img/" + results[i].avatarPath + "' width ='50%', height ='50%'>"
           + "</td><td><button type ='submit'>Edit</button></td></tr>"
       }
       table += "</table>";

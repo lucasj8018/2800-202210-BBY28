@@ -52,12 +52,12 @@ ready(function () {
   document.getElementById("loginButton").addEventListener("click", function (e) {
     console.log(1);
     e.preventDefault();
-    let email = document.getElementById("inputEmail");
+    let username = document.getElementById("inputUsername");
     let password = document.getElementById("inputPassword");
-    let queryString = "email=" + email.value + "&password=" + password.value;
-    console.log("data that we will send", email.value, password.value);
+    let queryString = "username=" + username.value + "&password=" + password.value;
+    console.log("data that we will send", username.value, password.value);
     const vars = {
-      "email": email,
+      "username": username,
       "password": password
     }
     ajaxPOST("/login", function (data) {
