@@ -159,22 +159,41 @@ async function checkUsers(req, res) {
   if (regUser.length == 1) {
     userFirstName = regUser[0].fName;
     userLastName = regUser[0].lName;
-    if (regUser[0].isAdmin){
+    if (regUser[0].isAdmin) {
       msg = "Admin user: " + userFirstName + " " + userLastName;
-    } else {
-      msg = "Regular user: " + userFirstName + " " + userLastName;
-    }
+
+      const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
+
+      // Creating table
+      let table = "<table id='userTable'><tr><th>id</th><th>email</th><th>password</th><th>First Name</th><th>Last Name</th><th>Location</th><th>Owner</th><th>Admin</th></tr>"
+
+      for (let i = 0; i < results.length; i++) {
+        table += "<tr><td>" + results[i].id
+          + "</td><td>" + results[i].email
+          + "</td><td>" + results[i].password
+          + "</td><td>" + results[i].fName
+          + "</td><td>" + results[i].lName
+          + "</td><td>" + results[i].location
+          + "</td><td>" + results[i].isPrivateKitchenOwner
+          + "</td><td>" + results[i].isAdmin
+          + "</td></tr>"
+      }
+      table += "</table>";
+      msg += table;
+  } else {
+    msg = "Regular user: " + userFirstName + " " + userLastName;
   }
+}
 
-  await db.end();
-  let profile = fs.readFileSync("./app/html/profile.html", "utf8");
-  let profileDOM = new JSDOM(profile);
+await db.end();
+let profile = fs.readFileSync("./app/html/profile.html", "utf8");
+let profileDOM = new JSDOM(profile);
 
-  // Update user data on the porfile page
-  profileDOM.window.document.getElementById("profile").innerHTML = msg;
-  res.set("Server", "Wazubi Engine");
-  res.set("X-Powered-By", "Wazubi");
-  res.send(profileDOM.serialize());
+// Update user data on the porfile page
+profileDOM.window.document.getElementById("profile").innerHTML = msg;
+res.set("Server", "Wazubi Engine");
+res.set("X-Powered-By", "Wazubi");
+res.send(profileDOM.serialize());
 
 }
 
@@ -192,40 +211,40 @@ app.use(function (req, res, next) {
 });
 
 
-async function connectToMySQL(req, res){
+async function connectToMySQL(req, res) {
   const mysql = require("mysql2/promise");
-		const connection = await mysql.createConnection({
-			host: "localhost",
-			user: "root",
-			password: "",
-			database: "comp2800",
-			multipleStatements: true
-		});
-		connection.connect();
-		await connection.end();
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+  connection.connect();
+  await connection.end();
 }
 
-async function init(){
+async function init() {
 
-	const mysql = require("mysql2/promise");
-	const connection = await mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "",
-		multipleStatements: true
-	});
+  const mysql = require("mysql2/promise");
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    multipleStatements: true
+  });
 
   // Sql file containing the code to create the database and tables.
-	const createDBAndTables = fs.readFileSync("./sql/comp2800.sql").toString();
+  const createDBAndTables = fs.readFileSync("./sql/comp2800.sql").toString();
 
-	await connection.query(createDBAndTables);
+  await connection.query(createDBAndTables);
 
   // Sql file containing the code to add user to the database
   const addUsers = fs.readFileSync("./sql/addUsers.sql").toString();
 
-	await connection.query(addUsers);
+  await connection.query(addUsers);
 
-	connection.end();
+  connection.end();
 }
 // Run the local server on port 8000
 let port = 8000;
