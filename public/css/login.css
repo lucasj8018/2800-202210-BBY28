@@ -61,6 +61,8 @@ div label  {
     grid-column: 2 / span 3;
     grid-row: 6 / span 1;
     text-align: center;
+    color: #FFF3DF;
+    font-weight: bolder;
 }
 
 #loginButton {

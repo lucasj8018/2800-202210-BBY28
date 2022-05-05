@@ -73,9 +73,11 @@ div label  {
 }
 
 #invalidUser {
-    grid-column: 2 / span 3;
-    grid-row: 6 / span 1;
+    grid-column: 2 / span 5;
+    grid-row: 8 / span 1;
     text-align: center;
+    color: #FFF3DF;
+    font-weight: bolder;
 }
 
 #createAccountButton {

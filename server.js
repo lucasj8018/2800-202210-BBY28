@@ -200,6 +200,45 @@ app.post("/login", function (req, res) {
   checkAuthetication(req, res);
 });
 
+
+//------------------------------------------------------------------------------------
+// This function is called when user trys to sign up an account on the signUp page.  The
+// function reads the input values and save to the bby_28_user table in the database.
+//------------------------------------------------------------------------------------
+async function signUpUser(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  // res.setHeader("Content-Type", "application/json");
+  console.log("What was sent", username, password, firstName, lastName);
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+  // await db.query("use comp2800");
+  let addUser = "use comp2800; insert into BBY_28_User (username, password, fName, lName) values ? ";
+  let userInfo = [[username, password, firstName, lastName]];
+  await db.query(addUser, [userInfo]);
+
+}
+
+app.post("/signing-up", function (req, res) {
+
+  signUpUser(req, res);
+});
+
+
+
+
+
+
 // For page not found (i.e., 404)
 app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
