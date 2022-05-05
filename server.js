@@ -92,10 +92,10 @@ app.get("/logout", function (req, res) {
 // the user record in the database and creates a session if a signed up user is found.
 //------------------------------------------------------------------------------------
 async function checkAuthetication(req, res) {
-  var email = req.body.email;
+  var username = req.body.username;
   var password = req.body.password;
   // res.setHeader("Content-Type", "application/json");
-  console.log("What was sent", email, password);
+  console.log("What was sent", username, password);
 
   const db = await mysql.createConnection({
     host: "localhost",
@@ -106,24 +106,24 @@ async function checkAuthetication(req, res) {
   });
 
   db.connect();
-  const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE email = ? AND password = ?", [email, password]);
+  const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE username = ? AND password = ?", [username, password]);
 
   console.log(results1);
-  var dbEmail = "";
+  var dbUsername = "";
   var dbPassword = "";
   var dbUserId = "";
 
   if (results1.length == 1) {
-    dbEmail = results1[0].email;
+    dbUsername = results1[0].username;
     dbPassword = results1[0].password;
     dbUserId = results1[0].id;
 
   }
 
-  if (req.body.email == dbEmail && req.body.password == dbPassword) {
+  if (req.body.username == dbUsername && req.body.password == dbPassword) {
     // user authenticated, create a session
     req.session.loggedIn = true;
-    req.session.email = dbEmail;
+    req.session.username = dbUsername;
     req.session.password = dbPassword;
     req.session.userId = dbUserId;
     req.session.save(function (err) {
@@ -147,11 +147,11 @@ async function checkUsers(req, res) {
 
   db.connect();
 
-  var userEmail = req.session.email;
+  var userUsername = req.session.username;
   var userPassword = req.session.password;
   var userId = req.session.userId;
 
-  const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND email = ?", [userId, userEmail]);
+  const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
   var msg = "";
   var userFirstName = "";
   var userLastName = "";
@@ -185,6 +185,45 @@ app.post("/login", function (req, res) {
 
   checkAuthetication(req, res);
 });
+
+
+//------------------------------------------------------------------------------------
+// This function is called when user trys to sign up an account on the signUp page.  The
+// function reads the input values and save to the bby_28_user table in the database.
+//------------------------------------------------------------------------------------
+async function signUpUser(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  // res.setHeader("Content-Type", "application/json");
+  console.log("What was sent", username, password, firstName, lastName);
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+  // await db.query("use comp2800");
+  let addUser = "use comp2800; insert into BBY_28_User (username, password, fName, lName) values ? ";
+  let userInfo = [[username, password, firstName, lastName]];
+  await db.query(addUser, [userInfo]);
+
+}
+
+app.post("/signing-up", function (req, res) {
+
+  signUpUser(req, res);
+});
+
+
+
+
+
 
 // For page not found (i.e., 404)
 app.use(function (req, res, next) {
