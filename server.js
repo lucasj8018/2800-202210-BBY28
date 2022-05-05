@@ -165,16 +165,11 @@ async function checkUsers(req, res) {
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
 
       // Creating table
-      let table = "<table id='userTable'><tr><th>id</th><th>email</th><th>password</th><th>First Name</th><th>Last Name</th><th>Location</th><th>Owner</th><th>Admin</th></tr>"
+      let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>email</th><th scope='col'>password</th><th scope='col'>Admin</th></tr>"
 
       for (let i = 0; i < results.length; i++) {
-        table += "<tr><td>" + results[i].id
-          + "</td><td>" + results[i].email
+          table += "</td><td>" + results[i].email
           + "</td><td>" + results[i].password
-          + "</td><td>" + results[i].fName
-          + "</td><td>" + results[i].lName
-          + "</td><td>" + results[i].location
-          + "</td><td>" + results[i].isPrivateKitchenOwner
           + "</td><td>" + results[i].isAdmin
           + "</td><td><button type ='submit'>Edit</button></td></tr>"
       }
