@@ -165,7 +165,7 @@ async function checkUsers(req, res) {
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
 
       // Creating table
-      let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>email</th><th scope='col'>password</th><th scope='col'>Admin</th></tr>"
+      let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>email</th><th scope='col'>password</th><th scope='col'>Admin</th><th scope ='col'></th></tr>"
 
       for (let i = 0; i < results.length; i++) {
           table += "</td><td>" + results[i].email
