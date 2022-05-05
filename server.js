@@ -210,17 +210,12 @@ async function init(){
 		multipleStatements: true
 	});
 
+  // Sql file containing the code to create the database and tables.
 	const createDBAndTables = fs.readFileSync("./sql/comp2800.sql").toString();
 
 	await connection.query(createDBAndTables);
 
-	// Adding users to database.
-	// let BBY_28_UserRecords = "insert into BBY_28_User (email, password, fName, lName, location, isPrivateKitchenOwner, isAdmin) values ?";
-	// let recordValues = [
-	// 	["ogeorge5@my.bcit.ca", "password", "Owen", "George", "Surrey, B.C.", false, true],
-  //   ["owengeorge@outlook.com", "password", "Owen", "George", "Surrey, B.C.", false, false]
-	// ];
-
+  // Sql file containing the code to add user to the database
   const addUsers = fs.readFileSync("./sql/addUsers.sql").toString();
 
 	await connection.query(addUsers);
