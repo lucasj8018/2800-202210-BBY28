@@ -176,7 +176,7 @@ async function checkUsers(req, res) {
           + "</td><td>" + results[i].location
           + "</td><td>" + results[i].isPrivateKitchenOwner
           + "</td><td>" + results[i].isAdmin
-          + "</td></tr>"
+          + "</td><td><button type ='submit'>Edit</button></td></tr>"
       }
       table += "</table>";
       msg += table;
