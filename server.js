@@ -171,7 +171,7 @@ async function checkUsers(req, res) {
           table += "</td><td>" + results[i].username
           + "</td><td>" + results[i].password
           + "</td><td><img src='./img/" + results[i].avatarPath + "' width ='50%', height ='50%'>"
-          + "</td><td><button type ='submit'>Edit</button></td></tr>"
+          + "</td><td><button type ='submit' name='" + results[i].id + "'>Delete</button></td></tr>"
       }
       table += "</table>";
       msg += table;
