@@ -2,6 +2,7 @@
 // This function is called when the page first loads. It listens to request on user
 // login and it will then post the login form entry information to the server.
 //-----------------------------------------------------------------------------
+"use strict";
 ready(function () {
 
   console.log("signUp.js loaded.");

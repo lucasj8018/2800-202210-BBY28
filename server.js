@@ -1,4 +1,5 @@
 // REQUIRES
+"use strict";
 const express = require("express");
 const session = require("express-session");
 const mysql = require('mysql2/promise');
@@ -14,7 +15,6 @@ app.use("/text", express.static("./public/text"));
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
 app.use("/img", express.static("./public/img"));
-// app.use("/icon", express.static("./public/icon"));
 app.use("/font", express.static("./public/font"));
 
 app.use(express.json());
@@ -96,10 +96,6 @@ app.get("/logout", function (req, res) {
 // the user record in the database and creates a session if a signed up user is found.
 //------------------------------------------------------------------------------------
 async function checkAuthetication(req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
-  // res.setHeader("Content-Type", "application/json");
-  console.log("What was sent", username, password);
 
   const db = await mysql.createConnection({
     host: "localhost",
@@ -112,7 +108,6 @@ async function checkAuthetication(req, res) {
   db.connect();
   const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE username = ? AND password = ?", [username, password]);
 
-  console.log(results1);
   var dbUsername;
   var dbPassword;
   var dbUserId;
@@ -163,13 +158,13 @@ async function checkUsers(req, res) {
   var userProfile = "";
   var userFirstName = "";
   var userLastName = "";
+  var userPassword ="";
 
   if (regUser.length == 1) {
     userFirstName = regUser[0].fName;
     userLastName = regUser[0].lName;
     userPassword = regUser[0].password;
     if (regUser[0].isAdmin) {
-      msg = "Admin user: " + userFirstName + " " + userLastName;
 
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
 
@@ -231,7 +226,6 @@ async function signUpUser(req, res) {
   var password = req.body.password;
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
-  // res.setHeader("Content-Type", "application/json");
   console.log("What was sent", username, password, firstName, lastName);
 
   const db = await mysql.createConnection({
@@ -243,7 +237,6 @@ async function signUpUser(req, res) {
   });
 
   db.connect();
-  // await db.query("use comp2800");
   let addUser = "use comp2800; insert into BBY_28_User (username, password, fName, lName) values ? ";
   let userInfo = [
     [username, password, firstName, lastName]
@@ -268,44 +261,8 @@ app.use(function (req, res, next) {
 });
 
 
-async function connectToMySQL(req, res) {
-  const mysql = require("mysql2/promise");
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
-    multipleStatements: true
-  });
-  connection.connect();
-  await connection.end();
-}
-
-async function init() {
-
-  const mysql = require("mysql2/promise");
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    multipleStatements: true
-  });
-
-  // Sql file containing the code to create the database and tables.
-  const createDBAndTables = fs.readFileSync("./sql/comp2800.sql").toString();
-
-  await connection.query(createDBAndTables);
-
-  // Sql file containing the code to add user to the database
-  const addUsers = fs.readFileSync("./sql/addUsers.sql").toString();
-
-  await connection.query(addUsers);
-
-  connection.end();
-}
 // Run the local server on port 8000
 let port = 8000;
 app.listen(port, function () {
   console.log("Bite of Home listening on port " + port + "!");
-  init();
 });
