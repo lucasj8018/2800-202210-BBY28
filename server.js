@@ -195,7 +195,7 @@ async function checkUsers(req, res) {
       <h5 class="lastName">` + userLastName + `</h5>
       <h5 class="username">` + userUsername + `</h5>
       <h5 class="password">` + userPassword + `</h5>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <a href="#" class="btn btn-primary">Edit</a>
     </div>
     </div>`;
     }

@@ -49,7 +49,7 @@ ready(function () {
   }
 
   // Takes the form entry information and post to the server
-  document.getElementById("loginButton").addEventListener("click", function (e) {
+  document.getElementById("loginButtonLabel").addEventListener("click", function (e) {
     e.preventDefault();
     let username = document.getElementById("inputUsername");
     let password = document.getElementById("inputPassword");
