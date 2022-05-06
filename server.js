@@ -23,11 +23,9 @@ app.use(express.urlencoded({
 }));
 
 app.use(session({
-  secret: "extra text that no one will guess",
-  name: "wazaSessionID",
-  // Create a new session for every request to the server
+  secret: "Secret text",
+  name: "sessionID",
   resave: false,
-  // create a unique identifier for that client
   saveUninitialized: true
 }));
 
@@ -65,12 +63,12 @@ app.get("/login", function (req, res) {
 
 app.get("/profile", function (req, res) {
 
-  // check for a session first
+  // check for a session 
   if (req.session.loggedIn) {
     checkUsers(req, res);
 
   } else {
-    // not logged in - no session and no access, redirect to login page
+    // If users not logged in, rediret to login page
     res.redirect("/");
   }
 
@@ -82,7 +80,7 @@ app.get("/logout", function (req, res) {
   if (req.session) {
     req.session.destroy(function (error) {
       if (error) {
-        res.status(400).send("Unable to log out")
+        res.status(400).send("Fail to log out")
       } else {
         // session deleted, redirect to login page
         res.redirect("/");
@@ -96,6 +94,8 @@ app.get("/logout", function (req, res) {
 // the user record in the database and creates a session if a signed up user is found.
 //------------------------------------------------------------------------------------
 async function checkAuthetication(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
 
   const db = await mysql.createConnection({
     host: "localhost",
@@ -198,13 +198,13 @@ async function checkUsers(req, res) {
 
   await db.end();
   let profile = fs.readFileSync("./app/html/profile.html", "utf8");
-  let profileDOM = new JSDOM(profile);
+  let profileContent = new JSDOM(profile);
 
   // Update user data on the porfile page
-  profileDOM.window.document.getElementById("profile").innerHTML = userProfile;
+  profileContent.window.document.getElementById("profile").innerHTML = userProfile;
   res.set("Server", "Wazubi Engine");
   res.set("X-Powered-By", "Wazubi");
-  res.send(profileDOM.serialize());
+  res.send(profileContent.serialize());
 
 }
 
@@ -226,7 +226,6 @@ async function signUpUser(req, res) {
   var password = req.body.password;
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
-  console.log("What was sent", username, password, firstName, lastName);
 
   const db = await mysql.createConnection({
     host: "localhost",
@@ -251,15 +250,23 @@ app.post("/signing-up", function (req, res) {
 });
 
 
-
-
-
-
-// For page not found (i.e., 404)
+// For page not found 404 error
 app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
 });
 
+async function connectToMySQL(req, res) {
+  const mysql = require("mysql2/promise");
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+  connection.connect();
+  await connection.end();
+}
 
 // Run the local server on port 8000
 let port = 8000;
