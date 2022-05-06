@@ -7,6 +7,10 @@
 
 }
 
+.navbar {
+    height: 100%;
+}
+
 .bg-info {
     background-color: #DE2007 !important;
 }
@@ -43,4 +47,17 @@ li > a:hover {
 .btn-outline-info:hover {
     color: #DE2007 !important;
     background-color: #FFF3DF !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar-brand {
+        font-size: 16pt;
+        padding-top: 0;
+    }
+    .text-muted {
+        font-size: 10pt;
+    }
+    .btn-outline-info {
+        font-size: 10pt;
+    }
 }
