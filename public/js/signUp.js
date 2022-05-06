@@ -40,20 +40,19 @@ ready(function () {
       document.getElementById("invalidUser").innerHTML = "Please enter the required info";
 
     } else {
+      window.location.replace("/login");
       let queryStr = "username=" + username.value + "&password=" + password.value +
         "&firstName=" + firstName.value + "&lastName=" + lastName.value;
 
       ajaxPOST("/signing-up", function (data) {
-
         if (data) {
           let parsedData = JSON.parse(data);
           if (parsedData.status == "fail") {
             console.log("Error");
           } else {
-            window.location.replace("/login");
+            window.location.href("/login");
           }
         }
-
       }, queryStr);
 
     }
