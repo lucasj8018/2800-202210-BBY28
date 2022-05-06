@@ -4,24 +4,7 @@
 //-----------------------------------------------------------------------------
 ready(function () {
 
-  console.log("Client script loaded.");
-
-  // This function makes two calls to the server to request a html table and json data
-  function ajaxGET(url, callback) {
-
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-        //console.log('responseText:' + xhr.responseText);
-        callback(this.responseText);
-
-      } else {
-        console.log(this.status);
-      }
-    }
-    xhr.open("GET", url);
-    xhr.send();
-  }
+  console.log("signUp.js loaded.");
 
   function ajaxPOST(url, callback, data) {
 
@@ -49,31 +32,42 @@ ready(function () {
   }
 
   // Takes the form entry information and post to the server
-  document.getElementById("loginButtonLabel").addEventListener("click", function (e) {
+  document.getElementById("createAccountButtonLabel").addEventListener("click", function (e) {
+    console.log(1);
     e.preventDefault();
     let username = document.getElementById("inputUsername");
     let password = document.getElementById("inputPassword");
-    let queryString = "username=" + username.value + "&password=" + password.value;
-    console.log("data that we will send", username.value, password.value);
+    let firstName = document.getElementById("inputFName");
+    let lastName = document.getElementById("inputLName");
+
+    if (username.value == "" || password.value == "" || firstName.value == "" || lastName == "") {
+      document.getElementById("invalidUser").innerHTML = "Please enter the required info";
+
+    } else {
+      let queryString = "username=" + username.value + "&password=" + password.value 
+      + "&firstName=" + firstName.value + "&lastName=" + lastName.value;
+    console.log("data that we will send", username.value, password.value, firstName.value, lastName.value);
     const vars = {
       "username": username,
       "password": password
     }
-    ajaxPOST("/login", function (data) {
+    ajaxPOST("/signing-up", function (data) {
 
       if (data) {
         let dataParsed = JSON.parse(data);
         console.log(dataParsed);
-
         if (dataParsed.status == "fail") {
-          document.getElementById("invalidUser").innerHTML = dataParsed.msg;
-        } else if (username.value == "" || password.value == "") {
-          document.getElementById("invalidUser").innerHTML = "Please enter information in all fields";
+          console.log("Error");
         } else {
-          window.location.replace("/profile");
+          window.location.replace("/login");
         }
       }
+      //document.getElementById("errorMsg").innerHTML = dataParsed.msg;
+
     }, queryString);
+
+    }
+
   });
 
 });
