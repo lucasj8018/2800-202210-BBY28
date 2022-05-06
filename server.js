@@ -5,7 +5,9 @@ const mysql = require('mysql2/promise');
 const app = express();
 app.use(express.json());
 const fs = require("fs");
-const { JSDOM } = require('jsdom');
+const {
+  JSDOM
+} = require('jsdom');
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -16,7 +18,9 @@ app.use("/img", express.static("./public/img"));
 app.use("/font", express.static("./public/font"));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 
 app.use(session({
   secret: "extra text that no one will guess",
@@ -126,11 +130,16 @@ async function checkAuthetication(req, res) {
     req.session.username = dbUsername;
     req.session.password = dbPassword;
     req.session.userId = dbUserId;
-    req.session.save(function (err) {
+    req.session.save(function (err) {});
+    res.send({
+      status: "success",
+      msg: "Logged in."
     });
-    res.send({ status: "success", msg: "Logged in." });
   } else {
-    res.send({ status: "fail", msg: "Invalid credentials." });
+    res.send({
+      status: "fail",
+      msg: "Invalid credentials."
+    });
   }
 }
 
@@ -151,13 +160,14 @@ async function checkUsers(req, res) {
   var userId = req.session.userId;
 
   const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
-  var msg = "";
+  var userProfile = "";
   var userFirstName = "";
   var userLastName = "";
 
   if (regUser.length == 1) {
     userFirstName = regUser[0].fName;
     userLastName = regUser[0].lName;
+    userPassword = regUser[0].password;
     if (regUser[0].isAdmin) {
       msg = "Admin user: " + userFirstName + " " + userLastName;
 
@@ -168,27 +178,38 @@ async function checkUsers(req, res) {
 
       // For loops that appends to the table the users username, password and their avatar
       for (let i = 0; i < results.length; i++) {
-          table += "</td><td>" + results[i].username
-          + "</td><td>" + results[i].password
-          + "</td><td><img src='./img/" + results[i].avatarPath + "' width ='50%', height ='50%'>"
-          + "</td><td><button type ='submit' name='" + results[i].id + "'>Delete</button></td></tr>"
+        table += "</td><td>" + results[i].username +
+          "</td><td>" + results[i].password +
+          "</td><td><img src='./img/" + results[i].avatarPath + "' width ='50%', height ='50%'>" +
+          "</td><td><button type ='submit' name='" + results[i].id + "'>Delete</button></td></tr>"
       }
       table += "</table>";
-      msg += table;
-  } else {
-    msg = "Regular user: " + userFirstName + " " + userLastName;
+      userProfile += table;
+    } else {
+
+      userProfile = `<div class="card" style="width: 18rem;">
+    <img src="`+ "./img/" + regUser[0].avatarPath+ `" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Your Profile</h5>
+      <h5 class="firstName">` + userFirstName + `</h5>
+      <h5 class="lastName">` + userLastName + `</h5>
+      <h5 class="username">` + userUsername + `</h5>
+      <h5 class="password">` + userPassword + `</h5>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+    </div>`;
+    }
   }
-}
 
-await db.end();
-let profile = fs.readFileSync("./app/html/profile.html", "utf8");
-let profileDOM = new JSDOM(profile);
+  await db.end();
+  let profile = fs.readFileSync("./app/html/profile.html", "utf8");
+  let profileDOM = new JSDOM(profile);
 
-// Update user data on the porfile page
-profileDOM.window.document.getElementById("profile").innerHTML = msg;
-res.set("Server", "Wazubi Engine");
-res.set("X-Powered-By", "Wazubi");
-res.send(profileDOM.serialize());
+  // Update user data on the porfile page
+  profileDOM.window.document.getElementById("profile").innerHTML = userProfile;
+  res.set("Server", "Wazubi Engine");
+  res.set("X-Powered-By", "Wazubi");
+  res.send(profileDOM.serialize());
 
 }
 
@@ -224,7 +245,9 @@ async function signUpUser(req, res) {
   db.connect();
   // await db.query("use comp2800");
   let addUser = "use comp2800; insert into BBY_28_User (username, password, fName, lName) values ? ";
-  let userInfo = [[username, password, firstName, lastName]];
+  let userInfo = [
+    [username, password, firstName, lastName]
+  ];
   await db.query(addUser, [userInfo]);
 
 }
