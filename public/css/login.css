@@ -126,12 +126,12 @@ div label  {
         padding: 50px;
     }
 
-    #inputEmail, #inputPassword {
+    #inputUsername, #inputPassword {
         font-size: 14pt;
         min-width: 440px;
     }
 
-    #email, #password, #loginButton, #signUpButton {
+    #username, #password, #loginButton, #signUpButton {
         font-size: 20pt;
     }
 }
