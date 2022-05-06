@@ -1,0 +1,113 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 8% 10% 50% 8% 16% 8%;
+    grid-template-columns: 10% 80% 10%;
+    font-family: 'latolight';
+}
+
+#navbar {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+}
+
+#spices {
+    grid-column: 1 / span 3;
+    grid-row: 2 / span 6;
+    width: 100%;
+    height: 100%;
+}
+
+#profile {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 2;
+    backdrop-filter: blur(10px);
+    backdrop-filter: brightness(60%);
+    border-radius: 10px;
+    height: 110vw;
+    width: 80vw;
+    max-height: 500px;
+    margin: auto;
+}
+
+.card {
+    background-color: transparent;
+    display: grid;
+    margin: 2vh auto;
+    padding: 2vh;
+    border-style: none;
+    max-width: 80vw;
+}
+
+.card-img-top {
+    width: 50%;
+    height: auto;
+    justify-self: center;
+    border-radius: 100%;
+}
+
+.card-body {
+    display: grid;
+    grid-template: 
+    'title title'
+    'fname lname'
+    'username username'
+    'password password'
+    'button button';
+    grid-template-rows: 15% 15% 15% 15% 25%;
+    grid-gap: 1vh;
+    color: #FFF3DF;
+}
+
+.card-title {
+    grid-area: title;
+}
+
+.firstName {
+    grid-area: fname;
+}
+
+.lastName {
+    grid-area: lname;
+}
+
+.username {
+    grid-area: username;
+}
+
+.password {
+    grid-area: password;
+}
+
+.firstName, .lastName, .username, .password {
+    text-decoration: none;
+    font-size: 14pt;
+
+}
+
+.btn {
+    grid-area: button;
+    background-color: #DE2007;
+    border-style: none;
+    padding: 6%;
+}
+
+.btn:hover {
+    background-color: #BB1B05;
+}
+
+#footer {
+    grid-column: 1 / span 3;
+    grid-row: 6 / span 1;
+}
+
+@media only screen and (min-width: 600px) {
+    #profile {
+        max-width: 500px;
+        min-width: 500px;
+    }
+}
