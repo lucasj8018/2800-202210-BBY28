@@ -113,9 +113,9 @@ async function checkAuthetication(req, res) {
   const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE username = ? AND password = ?", [username, password]);
 
   console.log(results1);
-  var dbUsername = "";
-  var dbPassword = "";
-  var dbUserId = "";
+  var dbUsername;
+  var dbPassword;
+  var dbUserId;
 
   if (results1.length == 1) {
     dbUsername = results1[0].username;
