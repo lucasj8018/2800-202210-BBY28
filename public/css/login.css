@@ -68,9 +68,8 @@ div label  {
     color: #FFF3DF;
 }
 
-#inputEmail, #inputPassword {
-    font-size: 10pt;
-    min-width: 70vw;
+#inputUsername, #inputPassword {
+    font-size: 14pt;
 }
 
 #invalidUser {
