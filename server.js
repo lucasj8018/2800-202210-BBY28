@@ -60,12 +60,25 @@ app.get("/login", function (req, res) {
   }
 });
 
-
 app.get("/profile", function (req, res) {
 
   // check for a session 
   if (req.session.loggedIn) {
     checkUsers(req, res);
+
+  } else {
+    // If users not logged in, rediret to login page
+    res.redirect("/");
+  }
+
+});
+
+app.get("/map", function (req, res) {
+
+  // check for a session 
+  if (req.session.loggedIn) {
+    let kitchenMap = fs.readFileSync("./app/html/kitchenMap.html", "utf8");
+    res.send(kitchenMap);
 
   } else {
     // If users not logged in, rediret to login page
