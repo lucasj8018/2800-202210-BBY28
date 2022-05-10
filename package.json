@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/lucasj8018/2800-202210-BBY28/issues"
   },
-  "homepage": "https://github.com/lucasj8018/2800-202210-BBY28#readme"
+  "homepage": "https://github.com/lucasj8018/2800-202210-BBY28#readme",
+  "engines": {
+    "node": "^12.11.1"
+  }
 }
