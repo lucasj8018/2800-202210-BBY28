@@ -1,8 +1,29 @@
 "use strict";
-
-
 var map;
 var geocoder;
+var addressData;
+
+//----------------------------------------------------------------------------------------
+// This function is called when the kitchenMap.html page finishes loading. It sends a
+// request to the server to retrieve the addresses of the registrated pritvate kitchen
+// from the database
+//----------------------------------------------------------------------------------------
+ready(function () {
+
+  fetch("/map-data")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      addressData = data;
+      console.log(addressData);
+      geocodeAddress();
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
+});
 
 //-------------------------------------------------------------------------------------------
 // This initMap() function template cames from Google's maps javascript API document example.
@@ -33,10 +54,11 @@ function initMap() {
   }
 
   geocoder = new google.maps.Geocoder();
-  geocodeAddress(geocoder, map);
 }
 
 window.initMap = initMap;
+
+
 
 //-------------------------------------------------------------------------------------------
 // This function is called when the function initMap() is executed.  It reads the registered 
@@ -46,11 +68,9 @@ window.initMap = initMap;
 //-------------------------------------------------------------------------------------------
 function geocodeAddress() {
 
-  var address = ["10025 174 St. Surrey BC V4N 4L2", "14956 99A Ave. Surrey"];
-
-  for (let i = 0; i < address.length; i++) {
+  for (let i = 0; i < addressData.length; i++) {
     geocoder.geocode({
-      'address': address[i]
+      'address': addressData[i].address
     }, function (results, status) {
       if (status == "OK") {
         console.log(status);
@@ -63,19 +83,19 @@ function geocodeAddress() {
         // Display some popup info for each location marker
         const contentString =
           `<div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Private Kitchen Title</h5>
-            <p class="card-text">Some description / Address.</p>
-            <a href="" class="btn btn-primary">View Details</a>
-          </div>
-          </div>`;
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Private Kitchen Title</h5>
+                <p class="card-text">Some description / Address.</p>
+                <a href="" class="btn btn-primary">View Details</a>
+              </div>
+              </div>`;
 
         const infowindow = new google.maps.InfoWindow({
           content: contentString,
         });
 
-        marker.addListener("click", function() {
+        marker.addListener("click", function () {
           infowindow.open({
             anchor: marker,
             map,
@@ -87,5 +107,15 @@ function geocodeAddress() {
         console.log("Geocoding failed due to " + status);
       }
     })
+  }
+}
+
+
+// This function checks whether page is loaded
+function ready(callbackFunc) {
+  if (document.readyState != "loading") {
+    callbackFunc();
+  } else {
+    document.addEventListener("DOMContentLoaded", callbackFunc);
   }
 }

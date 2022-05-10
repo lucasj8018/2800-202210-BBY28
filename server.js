@@ -87,6 +87,29 @@ app.get("/map", function (req, res) {
 
 });
 
+app.get("/map-data", function (req, res) {
+
+  let data =   [
+    {
+      "Title": "Porteau Cove",
+      "address": "10025 174 St. Surrey BC V4N 4L2"
+    },
+    {
+      "Title": "Alice Lake",
+      "address": "14956 99A Ave. Surrey"
+    }
+  ];
+
+  if (data.length != 0) {
+      res.json(data);
+
+  } else {
+      // Send format error message for exception
+      res.send({ status: "fail", msg: "Wrong data format" });
+  }
+
+});
+
 // Log out and redirect to login page
 app.get("/logout", function (req, res) {
 
@@ -151,7 +174,11 @@ async function checkAuthetication(req, res) {
   }
 }
 
-
+//-----------------------------------------------------------------------------------------
+// This function is called when user trys to redirect to the profile page. It checks 
+// whether the logged-in user is a regular or admin user and loads the contents accordingly
+// on the profile page.
+//-----------------------------------------------------------------------------------------
 async function checkUsers(req, res) {
 
   const db = await mysql.createConnection({
@@ -230,10 +257,10 @@ app.post("/login", function (req, res) {
 });
 
 
-//------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 // This function is called when user trys to sign up an account on the signUp page.  The
 // function reads the input values and save to the bby_28_user table in the database.
-//------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 async function signUpUser(req, res) {
   var username = req.body.username;
   var password = req.body.password;
