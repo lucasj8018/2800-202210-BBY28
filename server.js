@@ -292,7 +292,29 @@ async function init(){
 		multipleStatements: true
 	});
 
-	const createDBAndTables = fs.readFileSync("./sql/comp2800.sql").toString();
+	const createDBAndTables = `
+  CREATE DATABASE IF NOT EXISTS COMP2800;
+  use COMP2800;
+
+  CREATE TABLE IF NOT EXISTS BBY_28_User(
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      username varchar(100) NOT NULL UNIQUE,
+      password varchar(100) NOT NULL,
+      fName varchar(100) NOT NULL,
+      lName varchar(100) NOT NULL,
+      location varchar(100),
+      isPrivateKitchenOwner boolean DEFAULT false,
+      isAdmin boolean DEFAULT false,
+      avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
+  );
+
+  use comp2800;
+  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
+  values
+      ("Admin", "password", "Ad", "Min", "Surrey, B.C.", false, true),
+      ("Regular", "password", "Reg", "Ular", "Surrey, B.C.", false, false)
+  ;
+  `;
 
 	await connection.query(createDBAndTables);
 }
