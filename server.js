@@ -283,10 +283,24 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
+async function init(){
+  const mysql = require("mysql2/promise");
+	const connection = await mysql.createConnection({
+		host: "localhost",
+		user: "root",
+		password: "",
+		multipleStatements: true
+	});
+
+	const createDBAndTables = fs.readFileSync("./sql/comp2800.sql").toString();
+
+	await connection.query(createDBAndTables);
+}
 
 // Run the local server on port 8000
 // let port = 8000;
 let port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Bite of Home listening on port " + port + "!");
+
 });
