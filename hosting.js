@@ -283,48 +283,48 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
-async function init(){
-  const mysql = require("mysql2/promise");
-	const connection = await mysql.createConnection({
+// async function init(){
+//   const mysql = require("mysql2/promise");
+// 	const connection = await mysql.createConnection({
 
-		host: "us-cdbr-east-05.cleardb.net",
-		user: "bbcec9e55759dc",
-		password: "9be02f5e",
-    database: "heroku_57edae262e0f938"
-	});
+// 		host: "us-cdbr-east-05.cleardb.net",
+// 		user: "bbcec9e55759dc",
+// 		password: "9be02f5e",
+//     database: "heroku_57edae262e0f938"
+// 	});
 
-	const createDBAndTables = `
+// 	const createDBAndTables = `
 
-  CREATE TABLE IF NOT EXISTS BBY_28_User(
-    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      username varchar(100) NOT NULL UNIQUE,
-      password varchar(100) NOT NULL,
-      fName varchar(100) NOT NULL,
-      lName varchar(100) NOT NULL,
-      location varchar(100),
-      isPrivateKitchenOwner boolean DEFAULT false,
-      isAdmin boolean DEFAULT false,
-      avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
-  );
+//   CREATE TABLE IF NOT EXISTS BBY_28_User(
+//     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+//       username varchar(100) NOT NULL UNIQUE,
+//       password varchar(100) NOT NULL,
+//       fName varchar(100) NOT NULL,
+//       lName varchar(100) NOT NULL,
+//       location varchar(100),
+//       isPrivateKitchenOwner boolean DEFAULT false,
+//       isAdmin boolean DEFAULT false,
+//       avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
+//   );
 
-  `;
+//   `;
 
-	await connection.query(createDBAndTables);
+// 	await connection.query(createDBAndTables);
 
-  const addUsers = `
-  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
-  values
-      ("Admin", "password", "Ad", "Min", "Surrey, B.C.", false, true),
-      ("Regular", "password", "Reg", "Ular", "Surrey, B.C.", false, false)
-;
-  `
-  await connection.query(addUsers);
-}
+//   const addUsers = `
+//   insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
+//   values
+//       ("Admin", "password", "Ad", "Min", "Surrey, B.C.", false, true),
+//       ("Regular", "password", "Reg", "Ular", "Surrey, B.C.", false, false)
+// ;
+//   `
+//   await connection.query(addUsers);
+// }
 
 // Run the heroku server
 
 let port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Bite of Home listening on port " + port + "!");
-  init();
+  // init();
 });
