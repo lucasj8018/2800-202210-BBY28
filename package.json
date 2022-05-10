@@ -1,7 +1,7 @@
 {
   "name": "a-bite-of-home",
   "scripts": {
-    "start": "node server.js"
+    "start": "node hosting.js"
   },
   "dependencies": {
     "express": "^4.18.1",
