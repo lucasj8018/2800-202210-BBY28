@@ -2,6 +2,12 @@
   "name": "a-bite-of-home",
   "scripts":{
     "start": "node server.js"
+  },
+  "dependencies": {
+    "express":"^4.18.1",
+    "express-session": "^1.17.2",
+    "mysql2": "^2.3.3",
+    "jsdom": "^19.0.0"
   }
 
 
