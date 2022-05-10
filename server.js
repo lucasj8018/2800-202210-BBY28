@@ -324,5 +324,5 @@ async function init(){
 let port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Bite of Home listening on port " + port + "!");
-
+  init();
 });
