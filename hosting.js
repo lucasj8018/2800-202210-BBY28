@@ -306,15 +306,19 @@ async function init(){
       isAdmin boolean DEFAULT false,
       avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
   );
-  use heroku_57edae262e0f938;
-  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
-  values
-      ("Admin", "password", "Ad", "Min", "Surrey, B.C.", false, true),
-      ("Regular", "password", "Reg", "Ular", "Surrey, B.C.", false, false)
 
   `;
 
 	await connection.query(createDBAndTables);
+
+  const addUsers = `
+  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
+  values
+      ("Admin", "password", "Ad", "Min", "Surrey, B.C.", false, true),
+      ("Regular", "password", "Reg", "Ular", "Surrey, B.C.", false, false)
+;
+  `
+  await connection.query(addUsers);
 }
 
 // Run the heroku server
