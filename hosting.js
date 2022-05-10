@@ -306,7 +306,10 @@ async function init(){
       isAdmin boolean DEFAULT false,
       avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
   );
-
+  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
+  values
+      ("Admin", "password", "Ad", "Min", "Surrey, B.C.", false, true),
+      ("Regular", "password", "Reg", "Ular", "Surrey, B.C.", false, false)
 
   `;
 
