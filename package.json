@@ -1,0 +1,8 @@
+{
+  "name": "a-bite-of-home",
+  "scripts":{
+    "start": "node server.js"
+  }
+
+
+}
