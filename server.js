@@ -156,6 +156,7 @@ async function checkUsers(req, res) {
 
   const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
   var userProfile = "";
+  var dashboard = "";
   var userFirstName = "";
   var userLastName = "";
   var userPassword ="";
@@ -165,6 +166,18 @@ async function checkUsers(req, res) {
     userLastName = regUser[0].lName;
     userPassword = regUser[0].password;
     if (regUser[0].isAdmin) {
+
+      userProfile = `<div class="card" style="width: 18rem;">
+      <img src="`+ "./img/" + regUser[0].avatarPath+ `" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Your Profile</h5>
+        <h5 class="firstName">` + userFirstName + `</h5>
+        <h5 class="lastName">` + userLastName + `</h5>
+        <h5 class="username">` + userUsername + `</h5>
+        <h5 class="password">` + userPassword + `</h5>
+        <a href="#" class="btn btn-primary">Edit</a>
+      </div>
+      </div>`;
 
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
 
@@ -179,7 +192,7 @@ async function checkUsers(req, res) {
           "</td><td><button type ='submit' name='" + results[i].id + "'>Delete</button></td></tr>"
       }
       table += "</table>";
-      userProfile += table;
+      dashboard += table;
     } else {
 
       userProfile = `<div class="card" style="width: 18rem;">
@@ -202,6 +215,7 @@ async function checkUsers(req, res) {
 
   // Update user data on the porfile page
   profileContent.window.document.getElementById("profile").innerHTML = userProfile;
+  profileContent.window.document.getElementById("dashboard").innerHTML = dashboard;
   res.set("Server", "Wazubi Engine");
   res.set("X-Powered-By", "Wazubi");
   res.send(profileContent.serialize());
