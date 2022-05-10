@@ -98,10 +98,10 @@ async function checkAuthetication(req, res) {
   var password = req.body.password;
 
   const db = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
     multipleStatements: true
   });
 
@@ -142,10 +142,10 @@ async function checkAuthetication(req, res) {
 async function checkUsers(req, res) {
 
   const db = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
     multipleStatements: true
   });
 
@@ -242,15 +242,15 @@ async function signUpUser(req, res) {
   var lastName = req.body.lastName;
 
   const db = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
     multipleStatements: true
   });
 
   db.connect();
-  let addUser = "use comp2800; insert into BBY_28_User (username, password, fName, lName) values ? ";
+  let addUser = "use heroku_57edae262e0f938; insert into BBY_28_User (username, password, fName, lName) values ? ";
   let userInfo = [
     [username, password, firstName, lastName]
   ];
@@ -273,10 +273,10 @@ app.use(function (req, res, next) {
 async function connectToMySQL(req, res) {
   const mysql = require("mysql2/promise");
   const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
     multipleStatements: true
   });
   connection.connect();
@@ -307,12 +307,7 @@ async function init(){
       avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
   );
 
-  use comp2800;
-  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
-  values
-      ("Admin", "password", "Ad", "Min", "Surrey, B.C.", false, true),
-      ("Regular", "password", "Reg", "Ular", "Surrey, B.C.", false, false)
-  ;
+
   `;
 
 	await connection.query(createDBAndTables);
