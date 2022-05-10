@@ -283,8 +283,10 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
+
 // Run the local server on port 8000
-let port = 8000;
+// let port = 8000;
+let port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Bite of Home listening on port " + port + "!");
 });
