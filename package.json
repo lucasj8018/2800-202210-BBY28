@@ -1,14 +1,25 @@
 {
   "name": "a-bite-of-home",
-  "scripts":{
+  "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express":"^4.18.1",
+    "express": "^4.18.1",
     "express-session": "^1.17.2",
     "mysql2": "^2.3.3",
     "jsdom": "^19.0.0"
-  }
-
-
+  },
+  "description": "* [General info](#general-info)\r * [Technologies](#technologies)\r * [Contents](#content)",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasj8018/2800-202210-BBY28.git"
+  },
+  "author": "BBY-28",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasj8018/2800-202210-BBY28/issues"
+  },
+  "homepage": "https://github.com/lucasj8018/2800-202210-BBY28#readme"
 }
