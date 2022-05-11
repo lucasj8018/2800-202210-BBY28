@@ -55,7 +55,7 @@ app.get("/login", function (req, res) {
     connectToMySQL(req, res);
 
   } else {
-    // If users not logged in, rediret to login page
+    // If users not logged in, redirect to login page
     res.redirect("/");
   }
 });
@@ -68,10 +68,22 @@ app.get("/profile", function (req, res) {
     checkUsers(req, res);
 
   } else {
-    // If users not logged in, rediret to login page
+    // If users not logged in, redirect to login page
     res.redirect("/");
   }
 
+});
+
+app.get("/kitchenDetails", function (req, res) {
+
+  if (req.session.loggedIn) {
+    let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
+    res.send(kitchenDetails);
+
+  } else {
+    // If users not logged in, redirect to login page
+    res.redirect("/");
+  }
 });
 
 // Log out and redirect to login page
@@ -288,5 +300,5 @@ async function connectToMySQL(req, res) {
 let port = 8000;
 
 app.listen(port, function () {
-  console.log("Bite of Home listening on port " + port + "!");
+  console.log("A Bite of Home listening on port " + port + "!");
 });
