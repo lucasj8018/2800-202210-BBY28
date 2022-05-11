@@ -52,8 +52,6 @@ function initMap() {
     console.log("geolocation not supported");
     map = new google.maps.Map(document.getElementById("map"), options);
   }
-
-  geocoder = new google.maps.Geocoder();
 }
 
 window.initMap = initMap;
@@ -67,10 +65,11 @@ window.initMap = initMap;
 // listerner is also added to display the kitchen info when clicked on.
 //-------------------------------------------------------------------------------------------
 function geocodeAddress() {
+  geocoder = new google.maps.Geocoder();
 
   for (let i = 0; i < addressData.length; i++) {
     geocoder.geocode({
-      'address': addressData[i].address
+      'address': addressData[i]
     }, function (results, status) {
       if (status == "OK") {
         console.log(status);
