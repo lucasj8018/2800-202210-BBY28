@@ -60,7 +60,6 @@ app.get("/login", function (req, res) {
   }
 });
 
-
 app.get("/profile", function (req, res) {
 
   // check for a session 
@@ -72,6 +71,70 @@ app.get("/profile", function (req, res) {
     res.redirect("/");
   }
 
+});
+
+//----------------------------------------------------------------------------------------
+// Listens to a get routing request and loads the ktichenMap.html page.
+//----------------------------------------------------------------------------------------
+app.get("/map", function (req, res) {
+
+  // check for a session 
+  if (req.session.loggedIn) {
+    let kitchenMap = fs.readFileSync("./app/html/kitchenMap.html", "utf8");
+    res.send(kitchenMap);
+
+  } else {
+    // If users not logged in, rediret to login page
+    res.redirect("/");
+  }
+
+});
+
+//----------------------------------------------------------------------------------------
+// Listens to a get request to retrieve registered private kithcen addresses from the 
+// bby_28_user table and send to the client-side kitchenMap.js
+//----------------------------------------------------------------------------------------
+app.get("/map-data", async function (req, res) {
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  const [registeredAddresses, fields] = await db.execute("SELECT location FROM BBY_28_User");
+  var addresses;
+  var addressData = [];
+
+  for (let i = 0; i < registeredAddresses.length; i++) {
+    addresses = registeredAddresses[i].location;
+    addressData.push(addresses);
+  }
+  
+  console.log(addressData);
+
+  let data =   [
+    {
+      "Title": "Porteau Cove",
+      "address": "10025 174 St. Surrey BC V4N 4L2"
+    },
+    {
+      "Title": "Alice Lake",
+      "address": "14956 99A Ave. Surrey"
+    }
+  ];
+
+  if (addressData.length != 0) {
+      res.json(addressData);
+
+  } else {
+      // Send format error message for exception
+      res.send({ status: "fail", msg: "Wrong data format" });
+  }
 });
 
 // Log out and redirect to login page
@@ -138,7 +201,11 @@ async function checkAuthetication(req, res) {
   }
 }
 
-
+//-----------------------------------------------------------------------------------------
+// This function is called when user trys to redirect to the profile page. It checks 
+// whether the logged-in user is a regular or admin user and loads the contents accordingly
+// on the profile page.
+//-----------------------------------------------------------------------------------------
 async function checkUsers(req, res) {
 
   const db = await mysql.createConnection({
@@ -231,10 +298,10 @@ app.post("/login", function (req, res) {
 });
 
 
-//------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 // This function is called when user trys to sign up an account on the signUp page.  The
 // function reads the input values and save to the bby_28_user table in the database.
-//------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 async function signUpUser(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -258,12 +325,51 @@ async function signUpUser(req, res) {
 
 }
 
+//----------------------------------------------------------------------------------------
+// Listens to a post request to receive the user sign up data and call the signUpUser() 
+// function.
+//----------------------------------------------------------------------------------------
 app.post("/signing-up", function (req, res) {
-
   signUpUser(req, res);
-
 });
 
+//----------------------------------------------------------------------------------------
+// This function is called when a post request is received to receive the private kitchen 
+// registration data and insert it into the bby_28_user table in the database.
+//----------------------------------------------------------------------------------------
+async function registerPrivateKitchen(req, res) {
+  
+  res.setHeader("Content-Type", "application/json");
+  var kitchenName = req.body.name;
+  var kitchenAddress = req.body.street + " " + req.body.city + " " + req.body.postalCode;
+
+  console.log("Name", req.body.kitchenName);
+  console.log("Address", req.body.address);
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+  let addPrivateKitchen = "use comp2800; insert into BBY_28_User (kitchenName, location) values ? ";
+  let privateKitchenInfo = [
+    [kitchenName, kitchenAddress]
+  ];
+  await db.query(addPrivateKitchen, [privateKitchenInfo]);
+
+}
+
+//----------------------------------------------------------------------------------------
+// Listens to a post request to receive the user sign up data and call the registerPrivateKitchen() 
+// function.
+//----------------------------------------------------------------------------------------
+app.post('/register-kitchen', function (req, res) {
+  registerPrivateKitchen(req, res);
+});
 
 // For page not found 404 error
 app.use(function (req, res, next) {
