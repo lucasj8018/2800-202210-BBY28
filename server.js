@@ -89,6 +89,14 @@ app.get("/logout", function (req, res) {
   }
 });
 
+app.get("/kitchenRegistration", function (req, res) {
+  if (req.session.loggedIn) {
+    res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
+  } else {
+    res.redirect("/");
+  }
+});
+
 //------------------------------------------------------------------------------------
 // This function is called when user trys to log in to the home page. It autheticates
 // the user record in the database and creates a session if a signed up user is found.
