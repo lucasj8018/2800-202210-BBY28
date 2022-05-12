@@ -118,9 +118,7 @@ async function checkAuthetication(req, res) {
 
   }
   const [hashInput, inputFields] = await db.query("SELECT SHA1('" + req.body.password + "') as hash");
-  console.log(req.body.password);
   req.body.password = hashInput[0].hash;
-  console.log(req.body.password);
   if (req.body.username == dbUsername && req.body.password == dbPassword) {
     // user authenticated, create a session
     req.session.loggedIn = true;
@@ -161,12 +159,10 @@ async function checkUsers(req, res) {
   var dashboard = "";
   var userFirstName = "";
   var userLastName = "";
-  var userPassword ="";
 
   if (regUser.length == 1) {
     userFirstName = regUser[0].fName;
     userLastName = regUser[0].lName;
-    //userPassword = regUser[0].password;
     if (regUser[0].isAdmin) {
 
       userProfile = `<div class="card" style="width: 18rem;">
@@ -203,7 +199,7 @@ async function checkUsers(req, res) {
       <h5 class="firstName">` + userFirstName + `</h5>
       <h5 class="lastName">` + userLastName + `</h5>
       <h5 class="username">` + userUsername + `</h5>
-      <h5 class="password">` + userPassword + `</h5>
+      <h5 class="password">` + '••••••••' + `</h5>
       <a href="#" class="btn btn-primary">Edit</a>
     </div>
     </div>`;
