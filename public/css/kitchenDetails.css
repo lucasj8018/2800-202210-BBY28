@@ -175,7 +175,7 @@ td {
     color: #FFF3DF;
     padding-top: 20px;
     padding-bottom: 20px;
-    border-radius: 20px;
+    border-radius: 25px;
 }
 
 #addButton:hover {
@@ -298,11 +298,11 @@ td {
         bottom: 0;
         background-color: #DE2007;
         text-decoration: none;
-        font-size: 24pt;
+        font-size: 16pt;
         color: #FFF3DF;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        border-radius: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 25px;
     }
 
 #addButton:hover {
