@@ -262,7 +262,43 @@ async function checkUsers(req, res) {
         <h5 class="password">` + '••••••••' + `</h5>
         <a href="#" class="btn btn-primary">Edit</a>
       </div>
-      </div>`;
+      </div>
+      <br><br><br>
+      <div id="addUser" class="card">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >Username</span>
+        </div>
+        <input type="text" class="form-control" id="addUsername">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >Password</span>
+        </div>
+        <input type="text" class="form-control" id="addPassword">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >First Name</span>
+        </div>
+        <input type="text" class="form-control" id="addFirst">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >Last Name</span>
+        </div>
+        <input type="text" class="form-control" id="addLast">
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="isAdminSlider">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Admin user?</label>
+      </div>
+      <div id="incorrectInput"></div>
+        <a href="#" id="addUserButton"><p id="addUserLabel">Add User</p></a>
+      </div>
+
+
+      </div><br><br><br>`;
 
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
       // Creating table
@@ -334,7 +370,7 @@ async function signUpUser(req, res) {
   });
 
   db.connect();
-  let addUser = "use comp2800; insert into BBY_28_User (username, password, fName, lName) values ? ";
+  let addUser = "use comp2800; insert ignore into BBY_28_User (username, password, fName, lName) values ? ";
   let passwordHash = "SELECT SHA1('" + password + "') as hash";
   const [hashed, hashedFields] = await db.query(passwordHash);
   password = hashed[0].hash;
@@ -375,7 +411,7 @@ async function registerPrivateKitchen(req, res) {
   });
 
   db.connect();
-  let addPrivateKitchen = "use comp2800; insert into BBY_28_User (kitchenName, location) values ? ";
+  let addPrivateKitchen = "use comp2800; insert ignore into BBY_28_User (kitchenName, location) values ? ";
   let privateKitchenInfo = [
     [kitchenName, kitchenAddress]
   ];
@@ -389,7 +425,42 @@ async function registerPrivateKitchen(req, res) {
 //----------------------------------------------------------------------------------------
 app.post('/register-kitchen', function (req, res) {
   registerPrivateKitchen(req, res);
+  res.setHeader("Content-Type", "application/json");
+
 });
+
+app.post('/addUser', function(req, res){
+  adminAddUser(req, res);
+});
+
+async function adminAddUser(req, res){
+  res.setHeader("Content-Type", "application/json");
+  var userUsername = req.body.username;
+  var userPassword = req.body.password;
+  var userFirst = req.body.fName;
+  var userLast = req.body.lName;
+  var isAdmin = req.body.isAdmin;
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  let passwordHash = "SELECT SHA1('" + userPassword + "') as hash";
+  const [hashed, hashedFields] = await db.query(passwordHash);
+  userPassword = hashed[0].hash;
+
+  let addUser = "use comp2800; insert ignore into BBY_28_User (username, password, fName, lName, isAdmin) values ? ";
+  let userInfo = [
+    [userUsername, userPassword, userFirst, userLast, isAdmin]
+  ];
+  await db.query(addUser, [userInfo]);
+}
 
 // For page not found 404 error
 app.use(function (req, res, next) {
