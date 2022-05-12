@@ -131,11 +131,11 @@ app.get("/user-dashboard", async function (req, res) {
 
   const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
   if (results.length != 0) {
-      res.json(results);
+    res.json(results);
 
   } else {
-      // Send format error message for exception
-      res.send({ status: "fail", msg: "Wrong data format" });
+    // Send format error message for exception
+    res.send({ status: "fail", msg: "Wrong data format" });
   }
 });
 
@@ -144,7 +144,7 @@ app.get("/user-dashboard", async function (req, res) {
 // registration data and insert it into the bby_28_user table in the database.
 //----------------------------------------------------------------------------------------
 async function updateUserProfile(req, res) {
-  
+
   res.setHeader("Content-Type", "application/json");
 
   const db = await mysql.createConnection({
@@ -218,15 +218,15 @@ app.get("/map-data", async function (req, res) {
     addresses = registeredAddresses[i].location;
     addressData.push(addresses);
   }
-  
+
   console.log(addressData);
 
   if (addressData.length != 0) {
-      res.json(addressData);
+    res.json(addressData);
 
   } else {
-      // Send format error message for exception
-      res.send({ status: "fail", msg: "Wrong data format" });
+    // Send format error message for exception
+    res.send({ status: "fail", msg: "Wrong data format" });
   }
 });
 
@@ -283,7 +283,7 @@ async function checkAuthetication(req, res) {
     req.session.username = dbUsername;
     req.session.password = dbPassword;
     req.session.userId = dbUserId;
-    req.session.save(function (err) {});
+    req.session.save(function (err) { });
     res.send({
       status: "success",
       msg: "Logged in."
@@ -374,7 +374,7 @@ app.post("/signing-up", function (req, res) {
 // registration data and insert it into the bby_28_user table in the database.
 //----------------------------------------------------------------------------------------
 async function registerPrivateKitchen(req, res) {
-  
+
   res.setHeader("Content-Type", "application/json");
   var kitchenName = req.body.name;
   var kitchenAddress = req.body.street + " " + req.body.city + " " + req.body.postalCode;
@@ -409,11 +409,11 @@ app.post('/register-kitchen', function (req, res) {
 
 });
 
-app.post('/addUser', function(req, res){
+app.post('/addUser', function (req, res) {
   adminAddUser(req, res);
 });
 
-async function adminAddUser(req, res){
+async function adminAddUser(req, res) {
   res.setHeader("Content-Type", "application/json");
   var userUsername = req.body.username;
   var userPassword = req.body.password;
@@ -440,6 +440,36 @@ async function adminAddUser(req, res){
     [userUsername, userPassword, userFirst, userLast, isAdmin]
   ];
   await db.query(addUser, [userInfo]);
+}
+
+app.post('/deleteUser', function (req, res) {
+  deleteUser(req, res);
+});
+
+async function deleteUser(req, res) {
+  res.setHeader("Content-Type", "application/json");
+  var userID = req.body.id;
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+
+
+  let deleteUser = "use comp2800; delete from bby_28_user where id = ?"
+  let userInfo = [
+    [userID]
+  ];
+  await db.query(deleteUser, [userInfo]);
+
+
+
 }
 
 // For page not found 404 error

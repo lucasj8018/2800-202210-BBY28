@@ -83,7 +83,7 @@ ready(function () {
           table += "</td><td>" + dashboardData[i].username +
             "</td><td>" + "●●●●●●●●" +
             "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='50%', height ='50%'>" +
-            "</td><td><button type ='submit' name='" + dashboardData[i].id + "'>Delete</button></td></tr>"
+            "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button></td></tr>"
         }
         table += "</table>";
         dashboard += table;
@@ -95,6 +95,7 @@ ready(function () {
 
     })
     .catch(function (error) {
+      location.reload();
       console.log(error);
     })
 
@@ -116,6 +117,7 @@ ready(function () {
     }
   }
 
+
   document.getElementById("editUserInfo").addEventListener("click", function (e) {
     e.preventDefault();
     document.getElementById("personalInfoFields").disabled = false;
@@ -133,6 +135,8 @@ ready(function () {
     document.getElementById("personalInfoFields").disabled = true;
     document.getElementById("status").innerHTML = "Profile Updated";
   })
+
+
 
 });
 
@@ -183,6 +187,29 @@ function ready(callbackFunc) {
   } else {
     document.addEventListener("DOMContentLoaded", callbackFunc);
   }
+}
+
+async function postDeleteUser(data) {
+  try {
+    let resObject = await fetch("/deleteUser", {
+      method: 'POST',
+      headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    let parsedData = await resObject.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function deleteClicked(name){
+  postDeleteUser({
+    id: name
+  });
+  location.reload();
 }
 
 
