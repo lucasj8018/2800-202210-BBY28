@@ -473,22 +473,25 @@ async function deleteUser(req, res) {
 
 
   if (currentDeleted[0].id == userID){
-    console.log("CURRENT USER");
-
+    res.send({
+      status: "fail",
+      msg: "Cannot delete current user"
+    });
   } else if (adminCount == 1 && adminID == userID){
-    console.log("Cannot delete last admin");
+    res.send({
+      status: "fail",
+      msg: "Cannot delete last admin"
+    });
   }else {
+    res.send({
+      status: "success"
+    });
     let deleteUser = "use comp2800; delete from bby_28_user where id = ?"
     let userInfo = [
     [userID]
   ];
   await db.query(deleteUser, [userInfo]);
   }
-
-
-
-
-
 }
 
 // For page not found 404 error

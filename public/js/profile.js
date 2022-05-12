@@ -76,7 +76,7 @@ ready(function () {
       if (userData[0].isAdmin) {
         //Creating table
         var dashboard = "";
-        let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
+        let table = "<div id='incorrectDelete'> </div><br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
@@ -200,6 +200,11 @@ async function postDeleteUser(data) {
       body: JSON.stringify(data)
     });
     let parsedData = await resObject.json();
+    if (parsedData.status == 'fail'){
+      document.getElementById('incorrectDelete').innerHTML = parsedData.msg;
+    } else {
+      location.reload();
+    }
   } catch (error) {
     console.log(error);
   }
@@ -210,8 +215,8 @@ function deleteClicked(name){
     id: name,
     user: document.getElementById('usernameInput').value
   });
-  location.reload();
 }
+
 
 
 
