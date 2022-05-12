@@ -73,11 +73,31 @@ app.get("/profile", function (req, res) {
 
 });
 
+app.get("/kitchenRegistration", function (req, res) {
+  if (req.session.loggedIn) {
+    res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
+  } else {
+    res.redirect("/");
+  }
+});
+
 app.get("/kitchenDetails", function (req, res) {
 
   if (req.session.loggedIn) {
     let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
     res.send(kitchenDetails);
+
+  } else {
+    // If users not logged in, redirect to login page
+    res.redirect("/");
+  }
+})
+
+app.get("/upload", function (req, res) {
+
+  if (req.session.loggedIn) {
+    let upload = fs.readFileSync("./app/html/upload.html", "utf8");
+    res.send(upload);
 
   } else {
     // If users not logged in, redirect to login page
@@ -164,13 +184,7 @@ app.get("/logout", function (req, res) {
   }
 });
 
-app.get("/kitchenRegistration", function (req, res) {
-  if (req.session.loggedIn) {
-    res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
-  } else {
-    res.redirect("/");
-  }
-});
+
 
 //------------------------------------------------------------------------------------
 // This function is called when user trys to log in to the home page. It autheticates
