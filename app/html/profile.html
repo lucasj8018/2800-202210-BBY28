@@ -16,16 +16,18 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/navbarFooter.css">
-    <!-- <link rel="stylesheet" href="./css/profile.css"> -->
+    <link rel="stylesheet" href="./css/profile.css">
 </head>
 
 <body>
     <!-- our own navbar goes here -->
     <div id="navbar"></div>
 
+    <p id="welcome"><b>Welcome, <span id="userName">[username]</span></b></p>
+
     <div id="profile">
-        <div class="card" style="width: 18rem;">
-            <img id="avatarPath" src="" class="card-img-top" alt="...">
+        <div class="card" id="avatar" style="width: 18rem;">
+            <a href="#"><img id="avatarPath" class="card-img-top" alt="..."></a>
             <div class="card-body">
                 <h1 id="title">User Profile </h1>
                 <form>
@@ -61,8 +63,6 @@
     <div id="adminAdd"></div>
 
     <div id="dashboard"></div>
-
-    <img src="./img/knife.png" alt="knife" id="knife">
 
     <!-- our own footer goes here-->
     <div id="footer"></div>

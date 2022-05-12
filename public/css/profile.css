@@ -23,14 +23,31 @@ body {
     background-color: azure;
 }
 
+#welcome {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 24pt;
+}
+
 #profile {
     grid-column: 2 / span 1;
-    grid-row: 2 / span 2;
+    grid-row: 2 / span 1;
+    margin-top: 100px;
+}
+
+#avatarPath {
+    height: auto;
+    width: 100%;
+    justify-self: center;
+}
+
+.card {
     background-color: white;
     border-radius: 10px;
-    height: 90%;
     width: 80vw;
-    max-height: 500px;
+    margin-top: 200px;
     margin: auto;
     padding-bottom: 20px;
     z-index: 1;
@@ -58,72 +75,6 @@ body {
     align-items: start;
 }
 
-.card {
-    background-color: transparent;
-    display: grid;
-    margin: 2vh auto;
-    padding: 2vh;
-    border-style: none;
-    max-width: 80vw;
-}
-
-.card-img-top {
-    width: 50%;
-    height: auto;
-    justify-self: center;
-    border-radius: 100%;
-}
-
-.card-body {
-    display: grid;
-    grid-template: 
-    'title title'
-    'fname lname'
-    'username username'
-    'password password'
-    'button button';
-    grid-template-rows: 15% 15% 15% 15% 25%;
-    grid-gap: 1vh;
-    color: black;
-}
-
-.card-title {
-    grid-area: title;
-}
-
-.firstName {
-    grid-area: fname;
-}
-
-.lastName {
-    grid-area: lname;
-}
-
-.username {
-    grid-area: username;
-}
-
-.password {
-    grid-area: password;
-}
-
-.firstName, .lastName, .username, .password {
-    text-decoration: none;
-    font-size: 14pt;
-
-}
-
-.btn {
-    grid-area: button;
-    background-color: #DE2007;
-    border-style: none;
-    padding: 6%;
-}
-
-.btn:hover {
-    background-color: #BB1B05;
-}
-
 
 #footer {
     grid-column: 1 / span 3;
@@ -138,7 +89,7 @@ body {
         font-family: 'latolight';
     }
 
-    #profile {
+    .card {
         width: 50%;
         height: 100%;
         margin-top: 80px;        
