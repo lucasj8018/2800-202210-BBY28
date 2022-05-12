@@ -449,7 +449,7 @@ app.post('/deleteUser', function (req, res) {
 async function deleteUser(req, res) {
   res.setHeader("Content-Type", "application/json");
   var userID = req.body.id;
-
+  var currentUser = req.body.user;
   const db = await mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -460,13 +460,32 @@ async function deleteUser(req, res) {
 
   db.connect();
 
+  let checkAdmin = "SELECT * FROM BBY_28_user where isAdmin = 1";
+  const[admins, adminFields] = await db.query(checkAdmin);
+  let adminCount = admins.length;
+  let adminID = admins[0].id;
+
+  let checkUser = "SELECT id from bby_28_user where username = ?";
+    let user = [
+      [currentUser]
+    ];
+    let [currentDeleted, currentFields] = await db.query(checkUser, [user]);
 
 
-  let deleteUser = "use comp2800; delete from bby_28_user where id = ?"
-  let userInfo = [
+  if (currentDeleted[0].id == userID){
+    console.log("CURRENT USER");
+
+  } else if (adminCount == 1 && adminID == userID){
+    console.log("Cannot delete last admin");
+  }else {
+    let deleteUser = "use comp2800; delete from bby_28_user where id = ?"
+    let userInfo = [
     [userID]
   ];
   await db.query(deleteUser, [userInfo]);
+  }
+
+
 
 
 

@@ -207,7 +207,8 @@ async function postDeleteUser(data) {
 
 function deleteClicked(name){
   postDeleteUser({
-    id: name
+    id: name,
+    user: document.getElementById('usernameInput').value
   });
   location.reload();
 }
