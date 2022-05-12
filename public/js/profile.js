@@ -17,7 +17,7 @@ ready(function () {
       document.getElementById("firstNameInput").value = userData[0].fName;
       document.getElementById("lastNameInput").value = userData[0].lName;
       document.getElementById("usernameInput").value = userData[0].username;
-      document.getElementById("passwordInput").value = userData[0].password;
+      document.getElementById("passwordInput").value = "●●●●●●●●";
 
       if (userData[0].isAdmin) {
         document.getElementById("title").innerHTML = "Admin User Profile";
@@ -81,7 +81,7 @@ ready(function () {
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
           table += "</td><td>" + dashboardData[i].username +
-            "</td><td>" + dashboardData[i].password +
+            "</td><td>" + "●●●●●●●●" +
             "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='50%', height ='50%'>" +
             "</td><td><button type ='submit' name='" + dashboardData[i].id + "'>Delete</button></td></tr>"
         }
