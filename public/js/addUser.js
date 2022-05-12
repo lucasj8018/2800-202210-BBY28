@@ -24,13 +24,20 @@ ready(function () {
   // Checks to see if the element exists (only exists for admin users) then adds a listener
   if (document.getElementById("addUserButton")){
     document.getElementById("addUserButton").addEventListener("click", function (e) {
-      postData({
-        username: document.getElementById("addUsername").value,
-        password: document.getElementById("addPassword").value,
-        fName: document.getElementById("addFirst").value,
-        lName: document.getElementById("addLast").value,
-        isAdmin: document.getElementById("isAdminSlider").checked
-      });
+      if (document.getElementById("addUsername").value == '' || document.getElementById("addPassword").value == ''
+      || document.getElementById("addFirst").value == '' || document.getElementById("addLast").value == ''){
+        document.getElementById("incorrectInput").innerHTML = "All fields required";
+      } else {
+        postData({
+          username: document.getElementById("addUsername").value,
+          password: document.getElementById("addPassword").value,
+          fName: document.getElementById("addFirst").value,
+          lName: document.getElementById("addLast").value,
+          isAdmin: document.getElementById("isAdminSlider").checked
+        });
+        location.reload();
+      }
+
     });
   }
 

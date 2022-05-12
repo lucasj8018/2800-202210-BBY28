@@ -293,11 +293,9 @@ async function checkUsers(req, res) {
         <input class="form-check-input" type="checkbox" id="isAdminSlider">
         <label class="form-check-label" for="flexSwitchCheckDefault">Admin user?</label>
       </div>
-      <div id="incorrectInput"></div>
-        <a href="#" id="addUserButton"><p id="addUserLabel">Add User</p></a>
+        <a href="#" id="addUserButton" class='btn btn-primary'><p id="addUserLabel">Add User</p></a>
       </div>
-
-
+      <div id="incorrectInput"></div>
       </div><br><br><br>`;
 
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
