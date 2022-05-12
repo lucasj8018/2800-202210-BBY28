@@ -64,6 +64,20 @@ app.get("/profile", function (req, res) {
 
   // check for a session 
   if (req.session.loggedIn) {
+    let userProfile = fs.readFileSync("./app/html/profile.html", "utf8");
+    res.send(userProfile);
+
+  } else {
+    // If users not logged in, rediret to login page
+    res.redirect("/");
+  }
+
+});
+
+app.get("/display-profile", function (req, res) {
+
+  // check for a session 
+  if (req.session.loggedIn) {
     checkUsers(req, res);
 
   } else {
@@ -104,6 +118,61 @@ app.get("/upload", function (req, res) {
     res.redirect("/");
   }
 })
+app.get("/user-dashboard", async function (req, res) {
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
+  if (results.length != 0) {
+      res.json(results);
+
+  } else {
+      // Send format error message for exception
+      res.send({ status: "fail", msg: "Wrong data format" });
+  }
+});
+
+//----------------------------------------------------------------------------------------
+// This function is called when a post request is received to receive the private kitchen 
+// registration data and insert it into the bby_28_user table in the database.
+//----------------------------------------------------------------------------------------
+async function updateUserProfile(req, res) {
+  
+  res.setHeader("Content-Type", "application/json");
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  let updateUser = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ?, password = ? WHERE id = ?";
+  let userInfo = [
+    req.body.firstName, req.body.lastName, req.body.username, req.body.password, req.session.userId
+  ];
+  await db.query(updateUser, userInfo);
+  db.end();
+
+}
+
+//----------------------------------------------------------------------------------------
+// Listens to a post request to receive the user sign up data and call the registerPrivateKitchen() 
+// function.
+//----------------------------------------------------------------------------------------
+app.post('/update-profile', function (req, res) {
+  updateUserProfile(req, res);
+});
 
 //----------------------------------------------------------------------------------------
 // Listens to a get routing request and loads the ktichenMap.html page.
@@ -148,17 +217,6 @@ app.get("/map-data", async function (req, res) {
   }
   
   console.log(addressData);
-
-  let data =   [
-    {
-      "Title": "Porteau Cove",
-      "address": "10025 174 St. Surrey BC V4N 4L2"
-    },
-    {
-      "Title": "Alice Lake",
-      "address": "14956 99A Ave. Surrey"
-    }
-  ];
 
   if (addressData.length != 0) {
       res.json(addressData);
@@ -255,74 +313,12 @@ async function checkUsers(req, res) {
   var userUsername = req.session.username;
   var userId = req.session.userId;
 
-  const [regUser, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
-  var userProfile = "";
-  var dashboard = "";
-  var userFirstName = "";
-  var userLastName = "";
-  var userPassword ="";
+  const [userResults, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
 
-  if (regUser.length == 1) {
-    userFirstName = regUser[0].fName;
-    userLastName = regUser[0].lName;
-    userPassword = regUser[0].password;
-    if (regUser[0].isAdmin) {
-
-      userProfile = `<div class="card" style="width: 18rem;">
-      <img src="`+ "./img/" + regUser[0].avatarPath+ `" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Your Profile</h5>
-        <h5 class="firstName">` + userFirstName + `</h5>
-        <h5 class="lastName">` + userLastName + `</h5>
-        <h5 class="username">` + userUsername + `</h5>
-        <h5 class="password">` + userPassword + `</h5>
-        <a href="#" class="btn btn-primary">Edit</a>
-      </div>
-      </div>`;
-
-      const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
-
-      // Creating table
-      let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
-
-      // For loops that appends to the table the users username, password and their avatar
-      for (let i = 0; i < results.length; i++) {
-        table += "</td><td>" + results[i].username +
-          "</td><td>" + results[i].password +
-          "</td><td><img src='./img/" + results[i].avatarPath + "' width ='50%', height ='50%'>" +
-          "</td><td><button type ='submit' name='" + results[i].id + "'>Delete</button></td></tr>"
-      }
-      table += "</table>";
-      dashboard += table;
-    } else {
-
-      userProfile = `<div class="card" style="width: 18rem;">
-    <img src="`+ "./img/" + regUser[0].avatarPath+ `" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Your Profile</h5>
-      <h5 class="firstName">` + userFirstName + `</h5>
-      <h5 class="lastName">` + userLastName + `</h5>
-      <h5 class="username">` + userUsername + `</h5>
-      <h5 class="password">` + userPassword + `</h5>
-      <a href="#" class="btn btn-primary">Edit</a>
-    </div>
-    </div>`;
-    }
+  if (userResults.length == 1) {
+    res.json(userResults);
   }
-
-  await db.end();
-  let profile = fs.readFileSync("./app/html/profile.html", "utf8");
-  let profileContent = new JSDOM(profile);
-
-  // Update user data on the porfile page
-  profileContent.window.document.getElementById("profile").innerHTML = userProfile;
-  profileContent.window.document.getElementById("dashboard").innerHTML = dashboard;
-  res.set("Server", "Wazubi Engine");
-  res.set("X-Powered-By", "Wazubi");
-  res.send(profileContent.serialize());
-
 }
-
 
 // Receives ajaxPOST call from the client side. Call the checkAuthetication(req, res)
 // function to validate the form entry information from the user.
@@ -394,7 +390,7 @@ async function registerPrivateKitchen(req, res) {
     [kitchenName, kitchenAddress]
   ];
   await db.query(addPrivateKitchen, [privateKitchenInfo]);
-
+  db.end();
 }
 
 //----------------------------------------------------------------------------------------
