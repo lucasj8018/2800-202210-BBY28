@@ -189,8 +189,7 @@ async function checkAuthetication(req, res) {
   });
 
   db.connect();
-  const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE username = ? AND password = ?", [username, password]);
-
+  const [results1, fields1] = await db.execute("SELECT * FROM BBY_28_User WHERE username = ?", [username]);
   var dbUsername;
   var dbPassword;
   var dbUserId;
@@ -201,7 +200,8 @@ async function checkAuthetication(req, res) {
     dbUserId = results1[0].id;
 
   }
-
+  const [hashInput, inputFields] = await db.query("SELECT SHA1('" + req.body.password + "') as hash");
+  req.body.password = hashInput[0].hash;
   if (req.body.username == dbUsername && req.body.password == dbPassword) {
     // user authenticated, create a session
     req.session.loggedIn = true;
@@ -246,12 +246,10 @@ async function checkUsers(req, res) {
   var dashboard = "";
   var userFirstName = "";
   var userLastName = "";
-  var userPassword ="";
 
   if (regUser.length == 1) {
     userFirstName = regUser[0].fName;
     userLastName = regUser[0].lName;
-    userPassword = regUser[0].password;
     if (regUser[0].isAdmin) {
 
       userProfile = `<div class="card" style="width: 18rem;">
@@ -261,20 +259,19 @@ async function checkUsers(req, res) {
         <h5 class="firstName">` + userFirstName + `</h5>
         <h5 class="lastName">` + userLastName + `</h5>
         <h5 class="username">` + userUsername + `</h5>
-        <h5 class="password">` + userPassword + `</h5>
+        <h5 class="password">` + '••••••••' + `</h5>
         <a href="#" class="btn btn-primary">Edit</a>
       </div>
       </div>`;
 
       const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
-
       // Creating table
       let table = "<br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
 
       // For loops that appends to the table the users username, password and their avatar
       for (let i = 0; i < results.length; i++) {
         table += "</td><td>" + results[i].username +
-          "</td><td>" + results[i].password +
+          "</td><td>" + '••••••••' +
           "</td><td><img src='./img/" + results[i].avatarPath + "' width ='50%', height ='50%'>" +
           "</td><td><button type ='submit' name='" + results[i].id + "'>Delete</button></td></tr>"
       }
@@ -289,7 +286,7 @@ async function checkUsers(req, res) {
       <h5 class="firstName">` + userFirstName + `</h5>
       <h5 class="lastName">` + userLastName + `</h5>
       <h5 class="username">` + userUsername + `</h5>
-      <h5 class="password">` + userPassword + `</h5>
+      <h5 class="password">` + '••••••••' + `</h5>
       <a href="#" class="btn btn-primary">Edit</a>
     </div>
     </div>`;
@@ -338,6 +335,9 @@ async function signUpUser(req, res) {
 
   db.connect();
   let addUser = "use comp2800; insert into BBY_28_User (username, password, fName, lName) values ? ";
+  let passwordHash = "SELECT SHA1('" + password + "') as hash";
+  const [hashed, hashedFields] = await db.query(passwordHash);
+  password = hashed[0].hash;
   let userInfo = [
     [username, password, firstName, lastName]
   ];
