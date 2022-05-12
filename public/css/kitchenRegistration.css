@@ -6,9 +6,9 @@ html {
 
 body {
     display: grid;
-    grid-template-columns: 5% 90% 5%;
+    grid-template-columns: 10% 80% 10%;
     font-family: 'latolight';
-    font-size: 3vh;
+    font-size: 5vw;
     background-color: #c49a68;
     background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
 }
@@ -28,13 +28,17 @@ body {
     grid-row: 2 / span 100;
     display: grid;
     grid-template-areas: 
-    'name name name'
-    'street street street'
-    'city city pc'
-    'buttons buttons buttons';
+    'name name'
+    'street street'
+    'city pc'
+    'buttons buttons';
     grid-gap: 10px;
     padding-top: 8vh;
     padding-bottom: 5vh;
+}
+    
+.col-sm-2 {
+    width: auto;
 }
 
 #kitchen-name {
@@ -108,12 +112,31 @@ body {
         font-size: 2vh;
     }
 
+    #navbar {
+        font-size: 1.5vw;
+    }
+
     #registration-form {
         width: 500px;
         margin: auto;
+        grid-template-columns: 55% 45%; 
     }
 
-    #navbar {
-        font-size: 1.5vw;
+    #input-kitchen-name, #input-street {
+        width: 469px;
+    }
+
+    #buttons {
+        justify-content: center;
+    }
+
+    #cancel {
+        margin: auto;
+        padding: 0 5px;
+    }
+
+    #next {
+        margin: auto;
+        padding: 0 30px;
     }
 }
