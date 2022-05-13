@@ -133,6 +133,11 @@ body {
     color: #FFF3DF;
 }
 
+#incorrectInput {
+    text-align: center;
+    align-items: center;
+}
+
 #dashboard {
     grid-column: 2 / span 1;
     grid-row: 4 / span 2;
@@ -142,7 +147,7 @@ body {
     max-height: 500px;
     margin: auto;
     padding-bottom: 120px;
-    align-items: start;
+    align-self: start;
 }
 
 #footer {
@@ -180,9 +185,8 @@ body {
     }
 
     #adminAdd {
-  
         grid-row: 4 / span 2;
-        margin-top: 70px;
+        margin-top: 15px;
     }
 
     .form-check {
@@ -190,11 +194,19 @@ body {
     }
 
     #dashboard {
- 
         grid-row: 6 / span 1;
-        height: 80%;
+        height: 100%;
         width: 80vw;
         margin: auto;
-        padding-bottom: 950px;
+        margin-bottom: 500px;
+    }
+
+    #userTable {
+        margin-bottom: 0;
+        align-items: start;
+    }
+
+    table {
+        margin-top: -50px
     }
 }
