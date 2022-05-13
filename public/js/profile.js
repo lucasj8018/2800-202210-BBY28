@@ -18,6 +18,7 @@ ready(function () {
       document.getElementById("lastNameInput").value = userData[0].lName;
       document.getElementById("usernameInput").value = userData[0].username;
       document.getElementById("passwordInput").value = "●●●●●●●●";
+      document.getElementById("helloUsername").innerText = userData[0].username;
       console.log(document.getElementById("passwordInput").value);
 
       if (userData[0].isAdmin) {
@@ -58,6 +59,7 @@ ready(function () {
         `;
 
       }
+
 
     })
     .catch(function (error) {
@@ -118,10 +120,7 @@ ready(function () {
     }
   }
 
-<<<<<<< HEAD
-=======
     document.getElementById("updateUserInfo").disabled = true;
->>>>>>> Justin_Ng_profile_CSS_2
 
   document.getElementById("editUserInfo").addEventListener("click", function (e) {
     e.preventDefault();
