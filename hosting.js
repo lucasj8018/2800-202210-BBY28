@@ -241,6 +241,8 @@ app.get("/map-data", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
+  await db.end();
+
 });
 
 // Log out and redirect to login page
@@ -307,6 +309,8 @@ async function checkAuthetication(req, res) {
       msg: "Invalid credentials."
     });
   }
+  await db.end();
+
 }
 
 //-----------------------------------------------------------------------------------------
@@ -371,6 +375,8 @@ async function signUpUser(req, res) {
     [username, password, firstName, lastName]
   ];
   await db.query(addUser, [userInfo]);
+  await db.end();
+
 
 }
 
@@ -409,7 +415,7 @@ async function registerPrivateKitchen(req, res) {
     [kitchenName, kitchenAddress]
   ];
   await db.query(addPrivateKitchen, [privateKitchenInfo]);
-  db.end();
+  await db.end();
 }
 
 //----------------------------------------------------------------------------------------
@@ -453,6 +459,7 @@ async function adminAddUser(req, res) {
     [userUsername, userPassword, userFirst, userLast, isAdmin]
   ];
   await db.query(addUser, [userInfo]);
+  await db.end();
 }
 
 app.post('/deleteUser', function (req, res) {
@@ -504,6 +511,7 @@ async function deleteUser(req, res) {
     [userID]
   ];
   await db.query(deleteUser, [userInfo]);
+  await db.end();
   }
 }
 
@@ -542,6 +550,7 @@ async function initialize(){
     ["Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Ad", "Min", "Surrey, B.C.", false, true],
   ];
   await connection.query(query, [values]);
+  await connection.end();
 }
 
 // Run the heroku server
