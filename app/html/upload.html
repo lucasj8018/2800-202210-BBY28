@@ -23,12 +23,12 @@
     
     <div id="uploadTitle"><p><b>Upload Your Recipe/Dish</b></p></div>
 
-    <img src="./img/knife.png" id="knife">
+    <img src="./img/knife.png" id="knife" alt="knife">
 
 
     <form id="uploadForm">
         <div class="row" id="recipeOrDish">
-            <label for="recipeOrDish" class="col-sm-2 col-form-label" id="radioButtonsLabel"><b>Is this a recipe or a dish?</b></label>
+            <label class="col-sm-2 col-form-label" id="radioButtonsLabel"><b>Is this a recipe or a dish?</b></label>
             <div class="col-sm-10" id="radioButtons">
                 <p id="recipeChoiceLabel">Recipe</p>
                 <input type="radio" id="recipeChoice">
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="row" id="price">
-            <label for="inputStreet" class="col-sm-2 col-form-label" id="priceLabel"><b>Price</b></label>
+            <label for="inputPrice" class="col-sm-2 col-form-label" id="priceLabel"><b>Price</b></label>
             <div class="col-sm-10" id="priceInputDiv">
                 <input type="number" min="0" step="0.01" class="form-control" id="inputPrice" onchange="round()">
             </div>

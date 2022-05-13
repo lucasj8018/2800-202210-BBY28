@@ -80,25 +80,21 @@ body {
 #kitchen-name {
     grid-area: name;
     display: grid;
-    grid-template-rows: 1;
 }
 
 #street {
     grid-area: street;
     display: grid;
-    grid-template-rows: 1;
 }
 
 #city {
     grid-area: city;
     display: grid;
-    grid-template-rows: 1;
 }
 
 #postal-code {
     grid-area: pc;
     display: grid;
-    grid-template-rows: 1;
 }
 
 #buttons {
@@ -106,7 +102,6 @@ body {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-gap: 10px;
-    vertical-align: auto;
     padding-top: 5vh;
 }
 
