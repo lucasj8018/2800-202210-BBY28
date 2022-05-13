@@ -106,7 +106,6 @@ app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res
 
   await updateUserAvatar(req, res);
   res.redirect("/profile");
-  console.log(req.files);
 
 });
 
@@ -276,7 +275,6 @@ app.get("/map-data", async function (req, res) {
     addressData.push(addresses);
   }
 
-  console.log(addressData);
 
   if (addressData.length != 0) {
     res.json(addressData);

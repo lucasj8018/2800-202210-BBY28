@@ -46,7 +46,6 @@ ready(function () {
       ajaxPOST("/signing-up", function (data) {
         if (data) {
           let parsedData = JSON.parse(data);
-          console.log(parsedData);
           if (parsedData.status == "fail") {
             document.getElementById("invalidUser").innerHTML = parsedData.msg;
           } else {

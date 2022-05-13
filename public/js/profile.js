@@ -115,9 +115,7 @@ ready(async function () {
         },
         body: JSON.stringify(data)
       });
-      console.log("Response object", resObject);
       let parsedData = await resObject.json();
-      console.log("From the server", parsedData);
     } catch (error) {
       console.log(error);
     }

@@ -25,7 +25,6 @@ ready(function () {
     };
 
     fetch("/upload-avatar", options).then(function (res) {
-      console.log(res);
       window.location.replace("/profile");
     }).catch(function (err) {
       ("Error:", err)

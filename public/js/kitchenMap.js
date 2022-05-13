@@ -71,7 +71,6 @@ function geocodeAddress() {
         'address': addressData[i]
       }, function (results, status) {
         if (status == "OK") {
-          console.log(status);
           map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
             map: map,
@@ -102,11 +101,9 @@ function geocodeAddress() {
           });
   
         } else {
-          console.log("Geocoding failed due to " + status);
         }
       })
     } else {
-      console.log(1);
     }
   }
 }
