@@ -25,16 +25,20 @@ body {
 
 #welcome {
     grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
+    grid-row: 1 / span 1;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 120px;
     font-size: 24pt;
 }
 
 #profile {
     grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
-    margin-top: 100px;
+    grid-row: 1 / span 1;
+    margin-top: 200px;
+}
+
+#title {
+    text-align: center;
 }
 
 #avatarPath {
@@ -52,15 +56,81 @@ body {
     padding-bottom: 20px;
     z-index: 1;
     box-shadow: 5px 10px grey;
+    display: flex;
 }
 
-#knife {
+#editUserInfo {
+    background-color: #FFF3DF;
+    color: black;
+    border-color: #FFF3DF;
+}
+
+#editUserInfo:hover {
+    background-color: #E4D1B1;
+    color: black;
+    border-color: #E4D1B1;
+}
+
+#updateUserInfo {
+    background-color: #DE2007;
+    color: #FFF3DF;
+    border-color: #DE2007;
+}
+
+#updateUserInfo:hover {
+    background-color: #BB1B05;
+    color: #FFF3DF;
+    border-color: #DE2007;
+}
+
+#adminAdd {
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
-    width: 55%;
-    height: auto;
-    justify-self: end;
-    z-index: 1;
+    margin-top: 70px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.input-group {
+    width: 90%;
+    margin: auto;
+}
+
+.input-group-text {
+    width: 105px;
+}
+
+.form-control {
+    background-color: azure;
+}
+
+#usernameCardInput {
+    margin-top: 20px;
+}
+
+.form-check {
+    text-align: center;
+    width: 40%;
+    margin: auto;
+}
+
+#addUserButton {
+    width: 90%;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 25px;
+    background-color: #DE2007;
+    border-color: #DE2007;
+    color: #FFF3DF;
+}
+
+#addUserButton:hover {
+    background-color: #BB1B05;
+    border-color: #BB1B05;
+    color: #FFF3DF;
 }
 
 #dashboard {
@@ -75,7 +145,6 @@ body {
     align-items: start;
 }
 
-
 #footer {
     grid-column: 1 / span 3;
     grid-row: 7 / span 1;
@@ -85,22 +154,46 @@ body {
     
     body {
         display: grid;
-        grid-template-rows: 8% 40% 5% 8% 8% 40% 70% 8% 8%;
+        grid-template-rows: 8% 40% 1% 20% 1% 40% 70% 8% 8%;
         font-family: 'latolight';
     }
 
+    #welcome {
+        font-size: 32pt;
+    }
+
+    #avatar {
+        width: 30%;
+    }
+
+    #avatarPath {
+        height: auto;
+    }
+
     .card {
-        width: 50%;
-        height: 100%;
-        margin-top: 80px;        
+        width: 40vw;
+    }
+
+    .form-group {
+        font-size: 16pt;
+        margin-bottom: 10px
+    }
+
+    #adminAdd {
+  
+        grid-row: 4 / span 2;
+        margin-top: 70px;
+    }
+
+    .form-check {
+        font-size: 20pt;
     }
 
     #dashboard {
-        grid-column: 2 / span 1;
-        grid-row: 4 / span 3;
+ 
+        grid-row: 6 / span 1;
         height: 80%;
         width: 80vw;
-        max-height: 500px;
         margin: auto;
         padding-bottom: 950px;
     }
