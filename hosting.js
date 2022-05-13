@@ -9,9 +9,18 @@ const fs = require("fs");
 const {
   JSDOM
 } = require('jsdom');
-const internal = require("stream");
-const { init } = require("express/lib/application");
-const { connect } = require("http2");
+
+const multer = require("multer");
+
+const avatarStorage = multer.diskStorage({
+    destination: function (req, file, callbackFunc) {
+        callbackFunc(null, "./public/img/")
+    },
+    filename: function(req, file, callbackFunc) {
+        callbackFunc(null, "avatar_" + file.originalname.split('/').pop().trim());
+    }
+});
+const uploadAvatar = multer({ storage: avatarStorage });
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -87,8 +96,40 @@ app.get("/display-profile", function (req, res) {
     // If users not logged in, redirect to login page
     res.redirect("/");
   }
+});
+
+//----------------------------------------------------------------------------------------
+// This post request is called to receive the updated user profile picture and update it
+// on the bby_28_user table in the database.
+//----------------------------------------------------------------------------------------
+app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res) {
+
+  await updateUserAvatar(req, res);
+  res.redirect("/profile");
+  console.log(req.files);
 
 });
+
+async function updateUserAvatar(req, res) {
+
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  let updateAvatar = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET avatarPath = ? WHERE id = ?";
+  let avatarInfo = [
+    req.files[0].filename, req.session.userId
+  ];
+  await db.query(updateAvatar, avatarInfo);
+  db.end();
+
+}
 
 app.get("/kitchenRegistration", function (req, res) {
   if (req.session.loggedIn) {
@@ -121,6 +162,7 @@ app.get("/upload", function (req, res) {
     res.redirect("/");
   }
 })
+
 app.get("/user-dashboard", async function (req, res) {
   const db = await mysql.createConnection({
     host: "us-cdbr-east-05.cleardb.net",
@@ -140,12 +182,13 @@ app.get("/user-dashboard", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
-  await db.end();
+
+  db.end();
 });
 
 //----------------------------------------------------------------------------------------
-// This function is called when a post request is received to receive the private kitchen
-// registration data and insert it into the bby_28_user table in the database.
+// This function is called when a post request is called to receive the updated user
+// profile data and update it on the bby_28_user table in the database.
 //----------------------------------------------------------------------------------------
 async function updateUserProfile(req, res) {
 
@@ -179,7 +222,7 @@ async function updateUserProfile(req, res) {
 
   }
 
-  await db.end();
+  db.end();
 
 }
 
@@ -242,8 +285,8 @@ app.get("/map-data", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
-  await db.end();
 
+  db.end();
 });
 
 // Log out and redirect to login page
@@ -310,8 +353,8 @@ async function checkAuthetication(req, res) {
       msg: "Invalid credentials."
     });
   }
-  await db.end();
 
+  db.end();
 }
 
 //-----------------------------------------------------------------------------------------
@@ -339,7 +382,8 @@ async function checkUsers(req, res) {
   if (userResults.length == 1) {
     res.json(userResults);
   }
-  await db.end();
+
+  db.end();
 }
 
 // Receives ajaxPOST call from the client side. Call the checkAuthetication(req, res)
@@ -377,9 +421,8 @@ async function signUpUser(req, res) {
     [username, password, firstName, lastName]
   ];
   await db.query(addUser, [userInfo]);
-  await db.end();
 
-
+  db.end();
 }
 
 //----------------------------------------------------------------------------------------
@@ -388,6 +431,29 @@ async function signUpUser(req, res) {
 //----------------------------------------------------------------------------------------
 app.post("/signing-up", function (req, res) {
   signUpUser(req, res);
+});
+
+app.get("/check-kitchen-registration", async function (req, res) {
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  const [results, fields] = await db.execute("SELECT * FROM BBY_28_user WHERE id = ?", [req.session.userId]);
+  if (results.length != 0) {
+    res.json(results);
+
+  } else {
+    // Send format error message for exception
+    res.send({ status: "fail", msg: "Wrong data format" });
+  }
+
+  db.end();
 });
 
 //----------------------------------------------------------------------------------------
@@ -400,9 +466,6 @@ async function registerPrivateKitchen(req, res) {
   var kitchenName = req.body.name;
   var kitchenAddress = req.body.street + " " + req.body.city + " " + req.body.postalCode;
 
-  console.log("Name", req.body.kitchenName);
-  console.log("Address", req.body.address);
-
   const db = await mysql.createConnection({
     host: "us-cdbr-east-05.cleardb.net",
 		user: "bbcec9e55759dc",
@@ -410,14 +473,14 @@ async function registerPrivateKitchen(req, res) {
     database: "heroku_57edae262e0f938",
     multipleStatements: true
   });
-
   db.connect();
-  let addPrivateKitchen = "use heroku_57edae262e0f938; insert ignore into BBY_28_User (kitchenName, location) values ? ";
+
+  let addPrivateKitchen = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET kitchenName = ?, location = ?, isPrivateKitchenOwner = ? WHERE id = ?";
   let privateKitchenInfo = [
-    [kitchenName, kitchenAddress]
+    kitchenName, kitchenAddress, 1, req.session.userId
   ];
-  await db.query(addPrivateKitchen, [privateKitchenInfo]);
-  await db.end();
+  await db.query(addPrivateKitchen, privateKitchenInfo);
+  db.end();
 }
 
 //----------------------------------------------------------------------------------------
@@ -426,7 +489,6 @@ async function registerPrivateKitchen(req, res) {
 //----------------------------------------------------------------------------------------
 app.post('/register-kitchen', function (req, res) {
   registerPrivateKitchen(req, res);
-  res.setHeader("Content-Type", "application/json");
 
 });
 
@@ -461,7 +523,8 @@ async function adminAddUser(req, res) {
     [userUsername, userPassword, userFirst, userLast, isAdmin]
   ];
   await db.query(addUser, [userInfo]);
-  await db.end();
+
+  db.end();
 }
 
 app.post('/deleteUser', function (req, res) {
@@ -513,8 +576,46 @@ async function deleteUser(req, res) {
     [userID]
   ];
   await db.query(deleteUser, [userInfo]);
-  await db.end();
   }
+
+  db.end();
+}
+
+app.post("/updateUserDashboard", function(req, res){
+  updateUserDashboard(req, res);
+});
+
+async function updateUserDashboard(req, res){
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+
+  db.connect();
+  if (req.body.password != "●●●●●●●●"){
+    let updateUser = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET username = ?, password = ? WHERE id = ?";
+    let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
+    const [hashed, hashedFields] = await db.query(passwordHash);
+    let password = hashed[0].hash;
+    let userInfo = [
+      req.body.username, password, req.body.id
+    ];
+    await db.query(updateUser, userInfo);
+  } else {
+    let updateNotPassword = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET username = ? WHERE id = ?"
+    let userInfo = [
+      req.body.username, req.body.id
+    ];
+    await db.query(updateNotPassword, userInfo);
+
+  }
+
+  db.end();
+
 }
 
 // For page not found 404 error
@@ -535,30 +636,10 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
-async function initialize(){
-  const mysql = require("mysql2/promise");
-  const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-		user: "bbcec9e55759dc",
-		password: "9be02f5e",
-    database: "heroku_57edae262e0f938",
-    multipleStatements: true
-  });
-  connection.connect();
-  let deleteAdmin = "use heroku_57edae262e0f938; delete from bby_28_user where username='Admin'";
-  await connection.query(deleteAdmin);
-  let query = "use heroku_57edae262e0f938; insert into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin) values ?";
-  let values = [
-    ["Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Ad", "Min", "Surrey, B.C.", false, true],
-  ];
-  await connection.query(query, [values]);
-  await connection.end();
-}
 
 // Run the heroku server
 let port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log("A Bite of Home listening on port " + port + "!");
-  initialize();
-});
+})
