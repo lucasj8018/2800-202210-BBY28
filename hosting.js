@@ -295,19 +295,6 @@ async function init(){
 	});
 
 	const createDBAndTables = `
-  DROP TABLE BBY_28_user;
-  CREATE TABLE IF NOT EXISTS BBY_28_User(
-    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      username varchar(100) NOT NULL UNIQUE,
-      password varchar(100) NOT NULL,
-      fName varchar(100) NOT NULL,
-      lName varchar(100) NOT NULL,
-      location varchar(100),
-      isPrivateKitchenOwner boolean DEFAULT false,
-      kitchenName varchar(100),
-      isAdmin boolean DEFAULT false,
-      avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
-  );
   CREATE TABLE IF NOT EXISTS BBY_28_Recipe(
     id int NOT NULL AUTO_INCREMENT,
       userID int NOT NULL,
