@@ -20,7 +20,6 @@ ready(function () {
       document.getElementById("lastNameInput").value = userData[0].lName;
       document.getElementById("usernameInput").value = userData[0].username;
       document.getElementById("passwordInput").value = "●●●●●●●●";
-      document.getElementById("helloUsername").innerText = userData[0].username;
       console.log(document.getElementById("passwordInput").value);
 
       if (userData[0].isAdmin) {
@@ -56,12 +55,12 @@ ready(function () {
           <label class="form-check-label" for="flexSwitchCheckDefault">Admin user?</label>
         </div>
           <button id="addUserButton" class='btn btn-primary' id="addUserLabel">Add User</button>
+          <div id="incorrectInput"></div>
         </div>
-        <div id="incorrectInput"></div>
+        
         `;
 
       }
-
 
     })
     .catch(function (error) {
@@ -81,15 +80,22 @@ ready(function () {
       if (userData[0].isAdmin) {
         //Creating table
         var dashboard = "";
-        let table = "<div id='incorrectDelete'> </div><br/><br/><table class='table table-light table-striped' id='userTable'><tr><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
+        let table = "<div id='incorrectDelete'> </div><br/><br/><table class='table table-light table-striped' id='userTable'><tr id='userTableHeader'><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
+<<<<<<< HEAD
           table += "</td><td><input type='text' value='" + dashboardData[i].username + "'id='inputUsernameID" + dashboardData[i].id + "'  disabled>" +
             "</td><td><input type='text' value='" + "●●●●●●●●" + "'id='inputPasswordID" + dashboardData[i].id + "' disabled>" +
             "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='50%', height ='50%'>" +
             "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button><br><button type 'submit' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "'>Edit</button><br><button type 'submit' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "'>Save</button></td>"+
             "</tr>"
+=======
+          table += "</td><td>" + dashboardData[i].username +
+            "</td><td>" + "●●●●●●●●" +
+            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='30%', height ='30%'>" +
+            "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button></td></tr>"
+>>>>>>> Justin_Ng_dashboard_CSS
         }
         table += "</table>";
         dashboard += table;
@@ -123,7 +129,7 @@ ready(function () {
     }
   }
 
-    document.getElementById("updateUserInfo").disabled = true;
+  document.getElementById("updateUserInfo").disabled = true;
 
   document.getElementById("editUserInfo").addEventListener("click", function (e) {
     e.preventDefault();
@@ -174,7 +180,7 @@ function addUserButtonListener(){
     document.getElementById("addUserButton").addEventListener("click", function (e) {
       if (document.getElementById("addUsername").value == '' || document.getElementById("addPassword").value == ''
       || document.getElementById("addFirst").value == '' || document.getElementById("addLast").value == ''){
-        document.getElementById("incorrectInput").innerHTML = "All fields required";
+        document.getElementById("incorrectInput").innerHTML = "Please fill out all the fields.";
       } else {
         postDataUser({
           username: document.getElementById("addUsername").value,
