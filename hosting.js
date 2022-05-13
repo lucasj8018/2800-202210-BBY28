@@ -295,18 +295,6 @@ async function init(){
 	});
 
 	const createDBAndTables = `
-  CREATE TABLE IF NOT EXISTS BBY_28_Recipe(
-    id int NOT NULL AUTO_INCREMENT,
-      userID int NOT NULL,
-      name varchar(100),
-      description text,
-      purchaseable boolean DEFAULT false,
-      price int DEFAULT 0,
-      CONSTRAINT FK_RecipeUser FOREIGN KEY (userID)
-      REFERENCES BBY_28_User(id)
-      ON DELETE CASCADE,
-      CONSTRAINT UC_Recipe UNIQUE (id, userID)
-  );
   CREATE TABLE IF NOT EXISTS BBY_28_RecipeIngredients(
     recipeID int NOT NULL,
       recipeUserID int NOT NULL,
@@ -319,22 +307,7 @@ async function init(){
       ON DELETE CASCADE,
       CONSTRAINT UC_RecipeIngredients UNIQUE (recipeID, recipeUserID)
   );
-  CREATE TABLE IF NOT EXISTS BBY_28_ShoppingCart(
-    customerID int NOT NULL,
-      cookID int NOT NULL,
-      recipeID int NOT NULL,
-      quantity int DEFAULT 1,
-      CONSTRAINT FK_ShoppingCartCustomer FOREIGN KEY (customerID)
-      REFERENCES BBY_28_User(id)
-      ON DELETE CASCADE,
-      CONSTRAINT FK_ShoppingCartCook FOREIGN KEY (cookID)
-      REFERENCES BBY_28_Recipe(userID)
-      ON DELETE CASCADE,
-      CONSTRAINT FK_ShoppingCartRecipe FOREIGN KEY (recipeID)
-      REFERENCES BBY_28_Recipe(id)
-      ON DELETE CASCADE,
-      CONSTRAINT UC_ShoppingCart UNIQUE (customerID, cookID, recipeID)
-  );
+
   `;
 
 	await connection.query(createDBAndTables);
