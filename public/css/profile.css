@@ -240,12 +240,9 @@ body {
         align-items: start;
     }
 
-    table {
-        margin-top: -50px
-    }
 
 
-    th, td {
+    td {
         text-align: center;
     }
 }
