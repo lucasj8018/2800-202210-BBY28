@@ -1,5 +1,4 @@
 body {
-    display: grid;
     font-family: 'latolight';
     background-color: #c49a68;
     background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
@@ -27,14 +26,14 @@ body {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
     text-align: center;
-    margin-top: 120px;
+    margin-top: 50px;
     font-size: 24pt;
 }
 
 #profile {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
-    margin-top: 200px;
+    margin-top: 100px;
 }
 
 #title {
@@ -45,6 +44,15 @@ body {
     height: auto;
     width: 100%;
     justify-self: center;
+    border-radius: 10px;
+}
+
+#avatar-upload {
+    width: 69%;
+}
+
+#avatar-submit {
+    margin-left: 50px;
 }
 
 .card {
@@ -86,7 +94,7 @@ body {
 #adminAdd {
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
-    margin-top: 70px;
+    margin-top: 55px;
 }
 
 .form-group {
@@ -141,13 +149,26 @@ body {
 #dashboard {
     grid-column: 2 / span 1;
     grid-row: 4 / span 2;
-    border-radius: 10px;
     height: 90%;
     width: 80vw;
     max-height: 500px;
     margin: auto;
-    padding-bottom: 120px;
+    margin-bottom: 375px;
     align-self: start;
+}
+
+.btn-outline-info {
+    background-color: #DE2007;
+    color: #FFF3DF;
+    padding: 5px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    text-align: center;
+    width: 60px;
+}
+
+.btn-outline-info:hover {
+    background-color: #BB1B05;
 }
 
 #footer {
@@ -156,15 +177,14 @@ body {
 }
 
 @media only screen and (min-width: 1000px) {
-    
-    body {
-        display: grid;
-        grid-template-rows: 8% 40% 1% 20% 1% 40% 70% 8% 8%;
-        font-family: 'latolight';
-    }
 
     #welcome {
         font-size: 32pt;
+        margin-top: 70px;
+    }
+
+    #profile {
+        grid-row: 2 / span 1;
     }
 
     #avatar {
@@ -175,8 +195,12 @@ body {
         height: auto;
     }
 
+    #avatar-upload {
+        width: 50%;
+    }
+
     .card {
-        width: 40vw;
+        width: 30%;
     }
 
     .form-group {
@@ -186,7 +210,8 @@ body {
 
     #adminAdd {
         grid-row: 4 / span 2;
-        margin-top: 15px;
+        margin-top: 120px;
+        margin-bottom: 70px;
     }
 
     .form-check {
@@ -198,6 +223,7 @@ body {
         height: 100%;
         width: 80vw;
         margin: auto;
+        margin-top: 0;
         margin-bottom: 500px;
     }
 
@@ -208,5 +234,10 @@ body {
 
     table {
         margin-top: -50px
+    }
+
+
+    th, td {
+        text-align: center;
     }
 }
