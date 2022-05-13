@@ -80,19 +80,19 @@ ready(function () {
       if (userData[0].isAdmin) {
         //Creating table
         var dashboard = "";
-        let table = "<div id='incorrectDelete'> </div><br/><br/><table class='table table-light table-striped' id='userTable'><tr id='userTableHeader'><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
+        let table = "<br/><br/><div id='incorrectDelete'> </div><br/><br/><div class='table-responsive'><table class='table table-light table-striped' id='userTable' style='border-spacing:5px'><tr id='userTableHeader'><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
-          table += "</td><td><input type='text' value='" + dashboardData[i].username + "'id='inputUsernameID" + dashboardData[i].id + "'  disabled style='max-width: 94px'>" +
-            "</td><td><input type='text' value='" + "●●●●●●●●" + "'id='inputPasswordID" + dashboardData[i].id + "' disabled style='max-width: 94px'>" +
-            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='94px', height ='120px'>" +
-            "</td><td><button type='button' class='btn btn-outline-info' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 94px'>Delete</a><br>" +
-            "<button type='button' class='btn btn-outline-info' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 94px'>Edit</a><br>" + 
-            "<button type='button' class='btn btn-outline-info' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 94px'>Save</a></td>" +
+          table += "</td><td><input type='text' value='" + dashboardData[i].username + "'id='inputUsernameID" + dashboardData[i].id + "'  disabled style='max-width: 50%'>" +
+            "</td><td><input type='text' value='" + "●●●●●●●●" + "'id='inputPasswordID" + dashboardData[i].id + "' disabled style='max-width: 50%'>" +
+            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='80%', height ='80%'>" +
+            "</td><td><button type='button' class='btn btn-outline-info' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Delete</a><br>" +
+            "<button type='button' class='btn btn-outline-info' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Edit</a><br>" + 
+            "<button type='button' class='btn btn-outline-info' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Save</a></td>" +
             "</tr>"
         }
-        table += "</table>";
+        table += "</table></div>";
         dashboard += table;
 
         document.getElementById("dashboard").innerHTML = dashboard;
