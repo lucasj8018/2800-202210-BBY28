@@ -85,10 +85,11 @@ ready(function () {
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
-          table += "</td><td>" + dashboardData[i].username +
-            "</td><td>" + "●●●●●●●●" +
+          table += "</td><td><input type='text' value='" + dashboardData[i].username + "'id='inputUsernameID" + dashboardData[i].id + "'  disabled>" +
+            "</td><td><input type='text' value='" + "●●●●●●●●" + "'id='inputPasswordID" + dashboardData[i].id + "' disabled>" +
             "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='50%', height ='50%'>" +
-            "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button></td></tr>"
+            "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button><br><button type 'submit' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "'>Edit</button><br><button type 'submit' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "'>Save</button></td>"+
+            "</tr>"
         }
         table += "</table>";
         dashboard += table;
@@ -220,11 +221,21 @@ async function postDeleteUser(data) {
   }
 }
 
+
 function deleteClicked(name){
   postDeleteUser({
     id: name,
     user: document.getElementById('usernameInput').value
   });
+}
+
+function editClicked(name){
+  document.getElementById("inputUsernameID" + name).disabled = false;
+  document.getElementById("inputPasswordID" + name).disabled = false;
+}
+
+function saveClicked(name){
+  console.log("Save" + name);
 }
 
 
