@@ -235,9 +235,31 @@ function editClicked(name){
 }
 
 function saveClicked(name){
-  console.log("Save" + name);
+  postUpdateDashboard({
+    username: document.getElementById("inputUsernameID" + name).value,
+    password: document.getElementById("inputPasswordID" + name).value,
+    id: name
+  });
+  document.getElementById("inputUsernameID" + name).disabled = true;
+  document.getElementById("inputPasswordID" + name).disabled = true;
 }
 
+async function postUpdateDashboard(data) {
+  try {
+    let resObject = await fetch("/updateUserDashboard", {
+      method: 'POST',
+      headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    let parsedData = await resObject.json();
+
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 

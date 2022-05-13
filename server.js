@@ -554,6 +554,43 @@ async function deleteUser(req, res) {
   }
 }
 
+app.post("/updateUserDashboard", function(req, res){
+  updateUserDashboard(req, res);
+});
+
+async function updateUserDashboard(req, res){
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+  if (req.body.password != "●●●●●●●●"){
+    let updateUser = "use comp2800; UPDATE BBY_28_User SET username = ?, password = ? WHERE id = ?";
+    let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
+    const [hashed, hashedFields] = await db.query(passwordHash);
+    let password = hashed[0].hash;
+    let userInfo = [
+      req.body.username, password, req.body.id
+    ];
+    await db.query(updateUser, userInfo);
+  } else {
+    let updateNotPassword = "use comp2800; UPDATE BBY_28_User SET username = ? WHERE id = ?"
+    let userInfo = [
+      req.body.username, req.body.id
+    ];
+    await db.query(updateNotPassword, userInfo);
+
+  }
+
+  db.end();
+
+}
+
 // For page not found 404 error
 app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
