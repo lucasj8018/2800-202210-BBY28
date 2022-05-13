@@ -80,7 +80,7 @@ ready(function () {
       if (userData[0].isAdmin) {
         //Creating table
         var dashboard = "";
-        let table = "<br/><br/><div id='incorrectDelete'> </div><br/><br/><div class='table-responsive'><table class='table table-light table-striped' id='userTable' style='border-spacing:5px'><tr id='userTableHeader'><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
+        let table = "<br/><br/><div id='incorrectDelete'> </div><br/><br/><div><table class='table table-light table-striped' id='userTable'><tr id='userTableHeader'><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {

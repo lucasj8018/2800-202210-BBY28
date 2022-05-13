@@ -4,11 +4,6 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
 }
 
-#navbar {
-    grid-column: 1 / span 3;
-    grid-row: 1 / span 1;
-}
-
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -23,16 +18,12 @@ body {
 }
 
 #welcome {
-    grid-column: 2 / span 1;
-    grid-row: 1 / span 1;
     text-align: center;
     margin-top: 50px;
     font-size: 24pt;
 }
 
 #profile {
-    grid-column: 2 / span 1;
-    grid-row: 1 / span 1;
     margin-top: 100px;
 }
 
@@ -58,13 +49,11 @@ body {
 .card {
     background-color: white;
     border-radius: 10px;
-    width: 80vw;
+    width: 80%;
     margin-top: 200px;
     margin: auto;
     padding-bottom: 20px;
-    z-index: 1;
     box-shadow: 5px 10px grey;
-    display: flex;
 }
 
 #editUserInfo {
@@ -92,8 +81,6 @@ body {
 }
 
 #adminAdd {
-    grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
     margin-top: 55px;
 }
 
@@ -147,14 +134,12 @@ body {
 }
 
 #dashboard {
-    grid-column: 2 / span 1;
-    grid-row: 4 / span 2;
-    height: 90%;
-    width: 80vw;
-    max-height: 500px;
     margin: auto;
+    width: 80%;
+    margin-top: 200px;
     margin-bottom: 375px;
     align-self: start;
+    overflow: auto;
 }
 
 #incorrectDelete {
@@ -175,20 +160,11 @@ body {
     background-color: #BB1B05;
 }
 
-#footer {
-    grid-column: 1 / span 3;
-    grid-row: 7 / span 1;
-}
-
 @media only screen and (min-width: 1000px) {
 
     #welcome {
         font-size: 32pt;
         margin-top: 70px;
-    }
-
-    #profile {
-        grid-row: 2 / span 1;
     }
 
     #avatar {
@@ -213,7 +189,6 @@ body {
     }
 
     #adminAdd {
-        grid-row: 4 / span 2;
         margin-top: 120px;
         margin-bottom: 70px;
     }
@@ -223,11 +198,10 @@ body {
     }
 
     #dashboard {
-        grid-row: 6 / span 1;
         height: 100%;
-        width: 80vw;
+        width: 80%;
         margin: auto;
-        margin-top: 0;
+        margin-top: -20px;
         margin-bottom: 500px;
     }
 
@@ -239,8 +213,6 @@ body {
         margin-bottom: 0;
         align-items: start;
     }
-
-
 
     td {
         text-align: center;
