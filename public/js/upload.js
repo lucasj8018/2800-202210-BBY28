@@ -1,3 +1,4 @@
+"use strict";
 function round() {
     let price = document.getElementById("inputPrice").value;
     if ((price * 100) % 1 != 0) {
