@@ -14,13 +14,12 @@ ready(function () {
     })
     .then((data) => {
       userData = data;
-      console.log(userData);
+      document.getElementById("helloUsername").innerHTML = userData[0].fName;
       document.getElementById("avatarPath").src = "./img/" + userData[0].avatarPath;
       document.getElementById("firstNameInput").value = userData[0].fName;
       document.getElementById("lastNameInput").value = userData[0].lName;
       document.getElementById("usernameInput").value = userData[0].username;
       document.getElementById("passwordInput").value = "●●●●●●●●";
-      console.log(document.getElementById("passwordInput").value);
 
       if (userData[0].isAdmin) {
         document.getElementById("title").innerHTML = "Admin User Profile";
@@ -75,7 +74,6 @@ ready(function () {
     .then((data) => {
       var dashboardData;
       dashboardData = data;
-      console.log(dashboardData);
 
       if (userData[0].isAdmin) {
         //Creating table
@@ -259,10 +257,3 @@ async function postUpdateDashboard(data) {
     console.log(error);
   }
 }
-
-
-
-// function editUserInfo() {
-//   document.getElementById("personalInfoFields").disabled = false;
-//   console.log(1);
-// }

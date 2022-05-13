@@ -131,7 +131,6 @@ async function updateUserAvatar(req, res) {
 
 }
 
-
 app.get("/kitchenRegistration", function (req, res) {
   if (req.session.loggedIn) {
     res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
@@ -183,6 +182,8 @@ app.get("/user-dashboard", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
+
+  db.end();
 });
 
 //----------------------------------------------------------------------------------------
@@ -284,6 +285,8 @@ app.get("/map-data", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
+
+  db.end();
 });
 
 // Log out and redirect to login page
@@ -350,6 +353,8 @@ async function checkAuthetication(req, res) {
       msg: "Invalid credentials."
     });
   }
+
+  db.end();
 }
 
 //-----------------------------------------------------------------------------------------
@@ -377,6 +382,8 @@ async function checkUsers(req, res) {
   if (userResults.length == 1) {
     res.json(userResults);
   }
+
+  db.end();
 }
 
 // Receives ajaxPOST call from the client side. Call the checkAuthetication(req, res)
@@ -415,6 +422,7 @@ async function signUpUser(req, res) {
   ];
   await db.query(addUser, [userInfo]);
 
+  db.end();
 }
 
 //----------------------------------------------------------------------------------------
@@ -444,6 +452,8 @@ app.get("/check-kitchen-registration", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
+
+  db.end();
 });
 
 //----------------------------------------------------------------------------------------
@@ -513,6 +523,8 @@ async function adminAddUser(req, res) {
     [userUsername, userPassword, userFirst, userLast, isAdmin]
   ];
   await db.query(addUser, [userInfo]);
+
+  db.end();
 }
 
 app.post('/deleteUser', function (req, res) {
@@ -565,6 +577,8 @@ async function deleteUser(req, res) {
   ];
   await db.query(deleteUser, [userInfo]);
   }
+  
+  db.end();
 }
 
 app.post("/updateUserDashboard", function(req, res){

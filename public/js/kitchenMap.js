@@ -16,7 +16,6 @@ ready(function () {
     })
     .then((data) => {
       addressData = data;
-      console.log(addressData);
       geocodeAddress();
     })
     .catch(function (error) {
@@ -58,8 +57,6 @@ function initMap() {
 
 window.initMap = initMap;
 
-
-
 //-------------------------------------------------------------------------------------------
 // This function is called when the function initMap() is executed.  It reads the registered 
 // private kitchen address of the user and geocode it into the latitude and longtitude value 
@@ -88,7 +85,7 @@ function geocodeAddress() {
                 <div class="card-body">
                   <h5 class="card-title">Private Kitchen Title</h5>
                   <p class="card-text">Some description / Address.</p>
-                  <a href="" class="btn btn-primary">View Details</a>
+                  <a href="/kitchenDetails" class="btn btn-primary">View Details</a>
                 </div>
                 </div>`;
   

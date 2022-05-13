@@ -13,7 +13,6 @@ ready(function () {
   })
   .then((data) => {
     isRegistered = data[0].isPrivateKitchenOwner;
-    console.log(isRegistered);
 
     if (isRegistered) {
       document.getElementById("status-message").innerHTML = "This account is already registered";
