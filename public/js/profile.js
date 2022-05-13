@@ -23,27 +23,27 @@ ready(function () {
         document.getElementById("title").innerHTML = "Admin User Profile";
         document.getElementById("adminAdd").innerHTML = `
         <div id="addUser" class="card">
-        <div class="input-group mb-3">
+        <div class="input-group mb-3" id="usernameCardInput">
           <div class="input-group-prepend">
-            <span class="input-group-text" >Username</span>
+            <span class="input-group-text">Username</span>
           </div>
           <input type="text" class="form-control" id="addUsername">
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" >Password</span>
+            <span class="input-group-text">Password</span>
           </div>
           <input type="text" class="form-control" id="addPassword">
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" >First Name</span>
+            <span class="input-group-text">First Name</span>
           </div>
           <input type="text" class="form-control" id="addFirst">
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" >Last Name</span>
+            <span class="input-group-text">Last Name</span>
           </div>
           <input type="text" class="form-control" id="addLast">
         </div>
@@ -116,9 +116,13 @@ ready(function () {
     }
   }
 
+    document.getElementById("updateUserInfo").disabled = true;
+
   document.getElementById("editUserInfo").addEventListener("click", function (e) {
     e.preventDefault();
     document.getElementById("personalInfoFields").disabled = false;
+    document.getElementById("updateUserInfo").disabled = false;
+    document.getElementById("editUserInfo").disabled = true;
   })
 
   document.getElementById("updateUserInfo").addEventListener("click", function (e) {
@@ -131,6 +135,8 @@ ready(function () {
     })
 
     document.getElementById("personalInfoFields").disabled = true;
+    document.getElementById("editUserInfo").disabled = false;
+    document.getElementById("updateUserInfo").disabled = true;
     document.getElementById("status").innerHTML = "Profile Updated";
   })
 
