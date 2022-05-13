@@ -40,17 +40,17 @@ ready(function () {
       document.getElementById("invalidUser").innerHTML = "Please enter the required info";
 
     } else {
-      window.location.replace("/login");
       let queryStr = "username=" + username.value + "&password=" + password.value +
         "&firstName=" + firstName.value + "&lastName=" + lastName.value;
 
       ajaxPOST("/signing-up", function (data) {
         if (data) {
           let parsedData = JSON.parse(data);
+          console.log(parsedData);
           if (parsedData.status == "fail") {
-            console.log("Error");
+            document.getElementById("invalidUser").innerHTML = parsedData.msg;
           } else {
-            window.location.href("/login");
+            location.replace('/login');
           }
         }
       }, queryStr);

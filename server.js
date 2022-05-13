@@ -13,12 +13,12 @@ const {
 const multer = require("multer");
 
 const avatarStorage = multer.diskStorage({
-    destination: function (req, file, callbackFunc) {
-        callbackFunc(null, "./public/img/")
-    },
-    filename: function(req, file, callbackFunc) {
-        callbackFunc(null, "avatar_" + file.originalname.split('/').pop().trim());
-    }
+  destination: function (req, file, callbackFunc) {
+    callbackFunc(null, "./public/img/")
+  },
+  filename: function (req, file, callbackFunc) {
+    callbackFunc(null, "avatar_" + file.originalname.split('/').pop().trim());
+  }
 });
 const uploadAvatar = multer({ storage: avatarStorage });
 
@@ -111,7 +111,7 @@ app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res
 });
 
 async function updateUserAvatar(req, res) {
-  
+
   const db = await mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -204,7 +204,7 @@ async function updateUserProfile(req, res) {
 
   db.connect();
 
-  if (req.body.password != "●●●●●●●●"){
+  if (req.body.password != "●●●●●●●●") {
     let updateUser = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ?, password = ? WHERE id = ?";
     let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
     const [hashed, hashedFields] = await db.query(passwordHash);
@@ -412,14 +412,27 @@ async function signUpUser(req, res) {
   });
 
   db.connect();
-  let addUser = "use comp2800; insert ignore into BBY_28_User (username, password, fName, lName) values ? ";
-  let passwordHash = "SELECT SHA1('" + password + "') as hash";
-  const [hashed, hashedFields] = await db.query(passwordHash);
-  password = hashed[0].hash;
-  let userInfo = [
-    [username, password, firstName, lastName]
+  let checkDuplicateUser = "use comp2800; SELECT username from bby_28_user where username = ?";
+  let usernameValue = [
+    [username]
   ];
-  await db.query(addUser, [userInfo]);
+  const [duplicateUser, dupeFields] = await db.query(checkDuplicateUser, [usernameValue]);
+
+  if (duplicateUser[1][0]) {
+    res.send({ status: "fail", msg: "Account already created" });
+  } else {
+    let addUser = "use comp2800; insert ignore into BBY_28_User (username, password, fName, lName) values ? ";
+    let passwordHash = "SELECT SHA1('" + password + "') as hash";
+    const [hashed, hashedFields] = await db.query(passwordHash);
+    password = hashed[0].hash;
+    let userInfo = [
+      [username, password, firstName, lastName]
+    ];
+    await db.query(addUser, [userInfo]);
+    res.send({ status: "success", msg: "Account  created" });
+
+  }
+
 
   db.end();
 }
@@ -473,7 +486,7 @@ async function registerPrivateKitchen(req, res) {
     multipleStatements: true
   });
   db.connect();
-  
+
   let addPrivateKitchen = "use comp2800; UPDATE BBY_28_User SET kitchenName = ?, location = ?, isPrivateKitchenOwner = ? WHERE id = ?";
   let privateKitchenInfo = [
     kitchenName, kitchenAddress, 1, req.session.userId
@@ -545,46 +558,46 @@ async function deleteUser(req, res) {
   db.connect();
 
   let checkAdmin = "SELECT * FROM BBY_28_user where isAdmin = 1";
-  const[admins, adminFields] = await db.query(checkAdmin);
+  const [admins, adminFields] = await db.query(checkAdmin);
   let adminCount = admins.length;
   let adminID = admins[0].id;
 
   let checkUser = "SELECT id from bby_28_user where username = ?";
-    let user = [
-      [currentUser]
-    ];
-    let [currentDeleted, currentFields] = await db.query(checkUser, [user]);
+  let user = [
+    [currentUser]
+  ];
+  let [currentDeleted, currentFields] = await db.query(checkUser, [user]);
 
 
-  if (currentDeleted[0].id == userID){
+  if (currentDeleted[0].id == userID) {
     res.send({
       status: "fail",
       msg: "Cannot delete current user"
     });
-  } else if (adminCount == 1 && adminID == userID){
+  } else if (adminCount == 1 && adminID == userID) {
     res.send({
       status: "fail",
       msg: "Cannot delete last admin"
     });
-  }else {
+  } else {
     res.send({
       status: "success"
     });
     let deleteUser = "use comp2800; delete from bby_28_user where id = ?"
     let userInfo = [
-    [userID]
-  ];
-  await db.query(deleteUser, [userInfo]);
+      [userID]
+    ];
+    await db.query(deleteUser, [userInfo]);
   }
-  
+
   db.end();
 }
 
-app.post("/updateUserDashboard", function(req, res){
+app.post("/updateUserDashboard", function (req, res) {
   updateUserDashboard(req, res);
 });
 
-async function updateUserDashboard(req, res){
+async function updateUserDashboard(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
     host: "localhost",
@@ -595,7 +608,7 @@ async function updateUserDashboard(req, res){
   });
 
   db.connect();
-  if (req.body.password != "●●●●●●●●"){
+  if (req.body.password != "●●●●●●●●") {
     let updateUser = "use comp2800; UPDATE BBY_28_User SET username = ?, password = ? WHERE id = ?";
     let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
     const [hashed, hashedFields] = await db.query(passwordHash);
