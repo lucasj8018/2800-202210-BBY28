@@ -18,6 +18,7 @@ ready(function () {
       document.getElementById("lastNameInput").value = userData[0].lName;
       document.getElementById("usernameInput").value = userData[0].username;
       document.getElementById("passwordInput").value = "●●●●●●●●";
+      console.log(document.getElementById("passwordInput").value);
 
       if (userData[0].isAdmin) {
         document.getElementById("title").innerHTML = "Admin User Profile";

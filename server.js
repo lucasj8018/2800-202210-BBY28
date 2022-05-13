@@ -157,14 +157,24 @@ async function updateUserProfile(req, res) {
 
   db.connect();
 
-  let updateUser = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ?, password = ? WHERE id = ?";
-  let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
-  const [hashed, hashedFields] = await db.query(passwordHash);
-  let password = hashed[0].hash;
-  let userInfo = [
-    req.body.firstName, req.body.lastName, req.body.username, password, req.session.userId
-  ];
-  await db.query(updateUser, userInfo);
+  if (req.body.password != "●●●●●●●●"){
+    let updateUser = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ?, password = ? WHERE id = ?";
+    let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
+    const [hashed, hashedFields] = await db.query(passwordHash);
+    let password = hashed[0].hash;
+    let userInfo = [
+      req.body.firstName, req.body.lastName, req.body.username, password, req.session.userId
+    ];
+    await db.query(updateUser, userInfo);
+  } else {
+    let updateNotPassword = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ? WHERE id = ?"
+    let userInfo = [
+      req.body.firstName, req.body.lastName, req.body.username, req.session.userID
+    ];
+    await db.query(updateNotPassword, userInfo);
+
+  }
+
   db.end();
 
 }
