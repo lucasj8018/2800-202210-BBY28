@@ -84,18 +84,11 @@ ready(function () {
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
-<<<<<<< HEAD
           table += "</td><td><input type='text' value='" + dashboardData[i].username + "'id='inputUsernameID" + dashboardData[i].id + "'  disabled>" +
             "</td><td><input type='text' value='" + "●●●●●●●●" + "'id='inputPasswordID" + dashboardData[i].id + "' disabled>" +
-            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='50%', height ='50%'>" +
+            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='30%', height ='30%'>" +
             "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button><br><button type 'submit' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "'>Edit</button><br><button type 'submit' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "'>Save</button></td>"+
             "</tr>"
-=======
-          table += "</td><td>" + dashboardData[i].username +
-            "</td><td>" + "●●●●●●●●" +
-            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='30%', height ='30%'>" +
-            "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button></td></tr>"
->>>>>>> Justin_Ng_dashboard_CSS
         }
         table += "</table>";
         dashboard += table;

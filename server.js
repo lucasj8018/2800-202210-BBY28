@@ -108,10 +108,6 @@ app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res
   res.redirect("/profile");
   console.log(req.files);
 
-
-  // for(let i = 0; i < req.files.length; i++) {
-  //     req.files[i].filename = req.files[i].originalname;
-  // }
 });
 
 async function updateUserAvatar(req, res) {
@@ -429,6 +425,27 @@ app.post("/signing-up", function (req, res) {
   signUpUser(req, res);
 });
 
+app.get("/check-kitchen-registration", async function (req, res) {
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  const [results, fields] = await db.execute("SELECT * FROM BBY_28_user WHERE id = ?", [req.session.userId]);
+  if (results.length != 0) {
+    res.json(results);
+
+  } else {
+    // Send format error message for exception
+    res.send({ status: "fail", msg: "Wrong data format" });
+  }
+});
+
 //----------------------------------------------------------------------------------------
 // This function is called when a post request is received to receive the private kitchen 
 // registration data and insert it into the bby_28_user table in the database.
@@ -439,9 +456,6 @@ async function registerPrivateKitchen(req, res) {
   var kitchenName = req.body.name;
   var kitchenAddress = req.body.street + " " + req.body.city + " " + req.body.postalCode;
 
-  console.log("Name", req.body.kitchenName);
-  console.log("Address", req.body.address);
-
   const db = await mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -449,13 +463,13 @@ async function registerPrivateKitchen(req, res) {
     database: "comp2800",
     multipleStatements: true
   });
-
   db.connect();
-  let addPrivateKitchen = "use comp2800; insert ignore into BBY_28_User (kitchenName, location) values ? ";
+  
+  let addPrivateKitchen = "use comp2800; UPDATE BBY_28_User SET kitchenName = ?, location = ?, isPrivateKitchenOwner = ? WHERE id = ?";
   let privateKitchenInfo = [
-    [kitchenName, kitchenAddress]
+    kitchenName, kitchenAddress, 1, req.session.userId
   ];
-  await db.query(addPrivateKitchen, [privateKitchenInfo]);
+  await db.query(addPrivateKitchen, privateKitchenInfo);
   db.end();
 }
 
@@ -465,7 +479,6 @@ async function registerPrivateKitchen(req, res) {
 //----------------------------------------------------------------------------------------
 app.post('/register-kitchen', function (req, res) {
   registerPrivateKitchen(req, res);
-  res.setHeader("Content-Type", "application/json");
 
 });
 
