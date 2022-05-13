@@ -525,7 +525,7 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
-async function init(){
+async function initialize(){
   const mysql = require("mysql2/promise");
   const connection = await mysql.createConnection({
     host: "us-cdbr-east-05.cleardb.net",
@@ -547,5 +547,5 @@ let port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log("A Bite of Home listening on port " + port + "!");
-  init();
+  initialize();
 });
