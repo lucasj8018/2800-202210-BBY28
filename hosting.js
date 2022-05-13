@@ -284,50 +284,8 @@ async function connectToMySQL(req, res) {
 }
 // Run the heroku server
 
-async function init(){
-  const mysql = require("mysql2/promise");
-	const connection = await mysql.createConnection({
-
-		host: "us-cdbr-east-05.cleardb.net",
-		user: "bbcec9e55759dc",
-		password: "9be02f5e",
-    database: "heroku_57edae262e0f938"
-	});
-
-	const createDBAndTables = `
-  CREATE TABLE IF NOT EXISTS BBY_28_ShoppingCart(
-    customerID int NOT NULL,
-      cookID int NOT NULL,
-      recipeID int NOT NULL,
-      quantity int DEFAULT 1,
-      CONSTRAINT FK_ShoppingCartCustomer FOREIGN KEY (customerID)
-      REFERENCES BBY_28_User(id)
-      ON DELETE CASCADE,
-      CONSTRAINT FK_ShoppingCartCook FOREIGN KEY (cookID)
-      REFERENCES BBY_28_Recipe(userID)
-      ON DELETE CASCADE,
-      CONSTRAINT FK_ShoppingCartRecipe FOREIGN KEY (recipeID)
-      REFERENCES BBY_28_Recipe(id)
-      ON DELETE CASCADE,
-      CONSTRAINT UC_ShoppingCart UNIQUE (customerID, cookID, recipeID)
-  );
-
-  `;
-
-	await connection.query(createDBAndTables);
-
-  const addUsers = `
-  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
-values
-		("Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Ad", "Min", "Surrey, B.C.", false, true),
-    ("Regular", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Reg", "Ular", "Surrey, B.C.", false, false)
-;
-  `
-  await connection.query(addUsers);
-}
 
 let port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Bite of Home listening on port " + port + "!");
-  init();
 });
