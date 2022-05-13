@@ -295,17 +295,21 @@ async function init(){
 	});
 
 	const createDBAndTables = `
-  CREATE TABLE IF NOT EXISTS BBY_28_RecipeIngredients(
-    recipeID int NOT NULL,
-      recipeUserID int NOT NULL,
-      ingredient varchar(100),
-      CONSTRAINT FK_IngredientRecipeID FOREIGN KEY (recipeID)
-      REFERENCES BBY_28_Recipe(id)
+  CREATE TABLE IF NOT EXISTS BBY_28_ShoppingCart(
+    customerID int NOT NULL,
+      cookID int NOT NULL,
+      recipeID int NOT NULL,
+      quantity int DEFAULT 1,
+      CONSTRAINT FK_ShoppingCartCustomer FOREIGN KEY (customerID)
+      REFERENCES BBY_28_User(id)
       ON DELETE CASCADE,
-      CONSTRAINT FK_IngredientRecipeUserID FOREIGN KEY (recipeUserID)
+      CONSTRAINT FK_ShoppingCartCook FOREIGN KEY (cookID)
       REFERENCES BBY_28_Recipe(userID)
       ON DELETE CASCADE,
-      CONSTRAINT UC_RecipeIngredients UNIQUE (recipeID, recipeUserID)
+      CONSTRAINT FK_ShoppingCartRecipe FOREIGN KEY (recipeID)
+      REFERENCES BBY_28_Recipe(id)
+      ON DELETE CASCADE,
+      CONSTRAINT UC_ShoppingCart UNIQUE (customerID, cookID, recipeID)
   );
 
   `;
