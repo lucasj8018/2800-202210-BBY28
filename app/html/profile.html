@@ -26,6 +26,12 @@
     <div id="profile">
         <div class="card" style="width: 18rem;">
             <img id="avatarPath" src="" class="card-img-top" alt="...">
+            <form id="upload-avatar-form">
+                <input id="avatar-upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg"
+                    multiple="multiple" />
+                <input id="avatar-submit" type="submit" value="Upload" />
+            </form>
+            <p id="upload-status"></p>
             <div class="card-body">
                 <h1 id="title">User Profile </h1>
                 <form>
@@ -75,6 +81,7 @@
     </script>
     <script src="/js/skeleton.js"></script>
     <script src="/js/profile.js"></script>
+    <script src="/js/avatarUpload.js"></script>
 </body>
 
 </html>
