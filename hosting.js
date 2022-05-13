@@ -535,7 +535,7 @@ async function initialize(){
     multipleStatements: true
   });
   connection.connect();
-  let query = `insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)`
+  let query = `insert into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)`
   let values = [
     ["Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Ad", "Min", "Surrey, B.C.", false, true],
   ];
