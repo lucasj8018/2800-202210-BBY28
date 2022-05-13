@@ -216,7 +216,7 @@ async function updateUserProfile(req, res) {
   } else {
     let updateNotPassword = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ? WHERE id = ?"
     let userInfo = [
-      req.body.firstName, req.body.lastName, req.body.username, req.session.userID
+      req.body.firstName, req.body.lastName, req.body.username, req.session.userId
     ];
     await db.query(updateNotPassword, userInfo);
 
@@ -374,10 +374,9 @@ async function checkUsers(req, res) {
 
   db.connect();
 
-  var userUsername = req.session.username;
   var userId = req.session.userId;
 
-  const [userResults, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
+  const [userResults, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [userId]);
 
   if (userResults.length == 1) {
     res.json(userResults);
@@ -613,6 +612,8 @@ async function updateUserDashboard(req, res){
     await db.query(updateNotPassword, userInfo);
 
   }
+
+
 
   db.end();
 

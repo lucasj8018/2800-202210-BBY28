@@ -5,7 +5,7 @@
 // or dashboard updates to the server and save to the database.
 //-----------------------------------------------------------------------------------
 "use strict";
-ready(function () {
+ready(async function () {
   var userData;
 
   fetch("/display-profile")
@@ -69,7 +69,7 @@ ready(function () {
     })
 
 
-  fetch("/user-dashboard")
+  await fetch("/user-dashboard")
     .then((response) => {
       return response.json();
     })
@@ -103,7 +103,6 @@ ready(function () {
     })
     .catch(function (error) {
       location.reload();
-      console.log(error);
     })
 
   async function postData(data) {
