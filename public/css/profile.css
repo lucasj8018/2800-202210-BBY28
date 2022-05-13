@@ -157,6 +157,10 @@ body {
     align-self: start;
 }
 
+#incorrectDelete {
+    font-size: 16pt;
+}
+
 .btn-outline-info {
     background-color: #DE2007;
     color: #FFF3DF;
@@ -225,6 +229,10 @@ body {
         margin: auto;
         margin-top: 0;
         margin-bottom: 500px;
+    }
+
+    #incorrectDelete {
+        font-size: 24pt;
     }
 
     #userTable {
