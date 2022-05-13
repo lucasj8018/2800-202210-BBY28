@@ -9,6 +9,9 @@ const fs = require("fs");
 const {
   JSDOM
 } = require('jsdom');
+const internal = require("stream");
+const { init } = require("express/lib/application");
+const { connect } = require("http2");
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -522,10 +525,27 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
+async function init(){
+  const mysql = require("mysql2/promise");
+  const connection = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+  connection.connect();
+  let query = `insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)`
+  let values = [
+    ["Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Ad", "Min", "Surrey, B.C.", false, true],
+  ];
+  connection.query(query, [values]);
+}
 
 // Run the heroku server
 let port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log("A Bite of Home listening on port " + port + "!");
+  init();
 });
