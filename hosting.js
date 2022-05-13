@@ -140,6 +140,7 @@ app.get("/user-dashboard", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
+  await db.end();
 });
 
 //----------------------------------------------------------------------------------------
@@ -178,7 +179,7 @@ async function updateUserProfile(req, res) {
 
   }
 
-  db.end();
+  await db.end();
 
 }
 
@@ -338,6 +339,7 @@ async function checkUsers(req, res) {
   if (userResults.length == 1) {
     res.json(userResults);
   }
+  await db.end();
 }
 
 // Receives ajaxPOST call from the client side. Call the checkAuthetication(req, res)
