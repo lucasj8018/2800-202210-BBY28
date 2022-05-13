@@ -14,13 +14,12 @@ ready(function () {
     })
     .then((data) => {
       userData = data;
-      console.log(userData);
+      document.getElementById("helloUsername").innerHTML = userData[0].fName;
       document.getElementById("avatarPath").src = "./img/" + userData[0].avatarPath;
       document.getElementById("firstNameInput").value = userData[0].fName;
       document.getElementById("lastNameInput").value = userData[0].lName;
       document.getElementById("usernameInput").value = userData[0].username;
       document.getElementById("passwordInput").value = "●●●●●●●●";
-      console.log(document.getElementById("passwordInput").value);
 
       if (userData[0].isAdmin) {
         document.getElementById("title").innerHTML = "Admin User Profile";
@@ -75,7 +74,6 @@ ready(function () {
     .then((data) => {
       var dashboardData;
       dashboardData = data;
-      console.log(dashboardData);
 
       if (userData[0].isAdmin) {
         //Creating table
@@ -84,18 +82,11 @@ ready(function () {
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
-<<<<<<< HEAD
           table += "</td><td><input type='text' value='" + dashboardData[i].username + "'id='inputUsernameID" + dashboardData[i].id + "'  disabled>" +
             "</td><td><input type='text' value='" + "●●●●●●●●" + "'id='inputPasswordID" + dashboardData[i].id + "' disabled>" +
-            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='50%', height ='50%'>" +
+            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='30%', height ='30%'>" +
             "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button><br><button type 'submit' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "'>Edit</button><br><button type 'submit' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "'>Save</button></td>"+
             "</tr>"
-=======
-          table += "</td><td>" + dashboardData[i].username +
-            "</td><td>" + "●●●●●●●●" +
-            "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='30%', height ='30%'>" +
-            "</td><td><button type ='submit' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "'>Delete</button></td></tr>"
->>>>>>> Justin_Ng_dashboard_CSS
         }
         table += "</table>";
         dashboard += table;
@@ -266,10 +257,3 @@ async function postUpdateDashboard(data) {
     console.log(error);
   }
 }
-
-
-
-// function editUserInfo() {
-//   document.getElementById("personalInfoFields").disabled = false;
-//   console.log(1);
-// }

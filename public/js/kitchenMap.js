@@ -16,7 +16,6 @@ ready(function () {
     })
     .then((data) => {
       addressData = data;
-      console.log(addressData);
       geocodeAddress();
     })
     .catch(function (error) {
@@ -34,12 +33,12 @@ function initMap() {
   var location = {
     lat: 49.1887857,
     lng: -122.742487
-  }
+  };
 
   var options = {
     center: location,
-    zoom: 15
-  }
+    zoom: 14
+  };
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (loc) {
@@ -52,11 +51,11 @@ function initMap() {
     console.log("geolocation not supported");
     map = new google.maps.Map(document.getElementById("map"), options);
   }
+  geocoder = new google.maps.Geocoder();
+
 }
 
 window.initMap = initMap;
-
-
 
 //-------------------------------------------------------------------------------------------
 // This function is called when the function initMap() is executed.  It reads the registered 
@@ -65,47 +64,50 @@ window.initMap = initMap;
 // listerner is also added to display the kitchen info when clicked on.
 //-------------------------------------------------------------------------------------------
 function geocodeAddress() {
-  geocoder = new google.maps.Geocoder();
 
   for (let i = 0; i < addressData.length; i++) {
-    geocoder.geocode({
-      'address': addressData[i]
-    }, function (results, status) {
-      if (status == "OK") {
-        console.log(status);
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-        })
-
-        // Display some popup info for each location marker
-        const contentString =
-          `<div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Private Kitchen Title</h5>
-                <p class="card-text">Some description / Address.</p>
-                <a href="" class="btn btn-primary">View Details</a>
-              </div>
-              </div>`;
-
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString,
-        });
-
-        marker.addListener("click", function () {
-          infowindow.open({
-            anchor: marker,
-            map,
-            shouldFocus: false,
+    if (addressData[i] !== null) {
+      geocoder.geocode({
+        'address': addressData[i]
+      }, function (results, status) {
+        if (status == "OK") {
+          console.log(status);
+          map.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+          })
+  
+          // Display some popup info for each location marker
+          const contentString =
+            `<div class="card" style="width: 18rem;">
+                <img src="" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h5 class="card-title">Private Kitchen Title</h5>
+                  <p class="card-text">Some description / Address.</p>
+                  <a href="/kitchenDetails" class="btn btn-primary">View Details</a>
+                </div>
+                </div>`;
+  
+          const infowindow = new google.maps.InfoWindow({
+            content: contentString,
           });
-        });
-
-      } else {
-        console.log("Geocoding failed due to " + status);
-      }
-    })
+  
+          marker.addListener("click", function () {
+            infowindow.open({
+              anchor: marker,
+              map,
+              shouldFocus: false,
+            });
+          });
+  
+        } else {
+          console.log("Geocoding failed due to " + status);
+        }
+      })
+    } else {
+      console.log(1);
+    }
   }
 }
 
