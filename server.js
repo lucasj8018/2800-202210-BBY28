@@ -10,6 +10,18 @@ const {
   JSDOM
 } = require('jsdom');
 
+const multer = require("multer");
+
+const avatarStorage = multer.diskStorage({
+    destination: function (req, file, callbackFunc) {
+        callbackFunc(null, "./public/img/")
+    },
+    filename: function(req, file, callbackFunc) {
+        callbackFunc(null, "avatar_" + file.originalname.split('/').pop().trim());
+    }
+});
+const uploadAvatar = multer({ storage: avatarStorage });
+
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
 app.use("/js", express.static("./public/js"));
@@ -84,8 +96,45 @@ app.get("/display-profile", function (req, res) {
     // If users not logged in, redirect to login page
     res.redirect("/");
   }
-
 });
+
+//----------------------------------------------------------------------------------------
+// This post request is called to receive the updated user profile picture and update it
+// on the bby_28_user table in the database.
+//----------------------------------------------------------------------------------------
+app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res) {
+
+  await updateUserAvatar(req, res);
+  res.redirect("/profile");
+  console.log(req.files);
+
+
+  // for(let i = 0; i < req.files.length; i++) {
+  //     req.files[i].filename = req.files[i].originalname;
+  // }
+});
+
+async function updateUserAvatar(req, res) {
+  
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  let updateAvatar = "use comp2800; UPDATE BBY_28_User SET avatarPath = ? WHERE id = ?";
+  let avatarInfo = [
+    req.files[0].filename, req.session.userId
+  ];
+  await db.query(updateAvatar, avatarInfo);
+  db.end();
+
+}
+
 
 app.get("/kitchenRegistration", function (req, res) {
   if (req.session.loggedIn) {
@@ -118,6 +167,7 @@ app.get("/upload", function (req, res) {
     res.redirect("/");
   }
 })
+
 app.get("/user-dashboard", async function (req, res) {
   const db = await mysql.createConnection({
     host: "localhost",
@@ -140,8 +190,8 @@ app.get("/user-dashboard", async function (req, res) {
 });
 
 //----------------------------------------------------------------------------------------
-// This function is called when a post request is received to receive the private kitchen 
-// registration data and insert it into the bby_28_user table in the database.
+// This function is called when a post request is called to receive the updated user 
+// profile data and update it on the bby_28_user table in the database.
 //----------------------------------------------------------------------------------------
 async function updateUserProfile(req, res) {
 
