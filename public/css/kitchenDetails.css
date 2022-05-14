@@ -1,0 +1,319 @@
+@font-face {
+    font-family: 'on_my_wayregular';
+    src: url('../font/on_my_way/on_my_way_free_version-webfont.woff2') format('woff2'),
+         url('../font/on_my_way/on_my_way_free_version-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    display: grid;
+    font-family: 'latolight';
+    background-color: #c49a68;
+background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
+
+#navbar {
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 1;
+}
+
+#kitchenName {
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 1;
+    align-self: end;
+    justify-self: center;
+    text-align: center;
+    font-size: 32pt;
+    margin-top: 20px;
+    font-family: 'on_my_wayregular';
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+
+::-webkit-scrollbar-track {
+    background-color: azure;
+}
+
+#knife1 {
+    grid-column: 3 / span 1;
+    grid-row: 2 / span 1;
+    width: 75%;
+    height: auto;
+    justify-self: end;
+    z-index: 2;
+    position: relative;
+    top: 120px;
+
+}
+
+#recipes {
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 2;
+    backdrop-filter: brightness(80%);
+    background-color: white;
+    border-radius: 10px;
+    height: 90%;
+    width: 85vw;
+    max-height: 500px;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 60px;
+    padding-bottom: 20px;
+    z-index: 1;
+    box-shadow: 5px 10px grey;
+    overflow-y: auto;
+    text-align: center;
+}
+
+#recipeTitle {
+    font-size: 20pt;
+    font-family: 'on_my_wayregular';
+    text-align: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+table {
+    table-layout: fixed;
+    width: 400px;
+    border-collapse: separate;
+    border-spacing: 1px 20px;
+}
+
+td {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 14pt;
+}
+
+.name {
+    margin-bottom: 0;
+    word-wrap: break-word;
+}
+
+.viewButton {
+    background-color: #DE2007;
+    color: #FFF3DF;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.viewButton:hover {
+    background-color: #BB1B05;
+    color: #FFF3DF;
+}
+
+#knife2 {
+    grid-column: 3 / span 1;
+    grid-row: 4 / span 1;
+    width: 75%;
+    height: auto;
+    justify-self: end;
+    align-self: start;
+    z-index: 2;
+    position: relative;
+    top: 50px;
+}
+
+#dishes {
+    grid-column: 2 / span 2;
+    grid-row: 6 / span 1;
+    background-color: white;
+    border-radius: 10px;
+    height: 90%;
+    width: 85vw;
+    max-height: 500px;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    z-index: 1;
+    box-shadow: 5px 10px grey;
+    overflow-y: auto;
+    text-align: center;
+}
+
+#dishesTitle {
+    font-size: 20pt;
+    font-family: 'on_my_wayregular';
+    text-align: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+
+
+#footer {
+    grid-column: 1 / span 3;
+    grid-row: 9 / span 1;
+}
+
+#addButton {
+    grid-column: 2 / span 2;
+    grid-row: 7 / span 1;
+    text-align: center;
+    justify-self: center;
+    margin-top: 250px;
+    width: 60%;
+    position: relative;
+    bottom: 80px;
+    background-color: #DE2007;
+    text-decoration: none;
+    color: #FFF3DF;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 25px;
+}
+
+#addButton:hover {
+    background-color: #BB1B05;
+}
+
+#spacer {
+   display: none;
+}
+
+
+@media only screen and (min-width: 1000px) {
+    
+    body {
+        display: grid;
+        grid-template-rows: 10% 10% 40% 40% 8% 16% 16%;
+        grid-template-columns: 15% 70% 15%;
+        font-family: 'latolight';
+    }
+
+    #navbar {
+        grid-column: 1 / span 3;
+        grid-row: 1 / span 1;
+        height: 100%;
+    }
+
+    #kitchenName {
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
+        align-self: end;
+        justify-self: center;
+        font-size: 36pt;
+    }
+
+    #recipes {
+        width: 70%;
+        height: 90%;
+        grid-column: 2 / span 1;
+        grid-row: 3 / span 1;
+        display: inline-block;
+        margin-top: 0;
+        text-align: center; 
+        position: relative;
+        overflow-y: auto; 
+        margin-bottom: 30px;  
+    }
+
+    #recipeTitle {
+        grid-column: 3 / span 1;
+        grid-row: 1 / span 1;
+        font-size: 24pt;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 700px;
+        border-collapse: separate;
+        border-spacing: 3px 20px;
+    }
+
+    td {
+        font-size: 16pt;
+    } 
+
+    .foodImg {
+        width: 125px;
+        height: 125px;
+    }
+
+    #knife1 {
+        grid-column: 2 / span 1;
+        grid-row: 3 / span 1;
+        width: 35%;
+        justify-self: end;
+        z-index: 2;
+        position: relative;
+        top: -50px;
+    }
+
+    #dishes {
+        width: 70%;
+        height: 90%;
+        grid-column: 2 / span 1;
+        grid-row: 4 / span 1;
+        display: inline-block;
+        margin-top: 0;
+        text-align: center; 
+        position: relative;
+        overflow-y: auto; 
+        margin-bottom: 30px; 
+    }
+
+    #dishesTitle {
+        grid-column: 3 / span 1;
+        grid-row: 1 / span 1;
+        font-size: 24pt;
+        text-align: center;
+        font-family: 'on_my_wayregular';
+    }
+
+    #knife2 {
+        grid-column: 2 / span 1;
+        grid-row: 4 / span 1;
+        width: 35%;
+        justify-self: end;
+        z-index: 2;
+        position: relative;
+        top: -50px;
+    }
+
+    #addButton {
+        grid-column: 2 / span 1;
+        grid-row: 5 / span 1; 
+        text-align: center;
+        justify-self: center;
+        align-self: start;
+        margin-top: 100px;
+        margin-bottom: 200px;
+        width: 60%;
+        bottom: 0;
+        background-color: #DE2007;
+        text-decoration: none;
+        font-size: 16pt;
+        color: #FFF3DF;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 25px;
+    }
+
+#addButton:hover {
+    background-color: #BB1B05;
+}
+
+#spacer {
+    grid-column: 2 / span 1;
+    grid-row: 6 / span 1; 
+    text-align: center;
+    display: inline;
+    visibility: hidden;
+}
+}

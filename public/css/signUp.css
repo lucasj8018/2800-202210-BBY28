@@ -6,14 +6,30 @@ body {
     height: 100%;
     display: grid;
     grid-template-columns: 4% 92% 4%;
-    grid-template-rows: 7% 7% 60% 15% 8%;
     font-family: 'latolight';
     font-size: 16pt;
+    background-image: url("/img/spices.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+
+::-webkit-scrollbar-track {
+    background-color: azure;
 }
 
 #login_navbar {
     grid-column: 1 / span 3;
     grid-row: 1 / span 1;
+    height: 7vh;
 }
 
 #spices {
@@ -28,14 +44,13 @@ body {
     grid-row: 3 / span 1;
     display: grid;
     grid-template-columns: 7% 4% 30% 5% 40% 4% 7%;
-    grid-template-rows: 5% 20% 2% 20% 2% 20% 15% 10%;
+    grid-template-rows: 5% 20% 20% 20% 5% 10% 5%;
     backdrop-filter: blur(10px);
     backdrop-filter: brightness(60%);
     border-radius: 10%;
     font-size: 12pt;
+    justify-content: center;
     margin: auto;
-    min-height: 400px;
-    padding: 10px;
 }
 
 #username {
@@ -45,17 +60,17 @@ body {
 
 #password {
     grid-column: 2 / span 5;
-    grid-row: 4 / span 1;
+    grid-row: 3 / span 1;
 }
 
 #fName {
     grid-column: 2 / span 2;
-    grid-row: 6 / span 1; 
+    grid-row: 4 / span 1; 
 }
 
 #lName {
     grid-column: 5 / span 2;
-    grid-row: 6 / span 1; 
+    grid-row: 4 / span 1; 
 }
 
 div label  {
@@ -64,6 +79,10 @@ div label  {
 
 #inputUsername, #inputPassword, #inputFName, #inputLName {
     font-size: 10pt;
+}
+
+.col-sm-2 {
+    width: 100px;
 }
 
 #username, #password, #fName, #lName {
@@ -81,7 +100,7 @@ div label  {
 
 #createAccountButton {
     grid-column: 5 / span 1;
-    grid-row: 8 / span 1;
+    grid-row: 6 / span 1;
     text-align: center;
     background-color: #DE2007;
     height: 100%;
@@ -100,7 +119,7 @@ div label  {
 
 #backButton {
     grid-column: 3 / span 1;
-    grid-row: 8 / span 1;
+    grid-row: 6 / span 1;
     text-align: center;
     background-color: #FFF3DF;
     height: 100%;
@@ -120,30 +139,43 @@ div label  {
 #footer {
     grid-column: 1 / span 3;
     grid-row: 7 / span 1;
+    width: 100vw;
 }
 
 @media only screen and (min-width: 600px) {
+    body {
+        font-size: 5vw;
+    }
+
     #login {
         max-width: 600px;
-        min-width: 600px;
         width: 80vw;
         min-height: 600px;
         padding: 20px;
     }
+
     #username, #password, #address {
         font-size: 18pt;
-        min-width: 440pt;
+        min-width: 550px;
     }
+
     #fName, #lName {
         font-size: 16pt;
     }
+
     #lName {
-        min-width: 244pt;
+        min-width: 300px;
     }
+
     #inputUsername, #inputPassword, #inputFName, #inputLName {
         font-size: 14pt;
     }
+
+    .col-sm-2 {
+        width: 20vw;
+    }
+
     #backButtonLabel, #createAccountButtonLabel{
-        font-size: 20pt;
+        font-size: 18px;
     }
 }

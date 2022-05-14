@@ -21,39 +21,52 @@ Content of the project folder:
 
 ├── .git                     # Folder for git repo
 ├── images                   # Folder for images
-
-        /arcade.jpg
+        /avatar_d.png
+        /avatar_testing.png
+        /defaultAvatar.jpg
+        /knife.png: https://www.kindpng.com/imgv/ommTxh_transparent-knives-png-kitchen-knife-png-transparent-png/
+        /Logo.PNG
+        /spices.jpg: https://unsplash.com/photos/vA1L1jRTM70?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink
 
 
 ├── data                   # Folder for JSON files.
  
-        /restaurant.json
         
-├── scripts                # Folder for scripts
-       
-        /travelPlan.js                   # filters filler events to fit into the selected game schedule
+        
+├── scripts                # Folder for scripts     
+        /avatarUpload.js                   # description
+        /client.js
+        /kitchenMap.js
+        /loginSkeleton.js
+        /profile.js
+        /registerKitchen.js
+        /signUp.js
+        /skeleton.js
+        /upload.js
+
 
 ├── styles                  # Folder for styles
-        /style.css                       # style for overall pages    
+        /font.css                       # style for overall page
+        /kitchenDetails.css
+        /kitchenMap.css
+        /kitchenRegistration.css
+        /login.css
+        /navbarFooter.css
+        /profile.css
+        /signUp.css
+        /upload.css  
+
 
 ├── text                    # Folder for Nav and footer layout.
         /footer.html                     # footer layout for the overall page
         /loginNav.html                   # navigation bar for the login page
         /nav.html                        # navigation bar for pages other than the login page
 
-Firebase hosting files: 
-├── .firebase
-	/hosting..cache
-├── .firebaserc
-├── 404.html
-├── firebase.json
-├── firestore.indexes.json
-├── firestore.rules
-├── storage.rules
 
 HTML files: 
 ├── index.html                          # landing HTML file, this is what users see when you come to URL
-├── main.html                           # main HTML file, the landing page after log-in or user set-up
+├── main.html
+|--                           # main HTML file, the landing page after log-in or user set-up
 
 ├── .gitignore                # Git ignore file
 └── README.md                 # woah, you're reading this now!
@@ -61,6 +74,7 @@ HTML files:
 
 ## Resources
 - In-app icons from Feather v4.28.0 (Open Source https://feathericons.com/)
+- Wood Pattern background: "https://www.transparenttextures.com/patterns/wood-pattern.png"
 
 
 ## Contact 
@@ -74,5 +88,3 @@ HTML files:
 * <a href="https://fontawesome.com/">Font Awesome</a>
 * <a href="https://fonts.adobe.com/">Adobe Fonts</a> 
 * <a href="https://fonts.google.com/">Google Fonts</a>
-
-spices.jpg: https://unsplash.com/photos/vA1L1jRTM70?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink

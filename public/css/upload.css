@@ -1,0 +1,362 @@
+/* The css is written in the order that each element appears in the html page. */
+
+html {
+    height: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 7% 86% 7%;
+    font-family: 'latolight';
+    background-color: #c49a68;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+::-webkit-scrollbar-track {
+    background-color: azure;
+}
+
+#navbar {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+}
+
+#uploadTitle {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    align-self: end;
+    justify-self: center;
+    text-align: center;
+    font-size: 32pt;
+    margin-top: 20px;
+}
+
+#knife {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+    width: 50%;
+    align-self: start;
+    justify-self: end;
+    position: relative;
+    top: 100px;
+    left: 30px;
+    z-index: 2;
+}
+
+#uploadForm {
+    grid-column: 2 / span 1;
+    font-size: 20pt;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 15% 4% 15% 15% 30% 30% 30% 30%;
+    grid-row-gap: 10px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 3vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 10px grey;
+    overflow: auto;
+}
+
+#recipeOrDish {
+    display: grid;
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+}
+
+#radioButtonsLabel {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+    justify-self: start;
+}
+
+#radioButtons {
+    display: grid;
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 56% 33% 20%;
+    padding-right: 0;
+}
+
+#recipeChoiceLabel {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    align-self: start;
+    font-size: 16pt;
+}
+
+#dishChoiceLabel {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    align-self: start;
+    font-size: 16pt;
+}
+
+#recipeChoice {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    align-self: end;
+}
+
+#dishChoice {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+    align-self: end;
+}
+
+.col-sm-2 {
+    width: auto;
+}
+
+.col-sm-10 {
+    text-align: center;
+    justify-items: center;
+    width: auto;
+}
+
+.form-control {
+    background-color: azure;
+    font-size: 14pt;
+}
+
+#name {
+    display: grid;
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    grid-template-columns: 100%;
+    grid-template-rows: 35% 65%;
+}
+
+#nameInputDiv {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    align-self: start;
+}
+
+#nameLabel {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    align-self: center;
+}
+
+#price {
+    display: grid;
+    grid-column: 1 / span 1;
+    grid-row: 4 / span 1;
+    grid-template-columns: 100%;
+    grid-template-rows: 35% 65%;
+}
+
+#priceLabel {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    align-self: center;
+}
+
+#priceInputDiv {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    align-self: start;
+}
+
+#ingredients {
+    display: grid;
+    grid-column: 1 / span 1;
+    grid-row: 5 / span 1;
+    grid-template-columns: 100%;
+    grid-template-rows: 17% 50%;
+}
+
+#ingredientsLabel {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    align-self: center;
+}
+
+#ingredientsInputDiv {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    align-self: start;
+}
+
+#inputIngredients {
+    height: 175px;
+}
+
+#description {
+    display: grid;
+    grid-column: 1 / span 1;
+    grid-row: 6 / span 1;
+    grid-template-columns: 100%;
+    grid-template-rows: 17% 50%;
+}
+
+#descriptionLabel {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    align-self: center;
+}
+
+#descriptionInputDiv {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    align-self: start;
+}
+
+#inputDescription {
+    height: 175px;
+}
+
+#photoUpload {
+    display: grid;
+    grid-column: 1 / span 1;
+    grid-row: 7 / span 1;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 35% 65%;
+}
+
+#uploadPhotoLabel {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    align-self: center;
+    justify-self: start;
+    margin-bottom: 0;
+}
+
+#uploadPhotoButton {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+    align-self: center;
+    justify-self: end;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 95%;
+    background-color: #FFF3DF;
+    color: black;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 16pt;
+}
+
+#uploadPhotoButton:hover {
+    background-color: #E4D1B1;
+}
+
+#photoPreview {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
+    height: 300px;
+    width: 300px;
+    justify-self: center;
+}
+
+#finishButtonDiv {
+    display: grid;
+    grid-column: 1 / span 2;
+    grid-row: 8 / span 1;
+    grid-template-columns: 100%;
+    grid-template-rows: 60% 20% 20%;
+}
+
+#finishButton {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    background-color: #DE2007;
+    color: #FFF3DF;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 80%;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+#finishButton:hover {
+    background-color: #BB1B05;
+}
+
+#spacer {
+    grid-column: 2 / span 1;
+    grid-row: 6 / span 1; 
+    text-align: center;
+    display: inline;
+    visibility: hidden;
+}
+
+#footer {
+    grid-column: 1 / span 3;
+}
+
+
+@media only screen and (min-width: 1000px) {
+
+    #uploadForm {
+        font-size: 16pt;
+        width: 500px;
+        margin: auto;
+        margin-bottom: 100px;
+        grid-template-columns: 50% 50%; 
+    }
+
+    #recipeOrDish {
+        grid-column: 1 / span 2;
+    }
+
+    #name {
+        grid-column: 1 / span 2;
+    }
+
+    #price {
+        grid-column: 1 / span 2;
+    }
+
+    #ingredients {
+        grid-column: 1 / span 2;
+    }
+
+    #description {
+        grid-column: 1 / span 2;
+    }
+
+    #photoUpload {
+        grid-column: 1 / span 2;
+    }
+
+    #knife {
+        width: 30%;
+        align-self: start;
+        justify-self: center;
+        position: relative;
+        top: 110px;
+        left: 260px;
+        z-index: 2;
+    }
+
+    #buttons {
+        justify-content: center;
+    }
+
+    #cancel {
+        margin: auto;
+        padding: 0 5px;
+    }
+
+    #next {
+        margin: auto;
+        padding: 0 30px;
+    }
+}

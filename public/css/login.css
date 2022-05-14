@@ -9,6 +9,22 @@ body {
     grid-template-rows: 7% 10% 60% 20% 8%;
     font-family: 'latolight';
     font-size: 16pt;
+    background-image: url("/img/spices.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+
+::-webkit-scrollbar-track {
+    background-color: azure;
 }
 
 #login_navbar {
