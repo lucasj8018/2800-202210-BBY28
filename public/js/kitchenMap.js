@@ -16,6 +16,7 @@ ready(function () {
     })
     .then((data) => {
       addressData = data;
+      geocoder = new google.maps.Geocoder();
       geocodeAddress();
     })
     .catch(function (error) {
@@ -51,7 +52,6 @@ function initMap() {
     console.log("geolocation not supported");
     map = new google.maps.Map(document.getElementById("map"), options);
   }
-  geocoder = new google.maps.Geocoder();
 
 }
 
@@ -66,12 +66,12 @@ window.initMap = initMap;
 function geocodeAddress() {
 
   for (let i = 0; i < addressData.length; i++) {
-    if (addressData[i] !== null) {
+    if (addressData[i].location !== null) {
       geocoder.geocode({
-        'address': addressData[i]
+        'address': addressData[i].location
       }, function (results, status) {
         if (status == "OK") {
-          map.setCenter(results[0].geometry.location);
+          // map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
@@ -82,9 +82,9 @@ function geocodeAddress() {
             `<div class="card" style="width: 18rem;">
                 <img src="" class="card-img-top" alt="">
                 <div class="card-body">
-                  <h5 class="card-title">Private Kitchen Title</h5>
-                  <p class="card-text">Some description / Address.</p>
-                  <a href="/kitchenDetails" class="btn btn-primary">View Details</a>
+                  <h5 class="card-title">` + addressData[i].kitchenName + `</h5>
+                  <p class="card-text">` + addressData[i].location + `</p>
+                  <a href="/kitchenDetails?id=` + addressData[i].id + `" class="btn btn-primary">View Kitchen</a>
                 </div>
                 </div>`;
   

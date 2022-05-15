@@ -266,18 +266,19 @@ app.get("/map-data", async function (req, res) {
 
   db.connect();
 
-  const [registeredAddresses, fields] = await db.execute("SELECT location FROM BBY_28_User");
-  var addresses;
-  var addressData = [];
+  const [registeredAddresses, fields] = await db.execute("SELECT id, location, kitchenName FROM BBY_28_User");
+  // var addresses;
+  // var addressData = [];
 
-  for (let i = 0; i < registeredAddresses.length; i++) {
-    addresses = registeredAddresses[i].location;
-    addressData.push(addresses);
-  }
+  // for (let i = 0; i < registeredAddresses.length; i++) {
+  //   addresses = registeredAddresses[i].location;
+  //   addressData.push(addresses);
+  // }
+  
+  console.log(registeredAddresses);
 
-
-  if (addressData.length != 0) {
-    res.json(addressData);
+  if (registeredAddresses.length != 0) {
+    res.json(registeredAddresses);
 
   } else {
     // Send format error message for exception
