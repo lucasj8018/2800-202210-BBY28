@@ -716,6 +716,39 @@ async function updateUserAvatar(req, res) {
 
 }
 
+//-----------------------------------------------------------------------------------------
+// Listens to a get request and checks the id of the user on the path.  It then reads the 
+// recipe and dish data from the BBY_28_Recipe table and send to the client-side kitchenDetails.js.
+//-----------------------------------------------------------------------------------------
+app.get("/kitchen-details", async function (req, res) {
+
+  // check for a session 
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+  
+    db.connect();
+  
+    let idOfResponse = req.query["id"];
+  
+    const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE id = ?", [idOfResponse]);
+  
+    if (recipeResults.length == 1) {
+      res.json(recipeResults);
+    }
+  
+    db.end();
+    
+  } else {
+    // If users not logged in, redirect to login page
+    res.redirect("/");
+  }
+});
 
 
 
