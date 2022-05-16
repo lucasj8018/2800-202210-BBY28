@@ -9,18 +9,7 @@ const fs = require("fs");
 const {
   JSDOM
 } = require('jsdom');
-
 const multer = require("multer");
-
-const avatarStorage = multer.diskStorage({
-  destination: function (req, file, callbackFunc) {
-    callbackFunc(null, "./public/img/")
-  },
-  filename: function (req, file, callbackFunc) {
-    callbackFunc(null, "avatar_" + file.originalname.split('/').pop().trim());
-  }
-});
-const uploadAvatar = multer({ storage: avatarStorage });
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -97,6 +86,18 @@ app.get("/display-profile", function (req, res) {
     res.redirect("/");
   }
 });
+
+
+// Multer to upload user avatar photos
+const avatarStorage = multer.diskStorage({
+  destination: function (req, file, callbackFunc) {
+    callbackFunc(null, "./public/img/")
+  },
+  filename: function (req, file, callbackFunc) {
+    callbackFunc(null, req.session.userId + "_avatar_" + file.originalname.split('/').pop().trim());
+  }
+});
+const uploadAvatar = multer({ storage: avatarStorage });
 
 //----------------------------------------------------------------------------------------
 // This post request is called to receive the updated user profile picture and update it
@@ -267,15 +268,6 @@ app.get("/map-data", async function (req, res) {
   db.connect();
 
   const [registeredAddresses, fields] = await db.execute("SELECT id, location, kitchenName FROM BBY_28_User");
-  // var addresses;
-  // var addressData = [];
-
-  // for (let i = 0; i < registeredAddresses.length; i++) {
-  //   addresses = registeredAddresses[i].location;
-  //   addressData.push(addresses);
-  // }
-  
-  console.log(registeredAddresses);
 
   if (registeredAddresses.length != 0) {
     res.json(registeredAddresses);
@@ -630,6 +622,102 @@ async function updateUserDashboard(req, res) {
   db.end();
 
 }
+
+//----------------------------------------------------------------------------------------
+// Listens to a post request to receive the upload recipe or dish form data and save it to 
+// the bby_28_recipe table
+//----------------------------------------------------------------------------------------
+app.post('/upload-recipe-dish', async function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  // var kitchenName = req.body.name;
+  // var kitchenAddress = req.body.street + " " + req.body.city + " " + req.body.postalCode;
+  console.log(req.body);
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+  db.connect();
+
+  if (req.body.recipeOrDish == "recipe") {
+    var addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description) values ? ";
+    var recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description]];
+    console.log("recipe added");
+
+  } else if (req.body.recipeOrDish == "dish") {
+    addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, purchaseable, price) values ? ";
+    recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, true, req.body.price]];
+    console.log("dish added")
+  }
+ 
+  await db.query(addRecipeOrDish, [recipeOrDishInfo]);
+  db.end();
+
+});
+
+// Multer to upload recipe or dish pictures of the user's private kitchen menu
+const recipeDishStorage = multer.diskStorage({
+  destination: function (req, file, callbackFunc) {
+    callbackFunc(null, "./public/img/")
+  },
+  filename: function (req, file, callbackFunc) {
+    callbackFunc(null, req.session.userId + "_recipe_dish_" + file.originalname.split('/').pop().trim());
+  }
+});
+const uploadRecipeDish = multer({ storage: recipeDishStorage });
+
+//----------------------------------------------------------------------------------------
+// This post request is called to receive the uploaded recipe or dish picture and update it
+// in the BBY_28_Recipe table.
+//----------------------------------------------------------------------------------------
+app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async function (req, res) {
+  console.log(req.files);
+
+  // const db = await mysql.createConnection({
+  //   host: "localhost",
+  //   user: "root",
+  //   password: "",
+  //   database: "comp2800",
+  //   multipleStatements: true
+  // });
+
+  // db.connect();
+
+  // let updateRecipeDish = "use comp2800; UPDATE BBY_28_Recipe SET avatarPath = ? WHERE id = ?";
+  // let RecipeDishInfo = [
+  //   req.files[0].filename, req.session.userId
+  // ];
+  // await db.query(updateRecipeDish, RecipeDishInfo);
+  // db.end();
+
+});
+
+async function updateUserAvatar(req, res) {
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  let updateAvatar = "use comp2800; UPDATE BBY_28_User SET avatarPath = ? WHERE id = ?";
+  let avatarInfo = [
+    req.files[0].filename, req.session.userId
+  ];
+  await db.query(updateAvatar, avatarInfo);
+  db.end();
+
+}
+
+
+
 
 // For page not found 404 error
 app.use(function (req, res, next) {
