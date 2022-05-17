@@ -17,6 +17,7 @@ app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
 app.use("/img", express.static("./public/img"));
 app.use("/font", express.static("./public/font"));
+app.use("/mp3", express.static("./public/mp3"));
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -60,6 +61,11 @@ app.get("/login", function (req, res) {
     res.redirect("/");
   }
 });
+
+app.get("/contact", function (req, res) {
+  let contact = fs.readFileSync("./app/html/contact.html", "utf8");
+  res.send(contact);
+})
 
 app.get("/profile", function (req, res) {
 
@@ -255,7 +261,7 @@ app.post('/update-profile', function (req, res) {
 });
 
 //----------------------------------------------------------------------------------------
-// Listens to a get routing request and loads the ktichenMap.html page.
+// Listens to a get routing request and loads the kitchenMap.html page.
 //----------------------------------------------------------------------------------------
 app.get("/map", function (req, res) {
 
@@ -272,7 +278,7 @@ app.get("/map", function (req, res) {
 });
 
 //----------------------------------------------------------------------------------------
-// Listens to a get request to retrieve registered private kithcen addresses from the 
+// Listens to a get request to retrieve registered private kitchen addresses from the 
 // bby_28_user table and send to the client-side kitchenMap.js
 //----------------------------------------------------------------------------------------
 app.get("/map-data", async function (req, res) {

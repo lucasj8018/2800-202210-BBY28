@@ -27,6 +27,10 @@ Content of the project folder:
         /knife.png: https://www.kindpng.com/imgv/ommTxh_transparent-knives-png-kitchen-knife-png-transparent-png/
         /Logo.PNG
         /spices.jpg: https://unsplash.com/photos/vA1L1jRTM70?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink
+        /chefHat.png: http://www.qcustomclothing.com/white-chef-hat/374830/p
+
+├── mp3
+        /crunch.mp3: https://www.zapsplat.com/music/cartoon-eat-crunch-bite-single-mid-pitched-munch/
 
 
 ├── data                   # Folder for JSON files.
