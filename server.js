@@ -45,8 +45,14 @@ app.get("/", function (req, res) {
 });
 
 app.get("/myCart", function (req, res){
-  let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
-  res.send(myCart);
+  if (req.session.loggedIn){
+    let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
+    res.send(myCart);
+  } else {
+    // If users not logged in, redirecte to login page
+    res.redirect("/");
+  }
+
 })
 
 app.get("/signUp", function (req, res) {
@@ -768,7 +774,36 @@ app.get("/kitchen-details", async function (req, res) {
   }
 });
 
+app.get("/displayShoppingCart", async function(req, res){
+  if (req.session.loggedIn){
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    })
+    db.connect();
 
+    let shoppingCartQuery = `
+      SELECT recipePath, name, price, quantity
+      FROM BBY_28_recipe, BBY_28_ShoppingCart
+      WHERE recipeID = id
+      AND cookID = userID
+      AND customerID = ?
+    `;
+    const [shoppingCartResults, cartFields] = await db.query(shoppingCartQuery, [req.session.userId]);
+    if (shoppingCartResults.length != 0){
+      res.json(shoppingCartResults);
+    } else {
+      res.json([{recipePath : "EmptyShoppingCart"}]);
+    }
+    db.end();
+  } else {
+    res.redirect("/");
+  }
+
+});
 
 // For page not found 404 error
 app.use(function (req, res, next) {
