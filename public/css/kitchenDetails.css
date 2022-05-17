@@ -12,6 +12,7 @@ body {
     font-family: 'latolight';
     background-color: #c49a68;
 background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+padding-bottom: 150px;
 }
 
 #navbar {
@@ -22,11 +23,11 @@ background-image: url("https://www.transparenttextures.com/patterns/wood-pattern
 #kitchenName {
     grid-column: 2 / span 2;
     grid-row: 2 / span 1;
-    align-self: end;
+    align-self: start;
     justify-self: center;
     text-align: center;
-    font-size: 32pt;
     margin-top: 20px;
+    font-size: 32pt;
     font-family: 'on_my_wayregular';
 }
 
@@ -50,21 +51,18 @@ background-image: url("https://www.transparenttextures.com/patterns/wood-pattern
     height: auto;
     justify-self: end;
     z-index: 2;
-    position: relative;
-    top: 120px;
+    margin-top: 140px;
 
 }
 
 #recipes {
     grid-column: 2 / span 2;
     grid-row: 2 / span 2;
-    backdrop-filter: brightness(80%);
     background-color: white;
     border-radius: 10px;
-    height: 90%;
-    width: 85vw;
-    max-height: 500px;
-    margin-top: 150px;
+    height: 500px;
+    width: 85%;
+    margin-top: 170px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 60px;
@@ -79,14 +77,12 @@ background-image: url("https://www.transparenttextures.com/patterns/wood-pattern
     font-size: 20pt;
     font-family: 'on_my_wayregular';
     text-align: center;
-    position: sticky;
-    top: 0;
     background-color: white;
 }
 
 table {
     table-layout: fixed;
-    width: 400px;
+    width: 300px;
     border-collapse: separate;
     border-spacing: 1px 20px;
 }
@@ -119,12 +115,11 @@ td {
     grid-column: 3 / span 1;
     grid-row: 4 / span 1;
     width: 75%;
+    margin-bottom: -50px;
     height: auto;
     justify-self: end;
     align-self: start;
     z-index: 2;
-    position: relative;
-    top: 50px;
 }
 
 #dishes {
@@ -132,10 +127,11 @@ td {
     grid-row: 6 / span 1;
     background-color: white;
     border-radius: 10px;
-    height: 90%;
+    height: 500px;
     width: 85vw;
+    min-height: 500px;
     max-height: 500px;
-    margin-top: 0;
+    margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 20px;
@@ -154,27 +150,21 @@ td {
     background-color: white;
 }
 
-
-
-#footer {
-    grid-column: 1 / span 3;
-    grid-row: 9 / span 1;
+#addButtonDIV {
+    grid-column: 2 / span 2;
+    grid-row: 7 / span 1;
+    margin-top: 150px;
+    justify-self: center;
 }
 
 #addButton {
-    grid-column: 2 / span 2;
-    grid-row: 7 / span 1;
     text-align: center;
-    justify-self: center;
-    margin-top: 250px;
-    width: 60%;
-    position: relative;
-    bottom: 80px;
     background-color: #DE2007;
     text-decoration: none;
     color: #FFF3DF;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
     border-radius: 25px;
 }
 
@@ -182,16 +172,16 @@ td {
     background-color: #BB1B05;
 }
 
-#spacer {
-   display: none;
+#footer {
+    grid-column: 1 / span 3;
+    grid-row: 9 / span 1;
 }
-
 
 @media only screen and (min-width: 1000px) {
     
     body {
         display: grid;
-        grid-template-rows: 10% 10% 40% 40% 8% 16% 16%;
+        grid-template-rows: 10% 5% 30% 30% 5% 0% 0% 0%;
         grid-template-columns: 15% 70% 15%;
         font-family: 'latolight';
     }
@@ -205,22 +195,21 @@ td {
     #kitchenName {
         grid-column: 2 / span 1;
         grid-row: 1 / span 1;
-        align-self: end;
-        justify-self: center;
+        margin-top: 100px;
         font-size: 36pt;
     }
 
     #recipes {
-        width: 70%;
-        height: 90%;
         grid-column: 2 / span 1;
         grid-row: 3 / span 1;
+        height: 600px;
+        width: 70vw;
         display: inline-block;
         margin-top: 0;
         text-align: center; 
         position: relative;
         overflow-y: auto; 
-        margin-bottom: 30px;  
+        margin-bottom: 10px;  
     }
 
     #recipeTitle {
@@ -251,17 +240,18 @@ td {
         width: 35%;
         justify-self: end;
         z-index: 2;
-        position: relative;
-        top: -50px;
+        margin-top: -50px;
+        margin-right: -75px;
     }
 
     #dishes {
-        width: 70%;
-        height: 90%;
         grid-column: 2 / span 1;
         grid-row: 4 / span 1;
+        min-height: 600px;
+        max-height: 600px;
+        width: 70vw;
         display: inline-block;
-        margin-top: 0;
+        margin-top: 200px;
         text-align: center; 
         position: relative;
         overflow-y: auto; 
@@ -282,38 +272,21 @@ td {
         width: 35%;
         justify-self: end;
         z-index: 2;
-        position: relative;
-        top: -50px;
+        margin-top: 140px;
+        margin-right: -75px;
+    }
+
+    #addButtonDIV {
+        grid-column: 2 / span 1;
+        grid-row: 5 / span 1; 
+        margin-top: 400px;
+        margin-bottom: 50px;
     }
 
     #addButton {
-        grid-column: 2 / span 1;
-        grid-row: 5 / span 1; 
-        text-align: center;
-        justify-self: center;
-        align-self: start;
-        margin-top: 100px;
-        margin-bottom: 200px;
-        width: 60%;
-        bottom: 0;
-        background-color: #DE2007;
-        text-decoration: none;
         font-size: 16pt;
-        color: #FFF3DF;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        border-radius: 25px;
+        padding: 20px;
+        padding-left: 75px;
+        padding-right: 75px;
     }
-
-#addButton:hover {
-    background-color: #BB1B05;
-}
-
-#spacer {
-    grid-column: 2 / span 1;
-    grid-row: 6 / span 1; 
-    text-align: center;
-    display: inline;
-    visibility: hidden;
-}
 }

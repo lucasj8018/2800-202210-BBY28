@@ -16,7 +16,7 @@ ready(async function () {
     .then((data) => {
 
       if (id == data[data.length - 1].loggedinId || id == "loggedinUser") {
-        document.getElementById("addButton").innerHTML = "<a id='addButton' href='/upload'>Add recipes/dishes</a>"
+        document.getElementById("addButtonDIV").innerHTML = "<a id='addButton' href='/upload'>Add recipe/dish</a>"
       }
 
       let recipeTable = "";
