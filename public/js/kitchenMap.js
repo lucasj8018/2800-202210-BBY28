@@ -17,7 +17,6 @@ ready(function () {
     })
     .then((data) => {
       addressData = data;
-      geocoder = new google.maps.Geocoder();
       geocodeAddress();
     })
     .catch(function (error) {
@@ -53,6 +52,8 @@ async function initMap() {
     console.log("geolocation not supported");
     map = new google.maps.Map(document.getElementById("map"), options);
   }
+
+  geocoder = new google.maps.Geocoder();
 
 }
 
