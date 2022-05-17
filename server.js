@@ -145,9 +145,7 @@ app.get("/kitchenRegistration", function (req, res) {
 });
 
 app.get("/kitchenDetails", async function (req, res) {
-
-  if (req.session.loggedIn) {
-
+  
     const db = await mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -155,6 +153,8 @@ app.get("/kitchenDetails", async function (req, res) {
       database: "comp2800",
       multipleStatements: true
     });
+
+  if (req.session.loggedIn) {
 
     db.connect();
 
