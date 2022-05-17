@@ -44,6 +44,11 @@ app.get("/", function (req, res) {
 
 });
 
+app.get("/myCart", function (req, res){
+  let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
+  res.send(myCart);
+})
+
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
   res.send(signUp);
