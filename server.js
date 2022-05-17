@@ -87,7 +87,6 @@ app.get("/display-profile", function (req, res) {
   }
 });
 
-
 // Multer to upload user avatar photos
 const avatarStorage = multer.diskStorage({
   destination: function (req, file, callbackFunc) {
@@ -139,16 +138,37 @@ app.get("/kitchenRegistration", function (req, res) {
   }
 });
 
-app.get("/kitchenDetails", function (req, res) {
+app.get("/kitchenDetails", async function (req, res) {
 
   if (req.session.loggedIn) {
-    let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
-    res.send(kitchenDetails);
+
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+
+    db.connect();
+
+    const [results, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [req.session.userId]);
+    if (results.length == 1) {
+      if (results[0].isPrivateKitchenOwner) {
+        let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
+        res.send(kitchenDetails);
+
+      } else {
+        res.redirect("/kitchenRegistration");
+      }
+    }
 
   } else {
     // If users not logged in, redirect to login page
     res.redirect("/");
   }
+
+  db.end();
 })
 
 app.get("/upload", function (req, res) {
@@ -617,11 +637,32 @@ async function updateUserDashboard(req, res) {
 
   }
 
-
-
   db.end();
-
 }
+
+// Multer to upload recipe or dish pictures of the user's private kitchen menu
+const recipeDishStorage = multer.diskStorage({
+  destination: function (req, file, callbackFunc) {
+    callbackFunc(null, "./public/img/")
+  },
+  filename: function (req, file, callbackFunc) {
+    callbackFunc(null, req.session.userId + "_recipe_dish_" + file.originalname.split('/').pop().trim());
+  }
+});
+const uploadRecipeDish = multer({ storage: recipeDishStorage });
+var RecipeDishPhoto = "";
+
+//----------------------------------------------------------------------------------------
+// This post request is called to receive the uploaded recipe or dish picture and update it
+// in the BBY_28_Recipe table.
+//----------------------------------------------------------------------------------------
+app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async function (req, res) {
+  console.log(req.files);
+  RecipeDishPhoto = req.files[0].filename;
+  console.log(RecipeDishPhoto);
+
+});
+
 
 //----------------------------------------------------------------------------------------
 // Listens to a post request to receive the upload recipe or dish form data and save it to 
@@ -629,8 +670,6 @@ async function updateUserDashboard(req, res) {
 //----------------------------------------------------------------------------------------
 app.post('/upload-recipe-dish', async function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  // var kitchenName = req.body.name;
-  // var kitchenAddress = req.body.street + " " + req.body.city + " " + req.body.postalCode;
   console.log(req.body);
 
   const db = await mysql.createConnection({
@@ -643,13 +682,13 @@ app.post('/upload-recipe-dish', async function (req, res) {
   db.connect();
 
   if (req.body.recipeOrDish == "recipe") {
-    var addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description) values ? ";
-    var recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description]];
+    var addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, recipePath) values ? ";
+    var recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, RecipeDishPhoto]];
     console.log("recipe added");
 
   } else if (req.body.recipeOrDish == "dish") {
-    addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, purchaseable, price) values ? ";
-    recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, true, req.body.price]];
+    addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, purchaseable, price, recipePath) values ? ";
+    recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, 1, req.body.price, RecipeDishPhoto]];
     console.log("dish added")
   }
  
@@ -658,42 +697,6 @@ app.post('/upload-recipe-dish', async function (req, res) {
 
 });
 
-// Multer to upload recipe or dish pictures of the user's private kitchen menu
-const recipeDishStorage = multer.diskStorage({
-  destination: function (req, file, callbackFunc) {
-    callbackFunc(null, "./public/img/")
-  },
-  filename: function (req, file, callbackFunc) {
-    callbackFunc(null, req.session.userId + "_recipe_dish_" + file.originalname.split('/').pop().trim());
-  }
-});
-const uploadRecipeDish = multer({ storage: recipeDishStorage });
-
-//----------------------------------------------------------------------------------------
-// This post request is called to receive the uploaded recipe or dish picture and update it
-// in the BBY_28_Recipe table.
-//----------------------------------------------------------------------------------------
-app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async function (req, res) {
-  console.log(req.files);
-
-  // const db = await mysql.createConnection({
-  //   host: "localhost",
-  //   user: "root",
-  //   password: "",
-  //   database: "comp2800",
-  //   multipleStatements: true
-  // });
-
-  // db.connect();
-
-  // let updateRecipeDish = "use comp2800; UPDATE BBY_28_Recipe SET avatarPath = ? WHERE id = ?";
-  // let RecipeDishInfo = [
-  //   req.files[0].filename, req.session.userId
-  // ];
-  // await db.query(updateRecipeDish, RecipeDishInfo);
-  // db.end();
-
-});
 
 async function updateUserAvatar(req, res) {
 
@@ -731,14 +734,18 @@ app.get("/kitchen-details", async function (req, res) {
       database: "comp2800",
       multipleStatements: true
     });
-  
+
     db.connect();
   
     let idOfResponse = req.query["id"];
+    if (idOfResponse == "loggedinUser") {
+      idOfResponse = req.session.userId;
+    }
   
-    const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE id = ?", [idOfResponse]);
+    const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ?", [idOfResponse]);
+    recipeResults.push({ loggedinId: req.session.userId})
   
-    if (recipeResults.length == 1) {
+    if (recipeResults.length != 0) {
       res.json(recipeResults);
     }
   

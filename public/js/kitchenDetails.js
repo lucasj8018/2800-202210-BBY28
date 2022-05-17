@@ -7,82 +7,56 @@
 "use strict";
 ready(async function () {
   var url = document.URL;
-  console.log(url);
-
   var id = url.substring(url.lastIndexOf('=') + 1);
-  console.log(id);
 
   fetch("/kitchen-details?id=" + id)
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+
+      if (id == data[data.length - 1].loggedinId || id == "loggedinUser") {
+        document.getElementById("addButton").innerHTML = "<a id='addButton' href='/upload'>Add recipes/dishes</a>"
+      }
+
+      let recipeTable = "";
+      let dishTable = "";
+       recipeTable = "<p id='dishesTitle'>Recipes</p><table>"
+       dishTable = "<p id='dishesTitle'>Dishes</p><table>"
+
+      for (let i = 0; i < data.length - 1; i++) {
+        if (data[i].purchaseable == 0) {
+          recipeTable += "<tr>" +
+            "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
+            "<td><p class='name'>" + data[i].name + "</p></td>" +
+            "<td><a class='viewButton' href='#'>View Dish</a></td>" +
+            "</tr>";
+
+        } else if (data[i].purchaseable == 1) {
+          dishTable += "<tr>" +
+            "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
+            "<td><p class='name'>" + data[i].name + "</p></td>" +
+            "<td><a class='viewButton' href='#'>View Dish</a></td>" +
+            "</tr>";
+
+        }
+      }
+      recipeTable += "</table>";
+      dishTable += "</table>";
+
+      document.getElementById("recipes").innerHTML = recipeTable;
+      document.getElementById("dishes").innerHTML = dishTable;
 
     })
     .catch(function (error) {
       console.log(error);
     })
 
-
-  // await fetch("/user-dashboard")
-  //   .then((response) => {
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-  //     var dashboardData;
-  //     dashboardData = data;
-
-  //     if (userData[0].isAdmin) {
-  //       //Creating table
-  //       var dashboard = "";
-  //       let table = "<br/><br/><div id='incorrectDelete'> </div><br/><br/><div><table class='table table-light table-striped' id='userTable'><tr id='userTableHeader'><th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
-
-  //       // For loops that appends to the table the users username, password and their avatar
-  //       for (let i = 0; i < dashboardData.length; i++) {
-  //         table += "</td><td><input type='text' value='" + dashboardData[i].username + "'id='inputUsernameID" + dashboardData[i].id + "'  disabled style='max-width: 50%'>" +
-  //           "</td><td><input type='text' value='" + "●●●●●●●●" + "'id='inputPasswordID" + dashboardData[i].id + "' disabled style='max-width: 50%'>" +
-  //           "</td><td><img src='./img/" + dashboardData[i].avatarPath + "' width ='100px', height ='100px'>" +
-  //           "</td><td><button type='button' class='btn btn-outline-info' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Delete</a><br>" +
-  //           "<button type='button' class='btn btn-outline-info' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Edit</a><br>" + 
-  //           "<button type='button' class='btn btn-outline-info' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Save</a></td>" +
-  //           "</tr>"
-  //       }
-  //       table += "</table></div>";
-  //       dashboard += table;
-
-  //       document.getElementById("dashboard").innerHTML = dashboard;
-  //       addUserButtonListener();
-
-  //     }
-
-  //   })
-  //   .catch(function (error) {
-  //     location.reload();
-  //   })
-
-  // async function postData(data) {
-  //   try {
-  //     let resObject = await fetch("/update-profile", {
-  //       method: 'POST',
-  //       headers: {
-  //         "Accept": 'application/json',
-  //         "Content-Type": 'application/json'
-  //       },
-  //       body: JSON.stringify(data)
-  //     });
-  //     let parsedData = await resObject.json();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
 });
 
-
-
-
-// This function checks whether page is loaded
+//----------------------------------------------------------------------------------------------
+// This function checks whether page is loaded.
+//-----------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();
@@ -90,4 +64,3 @@ function ready(callbackFunc) {
     document.addEventListener("DOMContentLoaded", callbackFunc);
   }
 }
-

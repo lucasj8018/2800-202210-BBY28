@@ -2,6 +2,7 @@
 var map;
 var geocoder;
 var addressData;
+var google;
 
 //----------------------------------------------------------------------------------------
 // This function is called when the kitchenMap.html page finishes loading. It sends a
@@ -30,7 +31,7 @@ ready(function () {
 // This function is called when the Find Private Kitchen page loads and it add a google map
 // that is centered based on the geolocation of the user's device.
 //-------------------------------------------------------------------------------------------
-function initMap() {
+async function initMap() {
   var location = {
     lat: 49.1887857,
     lng: -122.742487

@@ -53,6 +53,7 @@ ready(function () {
                 recipeOrDish: isRecipeOrDish
             })
         }
+        window.location.replace("/kitchenDetails?id=loggedinUser");
 
     });
 })
