@@ -28,6 +28,7 @@ app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
 app.use("/img", express.static("./public/img"));
 app.use("/font", express.static("./public/font"));
+app.use("/mp3", express.static("./public/mp3"));
 
 app.use(express.json());
 app.use(express.urlencoded({
