@@ -28,6 +28,7 @@ app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
 app.use("/img", express.static("./public/img"));
 app.use("/font", express.static("./public/font"));
+app.use("/mp3", express.static("./public/mp3"));
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -53,6 +54,11 @@ app.get("/", function (req, res) {
   }
 
 });
+
+app.get("/contact", function (req, res) {
+  let contact = fs.readFileSync("./app/html/contact.html", "utf8");
+  res.send(contact);
+})
 
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
@@ -622,6 +628,8 @@ async function updateUserDashboard(req, res){
 app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
 });
+
+
 
 async function connectToMySQL(req, res) {
   const mysql = require("mysql2/promise");
