@@ -55,6 +55,11 @@ app.get("/", function (req, res) {
 
 });
 
+app.get("/contact", function (req, res) {
+  let contact = fs.readFileSync("./app/html/contact.html", "utf8");
+  res.send(contact);
+})
+
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
   res.send(signUp);
@@ -624,10 +629,7 @@ app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
 });
 
-app.get("/contact", function (req, res) {
-  let contact = fs.readFileSync("./app/html/contact.html", "utf8");
-  res.send(contact);
-})
+
 
 async function connectToMySQL(req, res) {
   const mysql = require("mysql2/promise");
