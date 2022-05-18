@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'on_my_wayregular';
+    src: url('../font/on_my_way/on_my_way_free_version-webfont.woff2') format('woff2'),
+         url('../font/on_my_way/on_my_way_free_version-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 html {
     height: 100%;
 }
@@ -7,10 +16,10 @@ body {
     display: grid;
     grid-template-columns: 4% 92% 4%;
     font-family: 'latolight';
-    font-size: 5vw;
     background-image: url("/img/spices.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    
 }
 
 ::-webkit-scrollbar {
@@ -30,10 +39,6 @@ body {
     grid-column: 1 / span 3;
     grid-row: 1 / span 1;
 
-}
-
-a.navbar-brand {
-    font-size: 5vw;
 }
 
 #login {
@@ -126,37 +131,17 @@ div label  {
 
 #footer {
     grid-column: 1 / span 3;
-    grid-row: 4 / span 1;
 }
 
-#copyright {
-    font-size: 3vw;
-    padding: 5px;
-}
-
-.nav-item {
-    padding: 10px 0.5vw;
-    line-height: 0px;
-}
-
-.p-3 {
-    padding: 0!important;
-}
-
-.btn {
-    padding: 0 3vw;
-    font-size: 3vw;
-}
 
 @media only screen and (min-width: 600px) {
-    a.navbar-brand {
-        font-size: 20pt;
+    body {
+        padding-bottom: 50px;
     }
 
     #login {
         max-width: 600px;
         min-width: 550px;
-        width: 40vw;
         padding: 50px;
     }
 
@@ -167,13 +152,5 @@ div label  {
 
     #username, #password, #loginButton, #signUpButton {
         font-size: 20pt;
-    }
-
-    #footer {
-        height: 20px;
-    }
-
-    .btn, #copyright {
-        font-size: 15pt;
     }
 }
