@@ -844,12 +844,23 @@ async function subQuantity(req, res){
   });
 
   db.connect();
-  let subQuery = "update bby_28_shoppingcart set quantity = quantity - 1 where customerID = ? and cookID = ? and recipeID = ?";
-  let subValues = [
+  let checkItemCount = "SELECT quantity from bby_28_shoppingcart where customerID = ? and cookID = ? and recipeID = ?";
+  let checkValues = [
     req.session.userId, req.body.cookID, req.body.recipeID
   ];
-  await db.query(subQuery, subValues);
-  res.send({ status: "success", msg: "Quantity decreased" });
+  let [itemQuantity, fields] = await db.query(checkItemCount, checkValues);
+  if(itemQuantity[0].quantity == 1){
+    let errorDivID = req.body.cookID + "_" + req.body.recipeID + "_sub";
+    res.send({status: "fail", id: errorDivID});
+  } else {
+    let subQuery = "update bby_28_shoppingcart set quantity = quantity - 1 where customerID = ? and cookID = ? and recipeID = ?";
+    let subValues = [
+      req.session.userId, req.body.cookID, req.body.recipeID
+    ];
+    await db.query(subQuery, subValues);
+    res.send({ status: "success", msg: "Quantity decreased" });
+  }
+
   db.end();
 }
 

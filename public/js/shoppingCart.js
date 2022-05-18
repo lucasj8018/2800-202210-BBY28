@@ -20,7 +20,8 @@ ready(async function () {
         "<td>" + data[i].name + "</td>" +
         "<td>$" + data[i].price + "</td>" +
         "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='subQuantity(this.name)'>-</button> " + data[i].quantity +
-        " <button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>+</button>" + "</td>" +
+        " <button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>+</button>" +
+        "<br/><div id='" + data[i].cookID + "_" + data[i].recipeID + "_sub'></div></td>" +
         "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'>Delete</button></td>" +
         "</tr>"
       }
@@ -47,7 +48,7 @@ async function postDeleteItem(data){
       body: JSON.stringify(data)
     });
     let parsedData = await resObject.json();
-    if (parsedData.status = "success"){
+    if (parsedData.status == "success"){
       location.reload();
     }
   } catch (error) {
@@ -66,8 +67,11 @@ async function postSubQuantity(data){
       body: JSON.stringify(data)
     });
     let parsedData = await resObject.json();
-    if (parsedData.status = "success"){
+    if (parsedData.status == "success"){
       location.reload();
+    } else {
+      console.log(parsedData.id);
+      document.getElementById(parsedData.id).innerHTML = "Cannot have a quantity less than zero.";
     }
   } catch (error) {
     console.log(error);
@@ -85,7 +89,7 @@ async function postAddQuantity(data){
       body: JSON.stringify(data)
     });
     let parsedData = await resObject.json();
-    if (parsedData.status = "success"){
+    if (parsedData.status == "success"){
       location.reload();
     }
   } catch (error) {
