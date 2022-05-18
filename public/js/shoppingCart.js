@@ -13,13 +13,14 @@ ready(async function () {
     } else {
       // Populates shopping cart table with items the user has added
       let shoppingCartTable = "<h1>Your Order</h1><table id='cartTable' class='table table-light table-striped'>";
-      shoppingCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th></tr>";
+      shoppingCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
       for (let i = 0; i < data.length; i++){
         shoppingCartTable += "<tr>" +
         "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' alt='cartImg'></td>" +
         "<td>" + data[i].name + "</td>" +
         "<td>$" + data[i].price + "</td>" +
         "<td>" + data[i].quantity + "</td>" +
+        "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'>Delete</button></td>" +
         "</tr>"
       }
       shoppingCartTable += "</table>";
@@ -33,6 +34,33 @@ ready(async function () {
     console.log(error);
   })
 });
+
+async function postDeleteItem(data){
+  try {
+    let resObject = await fetch("/deleteCartItem", {
+      method: 'POST',
+      headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    let parsedData = await resObject.json();
+    console.log(parsedData);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function deleteItemClicked(name){
+  let ids = name.split('_');
+  let cook = ids[0];
+  let recipe = ids[1];
+  postDeleteItem({
+    cookID: cook,
+    recipeID: recipe
+  });
+}
 
 //----------------------------------------------------------------------------------------------
 // This function checks whether page is loaded.

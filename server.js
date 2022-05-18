@@ -786,7 +786,7 @@ app.get("/displayShoppingCart", async function(req, res){
     db.connect();
 
     let shoppingCartQuery = `
-      SELECT recipePath, name, price, quantity
+      SELECT recipePath, name, price, quantity, cookID, recipeID
       FROM BBY_28_recipe, BBY_28_ShoppingCart
       WHERE recipeID = id
       AND cookID = userID
@@ -804,6 +804,30 @@ app.get("/displayShoppingCart", async function(req, res){
   }
 
 });
+
+app.post("/deleteCartItem", function (req, res){
+  deleteCartItem(req, res);
+})
+
+async function deleteCartItem(req, res){
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+  let deleteQuery = "DELETE FROM bby_28_shoppingcart WHERE customerID = ? AND cookID = ? AND recipeID = ?";
+  let deleteValues = [
+  req.session.userId, req.body.cookID, req.body.recipeID
+  ];
+  await db.query(deleteQuery, deleteValues);
+
+  db.end();
+}
 
 // For page not found 404 error
 app.use(function (req, res, next) {
