@@ -103,7 +103,7 @@ div label  {
 }
 
 #loginButtonLabel {
-    padding: 1vw;
+    padding: 5px;
     color: #FFF3DF;
 }
 
@@ -125,7 +125,6 @@ div label  {
 }
 
 #signUpButtonLabel {
-    padding: 0.7vw 0px 1.5vw 0px;
     color: black;
 }
 

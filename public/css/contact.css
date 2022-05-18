@@ -16,7 +16,18 @@ body {
     grid-row: 1 / span 1;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+}
 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+
+::-webkit-scrollbar-track {
+    background-color: azure;
+}
 
 #teamTitle {
     grid-column: 2 / span 1;
@@ -54,6 +65,10 @@ body {
 
 .name {
     font-size: 16pt;
+}
+
+.email {
+    font-size: 12pt;
 }
 
 .chefHatHidden {
@@ -304,7 +319,7 @@ body {
     }
 
     .name {
-        font-size: 20pt;
+        font-size: 18pt;
     }
 
     .email {
