@@ -140,6 +140,7 @@ app.get("/kitchenRegistration", function (req, res) {
   if (req.session.loggedIn) {
     res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
   } else {
+    // If user's not logged in, redirect to login page
     res.redirect("/");
   }
 });
@@ -175,6 +176,15 @@ app.get("/kitchenDetails", async function (req, res) {
   }
 
   db.end();
+})
+
+app.get("/addToCart", function(req, res) {
+  if (req.session.loggedIn) {
+    res.send(fs.readFileSync("./app/html/addToCart.html", "utf8"));
+  } else {
+    res.redirect("/");
+  }
+  //Uhhhh, how do I know what it wants? :,)
 })
 
 app.get("/upload", function (req, res) {
