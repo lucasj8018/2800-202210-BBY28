@@ -81,6 +81,57 @@ body {
     border-color: #DE2007;
 }
 
+#buttonMenu {
+    height: 450px;
+    text-align: center;
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 12% 15% 12% 15% 12% 15% 12% 15% 12%
+}
+
+#question {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+    font-size: 24pt;
+    margin-bottom: 40px;
+}
+
+#viewKitchens {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+}
+
+#myCart {
+    grid-column: 2 / span 1;
+    grid-row: 5 / span 1;
+}
+
+#registerKitchen {
+    grid-column: 2 / span 1;
+    grid-row: 7 / span 1;
+}
+
+#viewMyKitchen {
+    grid-column: 2 / span 1;
+    grid-row: 9 / span 1;
+}
+
+.buttonLabel {
+    align-self: center;
+    text-decoration: none;
+    color: #FFF3DF;
+    margin-bottom: 70px;
+    padding: 15px;
+    background-color: #DE2007;
+    border-radius: 25px;
+}
+
+.buttonLabel:hover {
+    background-color: #BB1B05;
+    color: #FFF3DF;
+}
+
 #adminAdd {
     margin-top: 55px;
 }
@@ -192,9 +243,26 @@ body {
         margin-bottom: 10px
     }
 
+    #buttonMenu {
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+        grid-template-rows: 15% 15% 12% 15% 12% 15% 12% 15% 12%
+    }
+
+    #question {
+        font-size: 30pt;
+    }
+
     #adminAdd {
         margin-top: 120px;
         margin-bottom: 70px;
+    }
+
+    .buttonLabel {
+        font-size: 16pt;
     }
 
     .form-check {
