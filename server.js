@@ -825,7 +825,55 @@ async function deleteCartItem(req, res){
   req.session.userId, req.body.cookID, req.body.recipeID
   ];
   await db.query(deleteQuery, deleteValues);
+  res.send({ status: "success", msg: "Item deleted" });
+  db.end();
+}
 
+app.post("/subQuantity", function (req, res){
+  subQuantity(req, res);
+})
+
+async function subQuantity(req, res){
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+  let subQuery = "update bby_28_shoppingcart set quantity = quantity - 1 where customerID = ? and cookID = ? and recipeID = ?";
+  let subValues = [
+    req.session.userId, req.body.cookID, req.body.recipeID
+  ];
+  await db.query(subQuery, subValues);
+  res.send({ status: "success", msg: "Quantity decreased" });
+  db.end();
+}
+
+app.post("/addQuantity", function (req, res){
+  addQuantity(req, res);
+})
+
+async function addQuantity(req, res){
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
+  let addQuery = "update bby_28_shoppingcart set quantity = quantity + 1 where customerID = ? and cookID = ? and recipeID = ?";
+  let addValues = [
+    req.session.userId, req.body.cookID, req.body.recipeID
+  ];
+  await db.query(addQuery, addValues);
+  res.send({ status: "success", msg: "Quantity increased" });
   db.end();
 }
 

@@ -19,7 +19,8 @@ ready(async function () {
         "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' alt='cartImg'></td>" +
         "<td>" + data[i].name + "</td>" +
         "<td>$" + data[i].price + "</td>" +
-        "<td>" + data[i].quantity + "</td>" +
+        "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='subQuantity(this.name)'>-</button> " + data[i].quantity +
+        " <button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>+</button>" + "</td>" +
         "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'>Delete</button></td>" +
         "</tr>"
       }
@@ -46,7 +47,47 @@ async function postDeleteItem(data){
       body: JSON.stringify(data)
     });
     let parsedData = await resObject.json();
-    console.log(parsedData);
+    if (parsedData.status = "success"){
+      location.reload();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function postSubQuantity(data){
+  try {
+    let resObject = await fetch("/subQuantity", {
+      method: 'POST',
+      headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    let parsedData = await resObject.json();
+    if (parsedData.status = "success"){
+      location.reload();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function postAddQuantity(data){
+  try {
+    let resObject = await fetch("/addQuantity", {
+      method: 'POST',
+      headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    let parsedData = await resObject.json();
+    if (parsedData.status = "success"){
+      location.reload();
+    }
   } catch (error) {
     console.log(error);
   }
@@ -60,6 +101,26 @@ function deleteItemClicked(name){
     cookID: cook,
     recipeID: recipe
   });
+}
+
+function subQuantity(name){
+  let ids = name.split('_');
+  let cook = ids[0];
+  let recipe = ids[1];
+  postSubQuantity({
+    cookID: cook,
+    recipeID: recipe
+  })
+}
+
+function addQuantity(name){
+  let ids = name.split('_');
+  let cook = ids[0];
+  let recipe = ids[1];
+  postAddQuantity({
+    cookID: cook,
+    recipeID: recipe
+  })
 }
 
 //----------------------------------------------------------------------------------------------
