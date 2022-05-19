@@ -44,8 +44,8 @@ app.get("/", function (req, res) {
 
 });
 
-app.get("/myCart", function (req, res) {
-  if (req.session.loggedIn) {
+app.get("/myCart", function (req, res){
+  if (req.session.loggedIn){
     let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
     res.send(myCart);
   } else {
@@ -53,7 +53,18 @@ app.get("/myCart", function (req, res) {
     res.redirect("/");
   }
 
-})
+});
+
+app.get("/kitchenOrders", function (req, res){
+  if (req.session.loggedIn){
+    let kitchenOrders = fs.readFileSync("./app/html/kitchenOrders.html", "utf8");
+    res.send(kitchenOrders);
+  } else {
+    // If users not logged in, redirecte to login page
+    res.redirect("/");
+  }
+
+});
 
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
@@ -151,6 +162,7 @@ app.get("/kitchenRegistration", function (req, res) {
   if (req.session.loggedIn) {
     res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
   } else {
+    // If user's not logged in, redirect to login page
     res.redirect("/");
   }
 });
@@ -186,6 +198,14 @@ app.get("/kitchenDetails", async function (req, res) {
   }
 
   db.end();
+})
+
+app.get("/addToCart", function(req, res) {
+  if (req.session.loggedIn) {
+    res.send(fs.readFileSync("./app/html/addToCart.html", "utf8"));
+  } else {
+    res.redirect("/");
+  }
 })
 
 app.get("/upload", function (req, res) {
@@ -897,6 +917,51 @@ async function addQuantity(req, res) {
   res.send({ status: "success", msg: "Quantity increased" });
   db.end();
 }
+//----------------------------------------------------------------------------------------
+// Listens to a get routing request and loads the addToCart.html page.
+//----------------------------------------------------------------------------------------
+app.get("/recipe-dish", function (req, res) {
+
+  // check for a session 
+  if (req.session.loggedIn) {
+    let dishDetail = fs.readFileSync("./app/html/addToCart.html", "utf8");
+    res.send(dishDetail);
+
+  } else {
+    // If users not logged in, rediret to login page
+    res.redirect("/");
+  }
+});
+
+//----------------------------------------------------------------------------------------
+// Listens to a get request and reads data from the database for the requested recipe or dish.
+//----------------------------------------------------------------------------------------
+app.get("/recipe-dish-data", async function (req, res) {
+
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+
+    db.connect();
+    const idOfResponse = req.query["id"].split("/");
+    let userId = idOfResponse[0];
+    let recipeDishId = idOfResponse[1];
+  
+    const [results, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ? AND id = ?", [userId, recipeDishId]);
+  
+    if (results.length != 0) {
+      res.json(results);
+    }
+  
+    db.end();
+  }
+});
+
 
 // For page not found 404 error
 app.use(function (req, res, next) {
