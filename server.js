@@ -44,6 +44,17 @@ app.get("/", function (req, res) {
 
 });
 
+app.get("/myCart", function (req, res){
+  if (req.session.loggedIn){
+    let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
+    res.send(myCart);
+  } else {
+    // If users not logged in, redirecte to login page
+    res.redirect("/");
+  }
+
+});
+
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
   res.send(signUp);

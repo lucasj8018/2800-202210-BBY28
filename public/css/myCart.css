@@ -1,0 +1,257 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 5% 90% 5%;
+    font-family: 'latolight';
+    background-color: #c49a68;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+    padding-bottom: 1800px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+::-webkit-scrollbar-track {
+    background-color: azure;
+}
+
+#navbar {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+}
+
+#cartTitle {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+    font-size: 24pt;
+    align-self: center;
+    margin-top: 50px;
+}
+
+#shoppingCart {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 10px grey;
+    padding-bottom: 50px;
+    min-height: 450px;
+    margin-top: 75px;
+    overflow: auto;
+}
+
+#tableHeader {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+td {
+    padding-left: 10px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.money {
+    word-break: break-word;
+}
+
+.name {
+    word-break: break-word;
+}
+
+.number {
+    word-break: break-word;
+}
+
+#imageCol {
+    width: 10%;
+}
+
+#dishCol {
+    width: 30%;
+    font-size: 16pt;
+}
+
+#priceCol {
+    width: 25%;
+    font-size: 16pt;
+}
+
+#quantityCol {
+    width: 30%;
+    font-size: 16pt;
+}
+
+.quantityButton {
+    height: 19px;
+    width: 19px;
+}
+
+#quantity {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#deleteCol {
+    width: 2%;
+    padding-right: 10px;
+}
+
+.trash {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+img {
+    width: 70px;
+    height: 70px;
+}
+
+#cartMenu {
+    position: sticky;
+    bottom: -55px;
+    background-color: white;
+    padding-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 285px;
+}
+
+#total {
+    font-size: 16pt;
+    text-align: right;
+}
+
+#checkoutDiv {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+
+#deleteCart {
+    background-color: #FFF3DF;
+    color: black !important;
+    border-color: #FFF3DF !important;
+}
+
+#deleteCart:hover {
+    background-color: #E4D1B1 !important;
+}
+
+#checkout {
+    background-color: #DE2007;
+}
+
+#checkout:hover {
+    color: #FFF3DF !important;
+    background-color: #BB1B05 !important;
+    border-color: #BB1B05 !important;
+}
+
+#cartHistoryTitle {
+    grid-column: 2 / span 1;
+    grid-row: 5 / span 1;
+    text-align: center;
+    font-size: 24pt;
+    align-self: center;
+    margin-top: 175px;
+}
+
+#shoppingCartHistory {
+    grid-column: 2 / span 1;
+    grid-row: 6 / span 1;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 10px grey;
+    padding-bottom: 50px;
+    min-height: 450px;
+    margin-top: 75px;
+    overflow: auto;
+}
+
+#tableHistoryHeader {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+#dateCol {
+    width: 5%;
+    font-size: 16pt;
+}
+
+#statusCol {
+    width: 5%;
+    font-size: 16pt;
+}
+
+#viewCol {
+    width: 5%;
+}
+
+#view {
+    background-color: #DE2007;
+}
+
+#view:hover {
+    color: #FFF3DF !important;
+    background-color: #BB1B05 !important;
+    border-color: #BB1B05 !important;
+}
+
+@media only screen and (min-width: 600px) {
+    
+    #cartTitle {
+        font-size: 32pt;
+    }
+
+    td {
+        font-size: 16pt;
+    }
+
+    #shoppingCart {
+        width: 60%;
+        justify-self: center;
+    }
+
+    #imageCol {
+        font-size: 24pt;
+    }
+
+    #dishCol {
+        font-size: 24pt;
+    }
+    
+    #priceCol {
+        font-size: 24pt;
+    }
+    
+    #quantityCol {
+        width: 30%;
+        font-size: 24pt;
+    }
+
+    .cartStatus {
+        font-size: 16pt;
+    }
+
+    #cartHistoryTitle {
+        font-size: 32pt;
+    }
+
+    #shoppingCartHistory {
+        width: 60%;
+        justify-self: center;
+    }
+}
