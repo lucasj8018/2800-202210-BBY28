@@ -932,7 +932,6 @@ app.get("/checkoutCart", async function (req, res){
     db.connect();
     let checkoutQuery = "SELECT * FROM bby_28_shoppingcart where customerID = ?";
     let [checkoutValues, fields] = await db.query(checkoutQuery, [req.session.userId]);
-    console.log(checkoutValues);
 
     let cooks = "";
     for (let i = 0; i < checkoutValues.length; i++){
@@ -1035,7 +1034,6 @@ app.post('/add-to-shoppingcart', async function (req, res) {
 
   var addItem = "use comp2800; insert ignore into BBY_28_Shoppingcart (customerID, cookID, recipeID, quantity) values ? ";
   var addItemInfo = [[req.session.userId, req.body.cookId, req.body.recipeId, req.body.qty]];
-  console.log("recipe added");
 
   await db.query(addItem, [addItemInfo]);
   db.end();
@@ -1060,7 +1058,6 @@ app.get("/displayPreviousCarts", async function (req, res){
     `;
     const [prevCartResults, cartFields] = await db.query(prevCartQuery, [req.session.userId]);
     if (prevCartResults.length != 0) {
-      console.log(prevCartResults);
       res.json(prevCartResults);
     }
     db.end();
