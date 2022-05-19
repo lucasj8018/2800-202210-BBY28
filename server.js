@@ -780,8 +780,9 @@ app.get("/kitchen-details", async function (req, res) {
     }
 
     const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ?", [idOfResponse]);
-    recipeResults.push({ loggedinId: req.session.userId })
-
+    const [userResults, fields2] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [idOfResponse]);
+    recipeResults.push({ loggedinId: req.session.userId, kitchenName: userResults[0].kitchenName})
+  
     if (recipeResults.length != 0) {
       res.json(recipeResults);
     }
@@ -961,6 +962,34 @@ app.get("/recipe-dish-data", async function (req, res) {
     db.end();
   }
 });
+
+//----------------------------------------------------------------------------------------
+// Listens to a post request to receive the add-to-shoppingcart dish data and save it to 
+// the bby_28_Shoppingcart table
+//----------------------------------------------------------------------------------------
+app.post('/add-to-shoppingcart', async function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  console.log(req.body);
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+  db.connect();
+
+  var addItem = "use comp2800; insert ignore into BBY_28_Shoppingcart (customerID, cookID, recipeID, quantity) values ? ";
+  var addItemInfo = [[req.session.userId, req.body.cookId, req.body.recipeId, req.body.qty]];
+  console.log("recipe added");
+
+  await db.query(addItem, [addItemInfo]);
+  db.end();
+
+});
+
+
 
 
 // For page not found 404 error
