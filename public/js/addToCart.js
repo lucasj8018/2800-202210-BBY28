@@ -12,6 +12,8 @@ ready(async function () {
   const id = url.substring(url.lastIndexOf('=') + 1).split("/");
   var userId = id[0];
   var recipeDishId = id[1];
+  var unitPrice;
+  var dishName;
 
   console.log(userId + recipeDishId);
   fetch("/recipe-dish-data?id=" + userId + "/" + recipeDishId)
@@ -20,10 +22,10 @@ ready(async function () {
     })
     .then((data) => {
 
-        console.log(data);
+      console.log(data);
 
-        let receipeDishDetails = "";
-        receipeDishDetails = `<div id="dish-description">
+      let receipeDishDetails = "";
+      receipeDishDetails = `<div id="dish-description">
         <div class="card" style="width: 18rem;">
             <img src=./img/` + data[0].recipePath + ` class="card-img-top" alt="" id="dish-photo">
             <div class="card-body">
@@ -31,23 +33,64 @@ ready(async function () {
                 <p class="dish-description">` + data[0].description + `</p>
             </div>`
 
-        if (data[0].purchaseable == 1) {
-            receipeDishDetails += `<ul class="list-group list-group-flush">
+      if (data[0].purchaseable == 1) {
+        receipeDishDetails += `<ul class="list-group list-group-flush">
                 <li class="list-group-item" id="dish-price">Price($CAD):  ` + data[0].price + `</li>
                 </ul></div>`
 
-        } else {
-            receipeDishDetails += `<ul class="list-group list-group-flush">
+      } else {
+        receipeDishDetails += `<ul class="list-group list-group-flush">
             <li class="list-group-item" id="dish-price">Price($CAD): N/A</li>
             </ul></div>`
-        }
+      }
 
-        document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
+      document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
+
+      dishName = data[0].name;
+      unitPrice = data[0].price;
+      document.getElementById("subtotal").innerHTML = unitPrice;
 
     })
     .catch(function (error) {
       console.log(error);
     })
+
+
+  var qty = 0;
+  var subtotal;
+
+  document.getElementById("plus").addEventListener("click", function (e) {
+    e.preventDefault();
+    if (qty <= 100) {
+      qty++;
+      subtotal = unitPrice * qty;
+      document.getElementById("quantity").value = qty;
+      document.getElementById("subtotal").innerHTML = subtotal;
+    }
+  })
+
+  document.getElementById("minus").addEventListener("click", function (e) {
+    e.preventDefault();
+    if (qty > 1) {
+      qty--;
+      subtotal = unitPrice * qty;
+      document.getElementById("quantity").value = qty;
+      document.getElementById("subtotal").innerHTML = subtotal;
+    }
+  })
+
+  document.getElementById("add-to-cart").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    postData({
+      userId: userId,
+      dishId: recipeDishId,
+      name: dishName,
+      qty: qty,
+      subtotal: subtotal
+    })
+
+  })
 
 });
 
@@ -62,7 +105,21 @@ function ready(callbackFunc) {
   }
 }
 
-
+async function postData(data) {
+  try {
+    let resObject = await fetch("/", {
+      method: 'POST',
+      headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    let parsedData = await resObject.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 // $(document).ready(function() {
@@ -84,8 +141,7 @@ function ready(callbackFunc) {
 //             quantity = parseInt($('#quantity').val());
 //             quantity -= 1;
 //             $('#quantity').val(quantity);
-            
+
 //         }
 //     })
 // });
-
