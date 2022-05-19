@@ -85,11 +85,9 @@ ready(async function () {
     e.preventDefault();
 
     postData({
-      userId: userId,
-      dishId: recipeDishId,
-      name: dishName,
-      qty: qty,
-      subtotal: subtotal
+      cookId: userId,
+      recipeId: recipeDishId,
+      qty: qty
     })
 
   })
@@ -109,7 +107,7 @@ function ready(callbackFunc) {
 
 async function postData(data) {
   try {
-    let resObject = await fetch("/", {
+    let resObject = await fetch("/add-to-shoppingcart", {
       method: 'POST',
       headers: {
         "Accept": 'application/json',
