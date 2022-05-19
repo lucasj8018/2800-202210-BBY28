@@ -25,11 +25,33 @@ ready(async function () {
         "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'>Delete</button></td>" +
         "</tr>"
       }
-      shoppingCartTable += "</table>";
+      shoppingCartTable += "</table><div id='deleteCart'><button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/></div>";
 
       document.getElementById("shoppingCart").innerHTML = shoppingCartTable;
     }
+    document.getElementById("deleteCartButton").addEventListener("click", function (){
+      document.getElementById("deleteCart").innerHTML = "<button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/>";
+      let confirmButton = document.createElement('button');
+      confirmButton.innerText = "Confirm";
+      confirmButton.className = 'btn btn-success'
+      confirmButton.onclick = function(){
+        postDeleteItem({
+          cookID: -1,
+          recipeID: -1
+        });
+      };
+      document.getElementById("deleteCart").appendChild(confirmButton);
 
+
+      let cancelButton = document.createElement('button');
+      cancelButton.innerText = "Cancel";
+      cancelButton.className = 'btn btn-danger'
+      cancelButton.onclick = function(){
+        location.reload();
+      };
+      document.getElementById("deleteCart").appendChild(cancelButton);
+
+    })
 
   })
   .catch (function (error){

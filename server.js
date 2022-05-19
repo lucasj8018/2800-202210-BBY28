@@ -44,8 +44,8 @@ app.get("/", function (req, res) {
 
 });
 
-app.get("/myCart", function (req, res){
-  if (req.session.loggedIn){
+app.get("/myCart", function (req, res) {
+  if (req.session.loggedIn) {
     let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
     res.send(myCart);
   } else {
@@ -156,14 +156,14 @@ app.get("/kitchenRegistration", function (req, res) {
 });
 
 app.get("/kitchenDetails", async function (req, res) {
-  
-    const db = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "comp2800",
-      multipleStatements: true
-    });
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
 
   if (req.session.loggedIn) {
 
@@ -708,7 +708,7 @@ app.post('/upload-recipe-dish', async function (req, res) {
     recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, 1, req.body.price, RecipeDishPhoto]];
     console.log("dish added")
   }
- 
+
   await db.query(addRecipeOrDish, [recipeOrDishInfo]);
   db.end();
 
@@ -753,29 +753,29 @@ app.get("/kitchen-details", async function (req, res) {
     });
 
     db.connect();
-  
+
     let idOfResponse = req.query["id"];
     if (idOfResponse == "loggedinUser") {
       idOfResponse = req.session.userId;
     }
-  
+
     const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ?", [idOfResponse]);
-    recipeResults.push({ loggedinId: req.session.userId})
-  
+    recipeResults.push({ loggedinId: req.session.userId })
+
     if (recipeResults.length != 0) {
       res.json(recipeResults);
     }
-  
+
     db.end();
-    
+
   } else {
     // If users not logged in, redirect to login page
     res.redirect("/");
   }
 });
 
-app.get("/displayShoppingCart", async function(req, res){
-  if (req.session.loggedIn){
+app.get("/displayShoppingCart", async function (req, res) {
+  if (req.session.loggedIn) {
     const db = await mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -793,10 +793,10 @@ app.get("/displayShoppingCart", async function(req, res){
       AND customerID = ?
     `;
     const [shoppingCartResults, cartFields] = await db.query(shoppingCartQuery, [req.session.userId]);
-    if (shoppingCartResults.length != 0){
+    if (shoppingCartResults.length != 0) {
       res.json(shoppingCartResults);
     } else {
-      res.json([{recipePath : "EmptyShoppingCart"}]);
+      res.json([{ recipePath: "EmptyShoppingCart" }]);
     }
     db.end();
   } else {
@@ -805,11 +805,11 @@ app.get("/displayShoppingCart", async function(req, res){
 
 });
 
-app.post("/deleteCartItem", function (req, res){
+app.post("/deleteCartItem", function (req, res) {
   deleteCartItem(req, res);
 })
 
-async function deleteCartItem(req, res){
+async function deleteCartItem(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
     host: "localhost",
@@ -820,20 +820,30 @@ async function deleteCartItem(req, res){
   });
 
   db.connect();
-  let deleteQuery = "DELETE FROM bby_28_shoppingcart WHERE customerID = ? AND cookID = ? AND recipeID = ?";
-  let deleteValues = [
-  req.session.userId, req.body.cookID, req.body.recipeID
-  ];
-  await db.query(deleteQuery, deleteValues);
-  res.send({ status: "success", msg: "Item deleted" });
+  if (req.body.cookID == -1 && req.body.recipeID == -1) {
+    let deleteQuery = "DELETE FROM bby_28_shoppingcart where customerID = ?";
+    let deleteValues = [
+      req.session.userId
+    ];
+    await db.query(deleteQuery, deleteValues);
+    res.send({ status: "success", msg: "Item deleted" });
+  } else {
+    let deleteQuery = "DELETE FROM bby_28_shoppingcart WHERE customerID = ? AND cookID = ? AND recipeID = ?";
+    let deleteValues = [
+      req.session.userId, req.body.cookID, req.body.recipeID
+    ];
+    await db.query(deleteQuery, deleteValues);
+    res.send({ status: "success", msg: "Item deleted" });
+  }
+
   db.end();
 }
 
-app.post("/subQuantity", function (req, res){
+app.post("/subQuantity", function (req, res) {
   subQuantity(req, res);
 })
 
-async function subQuantity(req, res){
+async function subQuantity(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
     host: "localhost",
@@ -849,9 +859,9 @@ async function subQuantity(req, res){
     req.session.userId, req.body.cookID, req.body.recipeID
   ];
   let [itemQuantity, fields] = await db.query(checkItemCount, checkValues);
-  if(itemQuantity[0].quantity == 1){
+  if (itemQuantity[0].quantity == 1) {
     let errorDivID = req.body.cookID + "_" + req.body.recipeID + "_sub";
-    res.send({status: "fail", id: errorDivID});
+    res.send({ status: "fail", id: errorDivID });
   } else {
     let subQuery = "update bby_28_shoppingcart set quantity = quantity - 1 where customerID = ? and cookID = ? and recipeID = ?";
     let subValues = [
@@ -864,11 +874,11 @@ async function subQuantity(req, res){
   db.end();
 }
 
-app.post("/addQuantity", function (req, res){
+app.post("/addQuantity", function (req, res) {
   addQuantity(req, res);
 })
 
-async function addQuantity(req, res){
+async function addQuantity(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
     host: "localhost",
