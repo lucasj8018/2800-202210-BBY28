@@ -55,6 +55,17 @@ app.get("/myCart", function (req, res){
 
 });
 
+app.get("/kitchenOrders", function (req, res){
+  if (req.session.loggedIn){
+    let kitchenOrders = fs.readFileSync("./app/html/kitchenOrders.html", "utf8");
+    res.send(kitchenOrders);
+  } else {
+    // If users not logged in, redirecte to login page
+    res.redirect("/");
+  }
+
+});
+
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
   res.send(signUp);
@@ -195,7 +206,6 @@ app.get("/addToCart", function(req, res) {
   } else {
     res.redirect("/");
   }
-  //Uhhhh, how do I know what it wants? :,)
 })
 
 app.get("/upload", function (req, res) {

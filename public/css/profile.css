@@ -2,7 +2,7 @@ body {
     font-family: 'latolight';
     background-color: #c49a68;
     background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
-    padding-bottom: 300px;
+    padding-bottom: 500px;
 }
 
 ::-webkit-scrollbar {
@@ -94,27 +94,36 @@ body {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
     font-size: 24pt;
-    margin-bottom: 40px;
 }
 
 #viewKitchens {
     grid-column: 2 / span 1;
     grid-row: 3 / span 1;
+    margin-top: 40px;
 }
 
 #myCart {
     grid-column: 2 / span 1;
     grid-row: 5 / span 1;
+    margin-top: 40px;
 }
 
 #registerKitchen {
     grid-column: 2 / span 1;
     grid-row: 7 / span 1;
+    margin-top: 40px;
+}
+
+#kitchenOrders {
+    grid-column: 2 / span 1;
+    grid-row: 9 / span 1;
+    margin-top: 40px;
 }
 
 #viewMyKitchen {
     grid-column: 2 / span 1;
-    grid-row: 9 / span 1;
+    grid-row: 11 / span 1;
+    margin-top: 55px;
 }
 
 .buttonLabel {

@@ -1,8 +1,5 @@
 //-----------------------------------------------------------------------------------
-// This function is called when the profile page first loads. It gets the user data 
-// and populate on the profile card.  It displays the user list dashboard if it logged
-// in as an admin user.  It also listens to post request to send updated profile data
-// or dashboard updates to the server and save to the database.
+// 
 //-----------------------------------------------------------------------------------
 "use strict";
 ready(async function () {

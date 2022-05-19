@@ -1,0 +1,125 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 5% 90% 5%;
+    font-family: 'latolight';
+    background-color: #c49a68;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+    padding-bottom: 900px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+::-webkit-scrollbar-track {
+    background-color: azure;
+}
+
+#navbar {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+}
+
+#orderTitle {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+    font-size: 24pt;
+    align-self: center;
+    margin-top: 50px;
+}
+
+#orderList {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 10px grey;
+    padding-bottom: 50px;
+    min-height: 450px;
+    margin-top: 75px;
+    overflow: auto;
+}
+
+#tableHeader {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+td {
+    padding-left: 10px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.name {
+    word-break: break-word;
+}
+
+#usernameCol {
+    width: 10%;
+    font-size: 16pt;
+}
+
+#dishCol {
+    width: 30%;
+    font-size: 16pt;
+}
+
+#quantityCol {
+    width: 25%;
+    font-size: 16pt;
+}
+
+#doneCol {
+    width: 5%;
+}
+
+#done {
+    background-color: #00AD42 !important;
+    border-color: #00AD42 !important;
+    margin-right: 10px;
+}
+
+#done:hover {
+    color: #FFF3DF !important;
+    background-color: #006A28 !important;
+    border-color: #006A28 !important;
+}
+
+@media only screen and (min-width: 600px) {
+    
+    #orderTitle {
+        font-size: 32pt;
+    }
+
+    td {
+        font-size: 16pt;
+    }
+
+    #orderList {
+        width: 60%;
+        justify-self: center;
+    }
+
+    #usernameCol {
+        font-size: 24pt;
+    }
+
+    #dishCol {
+        font-size: 24pt;
+    }
+    
+    #quantityCol {
+        font-size: 24pt;
+    }
+}
