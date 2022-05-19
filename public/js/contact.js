@@ -11,12 +11,20 @@ function playCrunch(){
 // and the classes for each chef hat will change to "chefHatVisible", such that
 // the chef hats will then appear.
 //----------------------------------------------------------------------------------- 
+
+let biteCount = 0;
+
 document.getElementById("bite").addEventListener("click", function() {
+
+biteCount++;
+
+if (biteCount == 4) {
     playCrunch();
     document.getElementById("chefHat1Image").className = "chefHatVisible";
     document.getElementById("chefHat2Image").className = "chefHatVisible";
     document.getElementById("chefHat3Image").className = "chefHatVisible";
     document.getElementById("chefHat4Image").className = "chefHatVisible";
+}
 });
 
 
