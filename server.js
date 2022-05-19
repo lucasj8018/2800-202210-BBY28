@@ -1042,6 +1042,32 @@ app.post('/add-to-shoppingcart', async function (req, res) {
 
 });
 
+app.get("/displayPreviousCarts", async function (req, res){
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    })
+    db.connect();
+
+    let prevCartQuery = `
+      SELECT *
+      FROM bby_28_prevcart
+      WHERE customerID = ?
+    `;
+    const [prevCartResults, cartFields] = await db.query(prevCartQuery, [req.session.userId]);
+    if (prevCartResults.length != 0) {
+      console.log(prevCartResults);
+      res.json(prevCartResults);
+    }
+    db.end();
+  } else {
+    res.redirect("/");
+  }
+})
 
 
 

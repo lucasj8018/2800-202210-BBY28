@@ -74,6 +74,31 @@ ready(async function () {
   .catch (function (error){
     console.log(error);
   })
+
+  fetch("/displayPreviousCarts")
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    let prevcart = `<table id="cartHistoryTable">
+    <tr id="tableHistoryHeader">
+        <td id="dateCol"><b>Date</b></td>
+        <td id="statusCol"><b>Status</b></td>
+        <td id="viewCol"></td>
+    </tr>
+`;
+    for (let i = 0; i < data.length; i++){
+      prevcart += `<tr><td>` + data[i].timestamp + `</td>
+      <td class='status'>Complete</td>
+      <td><button type="button" class="btn btn-danger" id='` + data[i].historyID + `'>View</button></td>
+      </tr>`
+    }
+    prevcart += `</table>`;
+    document.getElementById("shoppingCartHistory").innerHTML = prevcart;
+  })
+  .catch (function (error){
+    console.log(error);
+  })
 });
 
 async function postDeleteItem(data){
