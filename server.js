@@ -918,6 +918,59 @@ async function addQuantity(req, res) {
   res.send({ status: "success", msg: "Quantity increased" });
   db.end();
 }
+
+app.get("/checkoutCart", async function (req, res){
+  if (req.session.loggedIn){
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+
+    db.connect();
+    let checkoutQuery = "SELECT * FROM bby_28_shoppingcart where customerID = ?";
+    let [checkoutValues, fields] = await db.query(checkoutQuery, [req.session.userId]);
+    console.log(checkoutValues);
+
+    let cooks = "";
+    for (let i = 0; i < checkoutValues.length; i++){
+      cooks += checkoutValues[i].cookID + "/";
+    }
+    cooks = cooks.slice(0, -1);
+
+    let recipes = "";
+    for (let i = 0; i < checkoutValues.length; i++){
+      recipes += checkoutValues[i].recipeID + "/";
+    }
+    recipes = recipes.slice(0, -1);
+
+    let quantities = "";
+    for (let i = 0; i < checkoutValues.length; i++){
+      quantities += checkoutValues[i].quantity + "/";
+    }
+    quantities = quantities.slice(0, -1);
+
+    let historyQuery = "insert into bby_28_prevcart (customerID, cookIDs, recipeIDs, quantities, timestamp) values ?";
+    let today = new Date().toISOString().slice(0, 10)
+    let historyValues = [
+      [req.session.userId, cooks, recipes, quantities, today]
+    ];
+    await db.query(historyQuery, [historyValues]);
+
+    let deleteCurrentCart = "delete from bby_28_shoppingcart where customerID = ?"
+    await db.query(deleteCurrentCart, [req.session.userId]);
+    db.end();
+    res.redirect("/myCart");
+  } else {
+    res.redirect("/");
+  }
+
+
+})
+
+
 //----------------------------------------------------------------------------------------
 // Listens to a get routing request and loads the addToCart.html page.
 //----------------------------------------------------------------------------------------

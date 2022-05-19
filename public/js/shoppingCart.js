@@ -19,14 +19,14 @@ ready(async function () {
         "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' alt='cartImg'></td>" +
         "<td>" + data[i].name + "</td>" +
         "<td>$" + data[i].price + "</td>" +
-        "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='subQuantity(this.name)'>-</button> " + data[i].quantity +
-        " <button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>+</button>" +
+        "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='subQuantity(this.name)'>-</button> <span name='quantity'>" + data[i].quantity +
+        "</span><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>+</button>" +
         "<br/><div id='" + data[i].cookID + "_" + data[i].recipeID + "_sub'></div></td>" +
         "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'>Delete</button></td>" +
         "</tr>"
       }
       shoppingCartTable += "</table><div id='deleteCart'><button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/></div>";
-
+      shoppingCartTable += "<div id='checkoutDiv'><button id='checkout'>Checkout</button><br/></div>"
       document.getElementById("shoppingCart").innerHTML = shoppingCartTable;
     }
     document.getElementById("deleteCartButton").addEventListener("click", function (){
@@ -51,7 +51,24 @@ ready(async function () {
       };
       document.getElementById("deleteCart").appendChild(cancelButton);
 
-    })
+    });
+    document.getElementById('checkout').addEventListener("click", function (){
+      document.getElementById("checkoutDiv").innerHTML = "<button id='checkout'>Checkout</button><br/>";
+      let confirmButton = document.createElement('a');
+      confirmButton.innerText = "Confirm";
+      confirmButton.className = 'btn btn-success'
+      confirmButton.href = "/checkoutCart"
+      document.getElementById("checkoutDiv").appendChild(confirmButton);
+
+
+      let cancelButton = document.createElement('button');
+      cancelButton.innerText = "Cancel";
+      cancelButton.className = 'btn btn-danger'
+      cancelButton.onclick = function(){
+        location.reload();
+      };
+      document.getElementById("checkoutDiv").appendChild(cancelButton);
+    });
 
   })
   .catch (function (error){
