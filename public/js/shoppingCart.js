@@ -27,7 +27,7 @@ ready(async function () {
       shoppingCartTable += "</table><div id='deleteCart'><button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/></div>";
       shoppingCartTable += "<div id='checkoutDiv'><button id='checkout'>Checkout</button><br/></div>"
       document.getElementById("shoppingCart").innerHTML = shoppingCartTable;
-    }
+
     document.getElementById("deleteCartButton").addEventListener("click", function (){
       document.getElementById("deleteCart").innerHTML = "<button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/>";
       let confirmButton = document.createElement('button');
@@ -85,6 +85,7 @@ ready(async function () {
     totalPrice = totalPrice.toFixed(2);
     document.getElementById("totalPrice").innerText = "Total Price: $" + totalPrice;
     document.getElementById("totalItems").innerText = "Total Items: " + totalQuantity;
+    }
 
   })
   .catch (function (error){
