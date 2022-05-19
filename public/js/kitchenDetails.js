@@ -14,6 +14,8 @@ ready(async function () {
     })
     .then((data) => {
 
+      document.getElementById("currentKitchen").innerHTML = data[data.length -1].kitchenName;
+      
       if (id == data[data.length - 1].loggedinId || id == "loggedinUser") {
         document.getElementById("addButtonDIV").innerHTML = "<a id='addButton' href='/upload'>Add recipe/dish</a>"
       }

@@ -42,6 +42,7 @@ ready(async function () {
         receipeDishDetails += `<ul class="list-group list-group-flush">
             <li class="list-group-item" id="dish-price">Price($CAD): N/A</li>
             </ul></div>`
+        document.getElementById("content").innerHTML = "";
       }
 
       document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
@@ -49,6 +50,7 @@ ready(async function () {
       dishName = data[0].name;
       unitPrice = data[0].price;
       document.getElementById("subtotal").innerHTML = unitPrice;
+
 
     })
     .catch(function (error) {

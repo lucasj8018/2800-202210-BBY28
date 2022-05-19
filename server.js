@@ -780,7 +780,8 @@ app.get("/kitchen-details", async function (req, res) {
     }
   
     const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ?", [idOfResponse]);
-    recipeResults.push({ loggedinId: req.session.userId})
+    const [userResults, fields2] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [idOfResponse]);
+    recipeResults.push({ loggedinId: req.session.userId, kitchenName: userResults[0].kitchenName})
   
     if (recipeResults.length != 0) {
       res.json(recipeResults);
