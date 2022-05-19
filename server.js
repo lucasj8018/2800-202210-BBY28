@@ -774,6 +774,51 @@ app.get("/kitchen-details", async function (req, res) {
 });
 
 
+//----------------------------------------------------------------------------------------
+// Listens to a get routing request and loads the addToCart.html page.
+//----------------------------------------------------------------------------------------
+app.get("/recipe-dish", function (req, res) {
+
+  // check for a session 
+  if (req.session.loggedIn) {
+    let dishDetail = fs.readFileSync("./app/html/addToCart.html", "utf8");
+    res.send(dishDetail);
+
+  } else {
+    // If users not logged in, rediret to login page
+    res.redirect("/");
+  }
+});
+
+//----------------------------------------------------------------------------------------
+// Listens to a get request and reads data from the database for the requested recipe or dish.
+//----------------------------------------------------------------------------------------
+app.get("/recipe-dish-data", async function (req, res) {
+
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+
+    db.connect();
+    const idOfResponse = req.query["id"].split("/");
+    let userId = idOfResponse[0];
+    let recipeDishId = idOfResponse[1];
+  
+    const [results, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ? AND id = ?", [userId, recipeDishId]);
+  
+    if (results.length != 0) {
+      res.json(results);
+    }
+  
+    db.end();
+  }
+});
+
 
 // For page not found 404 error
 app.use(function (req, res, next) {

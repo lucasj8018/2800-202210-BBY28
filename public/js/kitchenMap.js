@@ -31,6 +31,9 @@ ready(function () {
 // that is centered based on the geolocation of the user's device.
 //-------------------------------------------------------------------------------------------
 async function initMap() {
+  
+  geocoder = new google.maps.Geocoder();
+
   var location = {
     lat: 49.1887857,
     lng: -122.742487
@@ -52,8 +55,6 @@ async function initMap() {
     console.log("geolocation not supported");
     map = new google.maps.Map(document.getElementById("map"), options);
   }
-
-  geocoder = new google.maps.Geocoder();
 
 }
 

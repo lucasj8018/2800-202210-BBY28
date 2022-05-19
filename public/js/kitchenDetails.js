@@ -1,8 +1,7 @@
 //-----------------------------------------------------------------------------------
-// This function is called when the profile page first loads. It gets the user data 
-// and populate on the profile card.  It displays the user list dashboard if it logged
-// in as an admin user.  It also listens to post request to send updated profile data
-// or dashboard updates to the server and save to the database.
+// This function is called when the kitchen detail page first loads. It requests recipe
+// and dish data from the BBY_28_Recipe table and populate as list items on the recipe
+// and dish container accordingly. 
 //-----------------------------------------------------------------------------------
 "use strict";
 ready(async function () {
@@ -29,14 +28,14 @@ ready(async function () {
           recipeTable += "<tr>" +
             "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
             "<td><p class='name'>" + data[i].name + "</p></td>" +
-            "<td><a class='viewButton' href='#'>View Dish</a></td>" +
+            "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + " '>View Dish</a></td>" +
             "</tr>";
 
         } else if (data[i].purchaseable == 1) {
           dishTable += "<tr>" +
             "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
             "<td><p class='name'>" + data[i].name + "</p></td>" +
-            "<td><a class='viewButton' href='#'>View Dish</a></td>" +
+            "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + "'>View Dish</a></td>" +
             "</tr>";
 
         }
