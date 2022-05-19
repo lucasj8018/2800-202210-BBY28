@@ -1,0 +1,14 @@
+body {
+    display: grid;
+    font-family: 'latolight';
+    background-color: #c49a68;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
+
+#minus {
+    background-color: #AAAAAA;
+}
+
+#plus {
+    background-color: #AAAAAA;
+}
