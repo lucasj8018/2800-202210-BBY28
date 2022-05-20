@@ -694,9 +694,7 @@ var RecipeDishPhoto = "";
 // in the BBY_28_Recipe table.
 //----------------------------------------------------------------------------------------
 app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async function (req, res) {
-  console.log(req.files);
   RecipeDishPhoto = req.files[0].filename;
-  console.log(RecipeDishPhoto);
 
 });
 
@@ -707,7 +705,6 @@ app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async fun
 //----------------------------------------------------------------------------------------
 app.post('/upload-recipe-dish', async function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  console.log(req.body);
 
   const db = await mysql.createConnection({
     host: "localhost",
@@ -721,12 +718,10 @@ app.post('/upload-recipe-dish', async function (req, res) {
   if (req.body.recipeOrDish == "recipe") {
     var addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, recipePath) values ? ";
     var recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, RecipeDishPhoto]];
-    console.log("recipe added");
 
   } else if (req.body.recipeOrDish == "dish") {
     addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, purchaseable, price, recipePath) values ? ";
     recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, 1, req.body.price, RecipeDishPhoto]];
-    console.log("dish added")
   }
 
   await db.query(addRecipeOrDish, [recipeOrDishInfo]);
@@ -1021,7 +1016,6 @@ app.get("/recipe-dish-data", async function (req, res) {
 //----------------------------------------------------------------------------------------
 app.post('/add-to-shoppingcart', async function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  console.log(req.body);
 
   const db = await mysql.createConnection({
     host: "localhost",
@@ -1080,7 +1074,6 @@ app.get("/displayPreviousOrder", async function (req, res){
     db.connect();
 
     let orderId = req.query.id;
-    console.log(orderId);
     let orderQuery = "SELECT * FROM bby_28_prevcart where historyID = ?";
     let [orderResults, fields] = await db.query(orderQuery, [orderId]);
 
@@ -1105,8 +1098,6 @@ app.get("/displayPreviousOrder", async function (req, res){
   }
 
 })
-
-
 
 
 // For page not found 404 error
