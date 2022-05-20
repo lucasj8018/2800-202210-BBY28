@@ -35,7 +35,6 @@ ready(function () {
         let foodName = document.getElementById("inputName").value;
         let foodIngredients = document.getElementById("inputIngredients").value;
         let foodDescription = document.getElementById("inputDescription").value;
-        console.log(foodName);
 
 
         if (document.getElementById("recipeChoice").checked) {
