@@ -9,18 +9,7 @@ const fs = require("fs");
 const {
   JSDOM
 } = require('jsdom');
-
 const multer = require("multer");
-
-const avatarStorage = multer.diskStorage({
-    destination: function (req, file, callbackFunc) {
-        callbackFunc(null, "./public/img/")
-    },
-    filename: function(req, file, callbackFunc) {
-        callbackFunc(null, "avatar_" + file.originalname.split('/').pop().trim());
-    }
-});
-const uploadAvatar = multer({ storage: avatarStorage });
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -55,10 +44,27 @@ app.get("/", function (req, res) {
 
 });
 
-app.get("/contact", function (req, res) {
-  let contact = fs.readFileSync("./app/html/contact.html", "utf8");
-  res.send(contact);
-})
+app.get("/myCart", function (req, res){
+  if (req.session.loggedIn){
+    let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
+    res.send(myCart);
+  } else {
+    // If users not logged in, redirecte to login page
+    res.redirect("/");
+  }
+
+});
+
+app.get("/kitchenOrders", function (req, res){
+  if (req.session.loggedIn){
+    let kitchenOrders = fs.readFileSync("./app/html/kitchenOrders.html", "utf8");
+    res.send(kitchenOrders);
+  } else {
+    // If users not logged in, redirecte to login page
+    res.redirect("/");
+  }
+
+});
 
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
@@ -77,6 +83,11 @@ app.get("/login", function (req, res) {
     res.redirect("/");
   }
 });
+
+app.get("/contact", function (req, res) {
+  let contact = fs.readFileSync("./app/html/contact.html", "utf8");
+  res.send(contact);
+})
 
 app.get("/profile", function (req, res) {
 
@@ -104,6 +115,17 @@ app.get("/display-profile", function (req, res) {
   }
 });
 
+// Multer to upload user avatar photos
+const avatarStorage = multer.diskStorage({
+  destination: function (req, file, callbackFunc) {
+    callbackFunc(null, "./public/img/")
+  },
+  filename: function (req, file, callbackFunc) {
+    callbackFunc(null, req.session.userId + "_avatar_" + file.originalname.split('/').pop().trim());
+  }
+});
+const uploadAvatar = multer({ storage: avatarStorage });
+
 //----------------------------------------------------------------------------------------
 // This post request is called to receive the updated user profile picture and update it
 // on the bby_28_user table in the database.
@@ -112,7 +134,6 @@ app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res
 
   await updateUserAvatar(req, res);
   res.redirect("/profile");
-  console.log(req.files);
 
 });
 
@@ -141,18 +162,48 @@ app.get("/kitchenRegistration", function (req, res) {
   if (req.session.loggedIn) {
     res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
   } else {
+    // If user's not logged in, redirect to login page
     res.redirect("/");
   }
 });
 
-app.get("/kitchenDetails", function (req, res) {
+app.get("/kitchenDetails", async function (req, res) {
+
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
 
   if (req.session.loggedIn) {
-    let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
-    res.send(kitchenDetails);
+
+    db.connect();
+
+    const [results, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [req.session.userId]);
+    if (results.length == 1) {
+      if (results[0].isPrivateKitchenOwner) {
+        let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
+        res.send(kitchenDetails);
+
+      } else {
+        res.redirect("/kitchenRegistration");
+      }
+    }
 
   } else {
     // If users not logged in, redirect to login page
+    res.redirect("/");
+  }
+
+  db.end();
+})
+
+app.get("/addToCart", function(req, res) {
+  if (req.session.loggedIn) {
+    res.send(fs.readFileSync("./app/html/addToCart.html", "utf8"));
+  } else {
     res.redirect("/");
   }
 })
@@ -210,7 +261,7 @@ async function updateUserProfile(req, res) {
 
   db.connect();
 
-  if (req.body.password != "●●●●●●●●"){
+  if (req.body.password != "●●●●●●●●") {
     let updateUser = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ?, password = ? WHERE id = ?";
     let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
     const [hashed, hashedFields] = await db.query(passwordHash);
@@ -222,7 +273,7 @@ async function updateUserProfile(req, res) {
   } else {
     let updateNotPassword = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ? WHERE id = ?"
     let userInfo = [
-      req.body.firstName, req.body.lastName, req.body.username, req.session.userID
+      req.body.firstName, req.body.lastName, req.body.username, req.session.userId
     ];
     await db.query(updateNotPassword, userInfo);
 
@@ -241,7 +292,7 @@ app.post('/update-profile', function (req, res) {
 });
 
 //----------------------------------------------------------------------------------------
-// Listens to a get routing request and loads the ktichenMap.html page.
+// Listens to a get routing request and loads the kitchenMap.html page.
 //----------------------------------------------------------------------------------------
 app.get("/map", function (req, res) {
 
@@ -258,7 +309,7 @@ app.get("/map", function (req, res) {
 });
 
 //----------------------------------------------------------------------------------------
-// Listens to a get request to retrieve registered private kithcen addresses from the
+// Listens to a get request to retrieve registered private kitchen addresses from the
 // bby_28_user table and send to the client-side kitchenMap.js
 //----------------------------------------------------------------------------------------
 app.get("/map-data", async function (req, res) {
@@ -273,19 +324,10 @@ app.get("/map-data", async function (req, res) {
 
   db.connect();
 
-  const [registeredAddresses, fields] = await db.execute("SELECT location FROM BBY_28_User");
-  var addresses;
-  var addressData = [];
+  const [registeredAddresses, fields] = await db.execute("SELECT id, location, kitchenName FROM BBY_28_User");
 
-  for (let i = 0; i < registeredAddresses.length; i++) {
-    addresses = registeredAddresses[i].location;
-    addressData.push(addresses);
-  }
-
-  console.log(addressData);
-
-  if (addressData.length != 0) {
-    res.json(addressData);
+  if (registeredAddresses.length != 0) {
+    res.json(registeredAddresses);
 
   } else {
     // Send format error message for exception
@@ -380,10 +422,9 @@ async function checkUsers(req, res) {
 
   db.connect();
 
-  var userUsername = req.session.username;
   var userId = req.session.userId;
 
-  const [userResults, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ? AND username = ?", [userId, userUsername]);
+  const [userResults, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [userId]);
 
   if (userResults.length == 1) {
     res.json(userResults);
@@ -419,14 +460,27 @@ async function signUpUser(req, res) {
   });
 
   db.connect();
-  let addUser = "use heroku_57edae262e0f938; insert ignore into BBY_28_User (username, password, fName, lName) values ? ";
-  let passwordHash = "SELECT SHA1('" + password + "') as hash";
-  const [hashed, hashedFields] = await db.query(passwordHash);
-  password = hashed[0].hash;
-  let userInfo = [
-    [username, password, firstName, lastName]
+  let checkDuplicateUser = "use heroku_57edae262e0f938; SELECT username from bby_28_user where username = ?";
+  let usernameValue = [
+    [username]
   ];
-  await db.query(addUser, [userInfo]);
+  const [duplicateUser, dupeFields] = await db.query(checkDuplicateUser, [usernameValue]);
+
+  if (duplicateUser[1][0]) {
+    res.send({ status: "fail", msg: "Account already created" });
+  } else {
+    let addUser = "use heroku_57edae262e0f938; insert ignore into BBY_28_User (username, password, fName, lName) values ? ";
+    let passwordHash = "SELECT SHA1('" + password + "') as hash";
+    const [hashed, hashedFields] = await db.query(passwordHash);
+    password = hashed[0].hash;
+    let userInfo = [
+      [username, password, firstName, lastName]
+    ];
+    await db.query(addUser, [userInfo]);
+    res.send({ status: "success", msg: "Account  created" });
+
+  }
+
 
   db.end();
 }
@@ -552,46 +606,46 @@ async function deleteUser(req, res) {
   db.connect();
 
   let checkAdmin = "SELECT * FROM BBY_28_user where isAdmin = 1";
-  const[admins, adminFields] = await db.query(checkAdmin);
+  const [admins, adminFields] = await db.query(checkAdmin);
   let adminCount = admins.length;
   let adminID = admins[0].id;
 
   let checkUser = "SELECT id from bby_28_user where username = ?";
-    let user = [
-      [currentUser]
-    ];
-    let [currentDeleted, currentFields] = await db.query(checkUser, [user]);
+  let user = [
+    [currentUser]
+  ];
+  let [currentDeleted, currentFields] = await db.query(checkUser, [user]);
 
 
-  if (currentDeleted[0].id == userID){
+  if (currentDeleted[0].id == userID) {
     res.send({
       status: "fail",
       msg: "Cannot delete current user"
     });
-  } else if (adminCount == 1 && adminID == userID){
+  } else if (adminCount == 1 && adminID == userID) {
     res.send({
       status: "fail",
       msg: "Cannot delete last admin"
     });
-  }else {
+  } else {
     res.send({
       status: "success"
     });
     let deleteUser = "use heroku_57edae262e0f938; delete from bby_28_user where id = ?"
     let userInfo = [
-    [userID]
-  ];
-  await db.query(deleteUser, [userInfo]);
+      [userID]
+    ];
+    await db.query(deleteUser, [userInfo]);
   }
 
   db.end();
 }
 
-app.post("/updateUserDashboard", function(req, res){
+app.post("/updateUserDashboard", function (req, res) {
   updateUserDashboard(req, res);
 });
 
-async function updateUserDashboard(req, res){
+async function updateUserDashboard(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
     host: "us-cdbr-east-05.cleardb.net",
@@ -602,7 +656,7 @@ async function updateUserDashboard(req, res){
   });
 
   db.connect();
-  if (req.body.password != "●●●●●●●●"){
+  if (req.body.password != "●●●●●●●●") {
     let updateUser = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET username = ?, password = ? WHERE id = ?";
     let passwordHash = "SELECT SHA1('" + req.body.password + "') as hash";
     const [hashed, hashedFields] = await db.query(passwordHash);
@@ -612,7 +666,7 @@ async function updateUserDashboard(req, res){
     ];
     await db.query(updateUser, userInfo);
   } else {
-    let updateNotPassword = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET username = ? WHERE id = ?"
+    let updateNotPassword = "use coheroku_57edae262e0f938mp2800; UPDATE BBY_28_User SET username = ? WHERE id = ?"
     let userInfo = [
       req.body.username, req.body.id
     ];
@@ -621,15 +675,444 @@ async function updateUserDashboard(req, res){
   }
 
   db.end();
+}
+
+// Multer to upload recipe or dish pictures of the user's private kitchen menu
+const recipeDishStorage = multer.diskStorage({
+  destination: function (req, file, callbackFunc) {
+    callbackFunc(null, "./public/img/")
+  },
+  filename: function (req, file, callbackFunc) {
+    callbackFunc(null, req.session.userId + "_recipe_dish_" + file.originalname.split('/').pop().trim());
+  }
+});
+const uploadRecipeDish = multer({ storage: recipeDishStorage });
+var RecipeDishPhoto = "";
+
+//----------------------------------------------------------------------------------------
+// This post request is called to receive the uploaded recipe or dish picture and update it
+// in the BBY_28_Recipe table.
+//----------------------------------------------------------------------------------------
+app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async function (req, res) {
+  console.log(req.files);
+  RecipeDishPhoto = req.files[0].filename;
+  console.log(RecipeDishPhoto);
+
+});
+
+
+//----------------------------------------------------------------------------------------
+// Listens to a post request to receive the upload recipe or dish form data and save it to
+// the bby_28_recipe table
+//----------------------------------------------------------------------------------------
+app.post('/upload-recipe-dish', async function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  console.log(req.body);
+
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+  db.connect();
+
+  if (req.body.recipeOrDish == "recipe") {
+    var addRecipeOrDish = "use heroku_57edae262e0f938; insert ignore into BBY_28_Recipe (userID, name, description, recipePath) values ? ";
+    var recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, RecipeDishPhoto]];
+    console.log("recipe added");
+
+  } else if (req.body.recipeOrDish == "dish") {
+    addRecipeOrDish = "use heroku_57edae262e0f938; insert ignore into BBY_28_Recipe (userID, name, description, purchaseable, price, recipePath) values ? ";
+    recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, 1, req.body.price, RecipeDishPhoto]];
+    console.log("dish added")
+  }
+
+  await db.query(addRecipeOrDish, [recipeOrDishInfo]);
+  db.end();
+
+});
+
+
+async function updateUserAvatar(req, res) {
+
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+
+  db.connect();
+
+  let updateAvatar = "use heroku_57edae262e0f938; UPDATE BBY_28_User SET avatarPath = ? WHERE id = ?";
+  let avatarInfo = [
+    req.files[0].filename, req.session.userId
+  ];
+  await db.query(updateAvatar, avatarInfo);
+  db.end();
 
 }
+
+//-----------------------------------------------------------------------------------------
+// Listens to a get request and checks the id of the user on the path.  It then reads the
+// recipe and dish data from the BBY_28_Recipe table and send to the client-side kitchenDetails.js.
+//-----------------------------------------------------------------------------------------
+app.get("/kitchen-details", async function (req, res) {
+
+  // check for a session
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+    });
+
+    db.connect();
+
+    let idOfResponse = req.query["id"];
+    if (idOfResponse == "loggedinUser") {
+      idOfResponse = req.session.userId;
+    }
+
+    const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ?", [idOfResponse]);
+    const [userResults, fields2] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [idOfResponse]);
+    recipeResults.push({ loggedinId: req.session.userId, kitchenName: userResults[0].kitchenName})
+
+    if (recipeResults.length != 0) {
+      res.json(recipeResults);
+    }
+
+    db.end();
+
+  } else {
+    // If users not logged in, redirect to login page
+    res.redirect("/");
+  }
+});
+
+app.get("/displayShoppingCart", async function (req, res) {
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+    })
+    db.connect();
+
+    let shoppingCartQuery = `
+      SELECT recipePath, name, price, quantity, cookID, recipeID
+      FROM BBY_28_recipe, BBY_28_ShoppingCart
+      WHERE recipeID = id
+      AND cookID = userID
+      AND customerID = ?
+    `;
+    const [shoppingCartResults, cartFields] = await db.query(shoppingCartQuery, [req.session.userId]);
+    if (shoppingCartResults.length != 0) {
+      res.json(shoppingCartResults);
+    } else {
+      res.json([{ recipePath: "EmptyShoppingCart" }]);
+    }
+    db.end();
+  } else {
+    res.redirect("/");
+  }
+
+});
+
+app.post("/deleteCartItem", function (req, res) {
+  deleteCartItem(req, res);
+})
+
+async function deleteCartItem(req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+
+  db.connect();
+  if (req.body.cookID == -1 && req.body.recipeID == -1) {
+    let deleteQuery = "DELETE FROM bby_28_shoppingcart where customerID = ?";
+    let deleteValues = [
+      req.session.userId
+    ];
+    await db.query(deleteQuery, deleteValues);
+    res.send({ status: "success", msg: "Item deleted" });
+  } else {
+    let deleteQuery = "DELETE FROM bby_28_shoppingcart WHERE customerID = ? AND cookID = ? AND recipeID = ?";
+    let deleteValues = [
+      req.session.userId, req.body.cookID, req.body.recipeID
+    ];
+    await db.query(deleteQuery, deleteValues);
+    res.send({ status: "success", msg: "Item deleted" });
+  }
+
+  db.end();
+}
+
+app.post("/subQuantity", function (req, res) {
+  subQuantity(req, res);
+})
+
+async function subQuantity(req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+
+  db.connect();
+  let checkItemCount = "SELECT quantity from bby_28_shoppingcart where customerID = ? and cookID = ? and recipeID = ?";
+  let checkValues = [
+    req.session.userId, req.body.cookID, req.body.recipeID
+  ];
+  let [itemQuantity, fields] = await db.query(checkItemCount, checkValues);
+  if (itemQuantity[0].quantity == 1) {
+    let errorDivID = req.body.cookID + "_" + req.body.recipeID + "_sub";
+    res.send({ status: "fail", id: errorDivID });
+  } else {
+    let subQuery = "update bby_28_shoppingcart set quantity = quantity - 1 where customerID = ? and cookID = ? and recipeID = ?";
+    let subValues = [
+      req.session.userId, req.body.cookID, req.body.recipeID
+    ];
+    await db.query(subQuery, subValues);
+    res.send({ status: "success", msg: "Quantity decreased" });
+  }
+
+  db.end();
+}
+
+app.post("/addQuantity", function (req, res) {
+  addQuantity(req, res);
+})
+
+async function addQuantity(req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+
+  db.connect();
+  let addQuery = "update bby_28_shoppingcart set quantity = quantity + 1 where customerID = ? and cookID = ? and recipeID = ?";
+  let addValues = [
+    req.session.userId, req.body.cookID, req.body.recipeID
+  ];
+  await db.query(addQuery, addValues);
+  res.send({ status: "success", msg: "Quantity increased" });
+  db.end();
+}
+
+app.get("/checkoutCart", async function (req, res){
+  if (req.session.loggedIn){
+    const db = await mysql.createConnection({
+      host: "us-cdbr-east-05.cleardb.net",
+      user: "bbcec9e55759dc",
+      password: "9be02f5e",
+      database: "heroku_57edae262e0f938",
+      multipleStatements: true
+    });
+
+    db.connect();
+    let checkoutQuery = "SELECT * FROM bby_28_shoppingcart where customerID = ?";
+    let [checkoutValues, fields] = await db.query(checkoutQuery, [req.session.userId]);
+
+    let cooks = "";
+    for (let i = 0; i < checkoutValues.length; i++){
+      cooks += checkoutValues[i].cookID + "/";
+    }
+    cooks = cooks.slice(0, -1);
+
+    let recipes = "";
+    for (let i = 0; i < checkoutValues.length; i++){
+      recipes += checkoutValues[i].recipeID + "/";
+    }
+    recipes = recipes.slice(0, -1);
+
+    let quantities = "";
+    for (let i = 0; i < checkoutValues.length; i++){
+      quantities += checkoutValues[i].quantity + "/";
+    }
+    quantities = quantities.slice(0, -1);
+
+    let historyQuery = "insert into bby_28_prevcart (customerID, cookIDs, recipeIDs, quantities, timestamp) values ?";
+    let today = new Date().toISOString().slice(0, 10)
+    let historyValues = [
+      [req.session.userId, cooks, recipes, quantities, today]
+    ];
+    await db.query(historyQuery, [historyValues]);
+
+    let deleteCurrentCart = "delete from bby_28_shoppingcart where customerID = ?"
+    await db.query(deleteCurrentCart, [req.session.userId]);
+    db.end();
+    res.redirect("/myCart");
+  } else {
+    res.redirect("/");
+  }
+
+
+})
+
+
+//----------------------------------------------------------------------------------------
+// Listens to a get routing request and loads the addToCart.html page.
+//----------------------------------------------------------------------------------------
+app.get("/recipe-dish", function (req, res) {
+
+  // check for a session
+  if (req.session.loggedIn) {
+    let dishDetail = fs.readFileSync("./app/html/addToCart.html", "utf8");
+    res.send(dishDetail);
+
+  } else {
+    // If users not logged in, rediret to login page
+    res.redirect("/");
+  }
+});
+
+//----------------------------------------------------------------------------------------
+// Listens to a get request and reads data from the database for the requested recipe or dish.
+//----------------------------------------------------------------------------------------
+app.get("/recipe-dish-data", async function (req, res) {
+
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "us-cdbr-east-05.cleardb.net",
+      user: "bbcec9e55759dc",
+      password: "9be02f5e",
+      database: "heroku_57edae262e0f938",
+      multipleStatements: true
+    });
+
+    db.connect();
+    const idOfResponse = req.query["id"].split("/");
+    let userId = idOfResponse[0];
+    let recipeDishId = idOfResponse[1];
+
+    const [results, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ? AND id = ?", [userId, recipeDishId]);
+
+    if (results.length != 0) {
+      res.json(results);
+    }
+
+    db.end();
+  }
+});
+
+//----------------------------------------------------------------------------------------
+// Listens to a post request to receive the add-to-shoppingcart dish data and save it to
+// the bby_28_Shoppingcart table
+//----------------------------------------------------------------------------------------
+app.post('/add-to-shoppingcart', async function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  console.log(req.body);
+
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+  });
+  db.connect();
+
+  var addItem = "use heroku_57edae262e0f938; insert ignore into BBY_28_Shoppingcart (customerID, cookID, recipeID, quantity) values ? ";
+  var addItemInfo = [[req.session.userId, req.body.cookId, req.body.recipeId, req.body.qty]];
+
+  await db.query(addItem, [addItemInfo]);
+  db.end();
+
+});
+
+app.get("/displayPreviousCarts", async function (req, res){
+  if (req.session.loggedIn) {
+    const db = await mysql.createConnection({
+      host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+    })
+    db.connect();
+
+    let prevCartQuery = `
+      SELECT *
+      FROM bby_28_prevcart
+      WHERE customerID = ?
+    `;
+    const [prevCartResults, cartFields] = await db.query(prevCartQuery, [req.session.userId]);
+    if (prevCartResults.length != 0) {
+      res.json(prevCartResults);
+    }
+    db.end();
+  } else {
+    res.redirect("/");
+  }
+})
+
+
+app.get("/displayPreviousOrder", async function (req, res){
+  if (req.session.loggedIn){
+    const db = await mysql.createConnection({
+      host: "us-cdbr-east-05.cleardb.net",
+		user: "bbcec9e55759dc",
+		password: "9be02f5e",
+    database: "heroku_57edae262e0f938",
+    multipleStatements: true
+    });
+
+    db.connect();
+
+    let orderId = req.query.id;
+    console.log(orderId);
+    let orderQuery = "SELECT * FROM bby_28_prevcart where historyID = ?";
+    let [orderResults, fields] = await db.query(orderQuery, [orderId]);
+
+    let recipeIdArray = orderResults[0].recipeIDs.split("/");
+    let qtyArray = orderResults[0].quantities.split("/");
+    let resultsArray = [];
+
+    let dishQuery = "SELECT * FROM bby_28_Recipe where id = ?";
+
+    for (let i = 0; i < recipeIdArray.length; i++) {
+      let [dishResults, fields2] = await db.query(dishQuery, recipeIdArray[i])
+      dishResults[0].quantity = qtyArray[i];
+      dishResults[0].orderId = orderResults[0].historyID;
+      resultsArray = resultsArray.concat(dishResults[0]);
+    }
+
+    res.json(resultsArray);
+    db.end();
+
+  } else {
+    res.redirect("/");
+  }
+
+})
+
+
+
 
 // For page not found 404 error
 app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
 });
-
-
 
 async function connectToMySQL(req, res) {
   const mysql = require("mysql2/promise");
