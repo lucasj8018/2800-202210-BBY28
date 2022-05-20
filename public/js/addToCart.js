@@ -27,30 +27,29 @@ ready(async function () {
       let receipeDishDetails = "";
       receipeDishDetails = `<div id="dish-description">
         <div class="card" style="width: 18rem;">
-            <img src=./img/` + data[0].recipePath + ` class="card-img-top" alt="" id="dish-photo">
-            <div class="card-body">
-                <h5 class="dish-name">` + data[0].name + `</h5>
-                <p class="dish-description">` + data[0].description + `</p>
-            </div>`
+        <img src=./img/` + data[0].recipePath + ` class="card-img-top" alt="" id="dish-photo">
+        <div class="card-body">
+        <h5 class="dish-name">` + data[0].name + `</h5>
+        <p class="dish-description">` + data[0].description + `</p>
+        </div>`
 
       if (data[0].purchaseable == 1) {
         receipeDishDetails += `<ul class="list-group list-group-flush">
-                <li class="list-group-item" id="dish-price">Price($CAD):  ` + data[0].price + `</li>
-                </ul></div>`
+          <li class="list-group-item" id="dish-price">Price($CAD):  ` + data[0].price.toFixed(2) + `</li>
+          </ul></div>`
 
       } else {
         receipeDishDetails += `<ul class="list-group list-group-flush">
-            <li class="list-group-item" id="dish-price">Price($CAD): N/A</li>
-            </ul></div>`
+          <li class="list-group-item" id="dish-price">Price($CAD): N/A</li>
+          </ul></div>`
         document.getElementById("content").innerHTML = "";
       }
 
       document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
 
       dishName = data[0].name;
-      unitPrice = data[0].price;
+      unitPrice = data[0].price.toFixed(2);
       document.getElementById("subtotal").innerHTML = unitPrice;
-
 
     })
     .catch(function (error) {
@@ -89,6 +88,8 @@ ready(async function () {
       recipeId: recipeDishId,
       qty: qty
     })
+
+    window.location.href = "/kitchenDetails?id=" + userId;
 
   })
 
