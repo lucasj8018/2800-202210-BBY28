@@ -20,7 +20,6 @@ ready(function () {
       geocodeAddress();
     })
     .catch(function (error) {
-      location.reload();
       console.log(error);
     })
 

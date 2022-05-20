@@ -244,7 +244,7 @@ function displayPreviousOrder(name) {
       "</tr>"
     }
     previousCartTable += "</table>";
-    let orderInfo = "<h2>Your Order</h2><h2>Total Price: "+ totalPrice +"$</h2><h2>Total Items: "+ totalQty +"</h2>";
+    let orderInfo = "<h2>Your Order</h2><h2>Total Price: $"+ totalPrice.toFixed(2) +"</h2><h2>Total Items: "+ totalQty +"</h2>";
     orderInfo += previousCartTable;
 
     document.getElementById("prevOrder" + orderId).innerHTML = orderInfo;
