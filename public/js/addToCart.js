@@ -48,7 +48,7 @@ ready(async function () {
 
       dishName = data[0].name;
       unitPrice = (Math.round(data[0].price * 100) / 100);
-      unitPrice = unitPrice.toFixed(2)
+      unitPrice = parseFloat(unitPrice).toFixed(2)
       document.getElementById("subtotal").innerHTML = unitPrice;
 
       var qty = 0;
