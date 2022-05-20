@@ -5,7 +5,7 @@ html {
 body {
     height: 100%;
     display: grid;
-    grid-template-columns: 4% 92% 4%;
+    grid-template-columns: 5% 90% 5%;
     font-family: 'latolight';
     font-size: 16pt;
     background-image: url("/img/spices.jpg");
@@ -32,76 +32,80 @@ body {
     height: 7vh;
 }
 
-#spices {
-    grid-column: 1 / span 3;
-    grid-row: 2 / span 5;
-    width: 100%;
-    height: 100%;
-}
-
 #login {
     grid-column: 2 / span 1;
-    grid-row: 3 / span 1;
+    grid-row: 2 / span 1;
     display: grid;
-    grid-template-columns: 7% 4% 30% 5% 40% 4% 7%;
-    grid-template-rows: 5% 20% 20% 20% 5% 10% 5%;
     backdrop-filter: blur(10px);
     backdrop-filter: brightness(60%);
     border-radius: 10%;
     font-size: 12pt;
+    padding: 5vw;
     justify-content: center;
     margin: auto;
-}
-
-#username {
-    grid-column: 2 / span 5;
-    grid-row: 2 / span 1;
-}
-
-#password {
-    grid-column: 2 / span 5;
-    grid-row: 3 / span 1;
-}
-
-#fName {
-    grid-column: 2 / span 2;
-    grid-row: 4 / span 1;
-    width: 100%; 
-}
-
-#lName {
-    grid-column: 5 / span 2;
-    grid-row: 4 / span 1; 
 }
 
 div label  {
     color: #FFF3DF;
 }
 
-#inputUsername, #inputPassword, #inputFName, #inputLName {
-    font-size: 10pt;
-    width: 100%;
+.row-mb3 {
+    justify-content: center;
+    margin: auto;
 }
 
-.col-sm-2 {
-    width: 100px;
+#username {
+    grid-column: 1 / span 3;
+    grid-row: 2 / span 1;
 }
 
-#username, #password, #fName, #lName {
-    display: grid;
+#password {
+    grid-column: 1 / span 3;
+    grid-row: 3 / span 1;
+}
+
+#fName {
+    grid-column: 1 / span 1;
+    grid-row: 4 / span 1;
+    width: 100%; 
+}
+
+#lName {
+    grid-column: 3 / span 1;
+    grid-row: 4 / span 1; 
 }
 
 #invalidUser {
-    grid-column: 2 / span 5;
-    grid-row: 7 / span 1;
+    grid-column: 1 / span 3;
+    grid-row: 5 / span 1;
     margin-top: 2vh;
     text-align: center;
     color: #FFF3DF;
     font-weight: bolder;
 }
 
+#backButton {
+    grid-column: 1 / span 1;
+    grid-row: 6 / span 1;
+    text-align: center;
+    background-color: #FFF3DF;
+    border-radius: 25px;
+    margin-right: 20px;
+    text-decoration: none;
+    height: 48px;
+}
+
+#backButton:hover {
+    background-color: #E4D1B1;
+}
+
+#backButtonLabel {
+    color: black;
+    padding-top: 1vh;
+}
+
 #createAccountButton {
-    grid-column: 5 / span 1;
+    grid-column: 3 / span 1;
     grid-row: 6 / span 1;
     text-align: center;
     background-color: #DE2007;
@@ -116,44 +120,29 @@ div label  {
 
 #createAccountButtonLabel {
     color: #FFF3DF;
-    padding: 10px 0;
+    padding-top: 1vh;
 }
 
-#backButton {
-    grid-column: 2 / span 2;
-    grid-row: 6 / span 1;
-    text-align: center;
-    background-color: #FFF3DF;
-    height: 100%;
-    border-radius: 25px;
-    text-decoration: none;
+#inputUsername, #inputPassword, #inputFName, #inputLName {
+    font-size: 10pt;
+    width: 100%;
 }
 
-#backButton:hover {
-    background-color: #E4D1B1;
-}
-
-#backButtonLabel {
-    color: black;
-    padding: 10px 0;
+#username, #password, #fName, #lName {
+    display: grid;
 }
 
 #footer {
     grid-column: 1 / span 3;
-    grid-row: 7 / span 1;
-    width: 100vw;
+    grid-row: 4 / span 1;
 }
 
-@media only screen and (min-width: 600px) {
-    body {
-        font-size: 5vw;
-    }
+@media only screen and (min-width: 576px) {
 
     #login {
-        max-width: 600px;
-        width: 80vw;
-        min-height: 600px;
-        padding: 20px;
+        grid-template-columns: 45% 10% 45%;
+        width: 460px;
+        padding: 30px;
     }
 
     #username, #password, #address {
