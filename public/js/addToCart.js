@@ -80,7 +80,7 @@ ready(async function () {
         postData({
           cookId: userId,
           recipeId: recipeDishId,
-          qty: qty
+          qty: qty + 1
         })
 
         window.location.href = "/kitchenDetails?id=" + userId;
