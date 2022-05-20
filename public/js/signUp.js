@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
-// This function is called when the page first loads. It listens to request on user
-// sign up and it will then post the sign up form data to the server.
+// This function is called when the sign up page first loads. It listens to request 
+// on user sign up and it will then post the sign up form data to the server.
 //-----------------------------------------------------------------------------
 "use strict";
 ready(function () {

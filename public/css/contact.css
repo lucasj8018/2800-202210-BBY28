@@ -1,0 +1,365 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    font-family: 'latolight';
+    background-color: #c49a68;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+    padding-bottom: 150px;
+}
+
+#navbar {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+
+::-webkit-scrollbar-track {
+    background-color: azure;
+}
+
+#teamTitle {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    font-size: 30pt;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+#knife {
+    grid-column: 2 / span 1;
+    grid-row: 5 / span 1;
+    height: auto;
+    width: 200px;
+    margin-top: -30px;
+    margin-right: -35px;
+    justify-self: end;
+    z-index: 1;
+}
+
+#teamInfo {
+    grid-column: 2 / span 1;
+    grid-row: 5 / span 1;
+    display: grid;
+    grid-template-columns: 5% 90% 5%;
+    grid-template-rows: 5% 19% 5% 19% 5% 19% 5% 19% 2%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 10px grey;
+    min-height: 1800px;
+}
+
+.name {
+    font-size: 16pt;
+}
+
+.email {
+    font-size: 12pt;
+}
+
+.chefHatHidden {
+    visibility: hidden;
+}
+
+.chefHatVisible {
+    visibility: visible;
+}
+
+#chefHat1Div {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    margin-top: 55px;
+    margin-left: -10px;
+    z-index: 1;
+}
+
+#chefHat1Image {
+    height: auto;
+    width: 140px;
+}
+
+#lucas {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 65% 5% 20%;
+}
+
+#lucasImageDiv {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    align-self: center;
+}
+
+#lucasImage {
+    border-radius: 10px;
+    height: 200px;
+    width: 200px;
+}
+
+#lucasDescription {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+}
+
+#lucasName {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+}
+
+#lucasEmail {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+}
+
+#chefHat2Div {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+    text-align: center;
+    margin-top: 55px;
+    margin-left: -5px;
+    z-index: 1;
+}
+
+#chefHat2Image {
+    height: auto;
+    width: 135px;
+}
+
+#justin {    
+    grid-column: 2 / span 1;
+    grid-row: 4 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 65% 5% 20%;
+}
+
+#justinImageDiv {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    align-self: center;
+}
+
+#justinImage {
+    border-radius: 10px;
+    height: 200px;
+    width: 200px;
+}
+
+#justinDescription {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+}
+
+#justinName {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+}
+
+#justinEmail {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+}
+
+#chefHat3Div {
+    grid-column: 2 / span 1;
+    grid-row: 5 / span 1;
+    text-align: center;
+    margin-top: 38px;
+    margin-left: 3px;
+    z-index: 1;
+}
+
+#chefHat3Image {
+    height: auto;
+    width: 160px;
+}
+
+#owen {
+    grid-column: 2 / span 1;
+    grid-row: 6 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 65% 5% 20%;
+}
+
+#owenImageDiv {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    align-self: center;
+}
+
+#owenImage {
+    border-radius: 10px;
+    height: 200px;
+    width: 200px;
+}
+
+#owenDescription {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+}
+
+#owenName {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+}
+
+#owenEmail {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+}
+
+#chefHat4Div {
+    grid-column: 2 / span 1;
+    grid-row: 7 / span 1;
+    text-align: center;
+    margin-top: 30px;
+    margin-right: 8px;
+    z-index: 1;
+}
+
+#chefHat4Image {
+    height: auto;
+    width: 177px;
+}
+
+#sarah {
+    grid-column: 2 / span 1;
+    grid-row: 8 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 65% 5% 20%;
+}
+
+#sarahImageDiv {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    align-self: center;
+}
+
+#sarahImage {
+    border-radius: 10px;
+    height: 200px;
+    width: 200px;
+}
+
+#sarahDescription {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+}
+
+#sarahName {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+}
+
+#sarahEmail {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    text-align: center;
+}
+
+@media only screen and (min-width: 1000px) {
+    body {
+        display: grid;
+        grid-template-columns: 25% 50% 25%;
+    }
+
+    #knife {
+        height: auto;
+        width: 325px;
+        margin-top: -50px;
+        margin-right: -65px;
+    }
+
+    #teamInfo {
+        grid-template-columns: 5% 42.5% 5% 42.5% 5%;
+        grid-template-rows: 10% 40% 10% 40%;
+        min-height: 800px;
+    }
+
+    .name {
+        font-size: 18pt;
+    }
+
+    .email {
+        font-size: 14pt;
+    }
+
+    #chefHat1Div {
+        margin-top: 70px;
+    }
+
+    #chefHat2Div {
+        grid-column: 4 / span 1;
+        grid-row: 1 / span 1;
+        margin-top: 66px;
+    }
+    
+    #justin {    
+        grid-column: 4 / span 1;
+        grid-row: 2 / span 1;
+    }
+    
+    #chefHat3Div {
+        grid-column: 2 / span 1;
+        grid-row: 3 / span 1;
+        margin-top: 53px;
+    }
+    
+    #owen {    
+        grid-column: 2 / span 1;
+        grid-row: 4 / span 1;
+    }
+
+    #chefHat4Div {
+        grid-column: 4 / span 1;
+        grid-row: 3 / span 1;
+        margin-top: 45px;
+    }
+    
+    #sarah {    
+        grid-column: 4 / span 1;
+        grid-row: 4 / span 1;
+    }
+}

@@ -27,6 +27,13 @@ Content of the project folder:
         /knife.png: https://www.kindpng.com/imgv/ommTxh_transparent-knives-png-kitchen-knife-png-transparent-png/
         /Logo.PNG
         /spices.jpg: https://unsplash.com/photos/vA1L1jRTM70?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink
+        /chefHat.png: http://www.qcustomclothing.com/white-chef-hat/374830/p
+        /trash.jpg: https://www.flaticon.com/free-icon/trash_3096673?term=trash&page=1&position=1&page=1&position=1&related_id=3096673&origin=tag
+        /add.png: https://www.flaticon.com/premium-icon/add_3024515?term=add&page=1&position=9&page=1&position=9&related_id=3024515&origin=search
+        /subtract.png: https://www.flaticon.com/premium-icon/minimize_3024571?related_id=3024571&origin=pack
+
+├── mp3
+        /crunch.mp3: https://www.zapsplat.com/music/cartoon-eat-crunch-bite-single-mid-pitched-munch/
 
 
 ├── data                   # Folder for JSON files.
