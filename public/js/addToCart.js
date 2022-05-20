@@ -26,23 +26,24 @@ ready(async function () {
 
       let receipeDishDetails = "";
       receipeDishDetails = `<div id="dish-description">
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <img src=./img/` + data[0].recipePath + ` class="card-img-top" alt="" id="dish-photo">
             <div class="card-body">
-                <h5 class="dish-name">` + data[0].name + `</h5>
+                <h5 class="dish-name"><b>` + data[0].name + `</b></h5>
                 <p class="dish-description">` + data[0].description + `</p>
             </div>`
 
       if (data[0].purchaseable == 1) {
-        receipeDishDetails += `<ul class="list-group list-group-flush">
-                <li class="list-group-item" id="dish-price">Price($CAD):  ` + data[0].price + `</li>
-                </ul></div>`
+        receipeDishDetails += `<ul class="list-group list-group-flush" id="addToCartDiv">
+                <li class="list-group-item" id="dish-price">Price($CAD):  ` + Math.round(data[0].price * 100) / 100 + `<span id="numberOfDishes"><a type="button"><img src="/img/subtract.png" id="subtract" class="quantityButton"
+                alt="subtractSign"></a><span id="quantity">10</span><a type="button"><img src="/img/add.png"
+                id="add" class="quantityButton" alt="addSign"></a></span><span id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></span></div></li></div>
+            </ul>`
 
       } else {
         receipeDishDetails += `<ul class="list-group list-group-flush">
             <li class="list-group-item" id="dish-price">Price($CAD): N/A</li>
             </ul></div>`
-        document.getElementById("content").innerHTML = "";
       }
 
       document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
