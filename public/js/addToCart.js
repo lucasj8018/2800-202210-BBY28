@@ -15,14 +15,11 @@ ready(async function () {
   var unitPrice;
   var dishName;
 
-  console.log(userId + recipeDishId);
   fetch("/recipe-dish-data?id=" + userId + "/" + recipeDishId)
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-
-      console.log(data);
 
       let receipeDishDetails = "";
       receipeDishDetails = `<div id="dish-description">
@@ -36,8 +33,9 @@ ready(async function () {
       if (data[0].purchaseable == 1) {
         receipeDishDetails += `<ul class="list-group list-group-flush" id="addToCartDiv">
                 <li class="list-group-item" id="dish-price">Price($CAD):  ` + Math.round(data[0].price * 100) / 100 + `<span id="numberOfDishes"><a type="button"><img src="/img/subtract.png" id="subtract" class="quantityButton"
-                alt="subtractSign"></a><span id="quantity">10</span><a type="button"><img src="/img/add.png"
-                id="add" class="quantityButton" alt="addSign"></a></span><span id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></span></div></li></div>
+                alt="subtractSign"></a><span id="quantity">1</span><a type="button"><img src="/img/add.png"
+                id="add" class="quantityButton" alt="addSign"></a></span><span id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></span></li>
+                <li class="list-group-item"><span>Subtotal($CAD): </span><span id="subtotal"></span></li></div>
             </ul>`
 
       } else {
@@ -49,49 +47,48 @@ ready(async function () {
       document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
 
       dishName = data[0].name;
-      unitPrice = data[0].price;
+      unitPrice = data[0].price.toFixed(2);
       document.getElementById("subtotal").innerHTML = unitPrice;
 
+      var qty = 0;
+      var subtotal;
 
+      document.getElementById("add").addEventListener("click", function (e) {
+        e.preventDefault();
+        if (qty <= 100) {
+          qty++;
+          subtotal = unitPrice * qty;
+          document.getElementById("quantity").innerHTML = qty;
+          document.getElementById("subtotal").innerHTML = subtotal;
+        }
+      })
+
+      document.getElementById("subtract").addEventListener("click", function (e) {
+        e.preventDefault();
+        if (qty > 1) {
+          qty--;
+          subtotal = unitPrice * qty;
+          document.getElementById("quantity").innerHTML = qty;
+          document.getElementById("subtotal").innerHTML = subtotal;
+        }
+      })
+
+      document.getElementById("add-to-cart").addEventListener("click", function (e) {
+        e.preventDefault();
+
+        postData({
+          cookId: userId,
+          recipeId: recipeDishId,
+          qty: qty
+        })
+
+        window.location.href = "/kitchenDetails?id=" + userId;
+
+      })
     })
     .catch(function (error) {
       console.log(error);
     })
-
-
-  var qty = 0;
-  var subtotal;
-
-  document.getElementById("plus").addEventListener("click", function (e) {
-    e.preventDefault();
-    if (qty <= 100) {
-      qty++;
-      subtotal = unitPrice * qty;
-      document.getElementById("quantity").value = qty;
-      document.getElementById("subtotal").innerHTML = subtotal;
-    }
-  })
-
-  document.getElementById("minus").addEventListener("click", function (e) {
-    e.preventDefault();
-    if (qty > 1) {
-      qty--;
-      subtotal = unitPrice * qty;
-      document.getElementById("quantity").value = qty;
-      document.getElementById("subtotal").innerHTML = subtotal;
-    }
-  })
-
-  document.getElementById("add-to-cart").addEventListener("click", function (e) {
-    e.preventDefault();
-
-    postData({
-      cookId: userId,
-      recipeId: recipeDishId,
-      qty: qty
-    })
-
-  })
 
 });
 
@@ -121,28 +118,3 @@ async function postData(data) {
     console.log(error);
   }
 }
-
-
-// $(document).ready(function() {
-//     var quantity = 0;
-
-//     $('#plus').click(function(e) {
-//         e.preventDefault();
-//         quantity = parseInt($('#quantity').val());
-//         quantity += 1;
-//         $('#quantity').val(quantity);
-//     })
-
-//     $('#minus').click(function(e) {
-//         if (quantity == 0) {
-//             //change to darker colour
-//         }
-//         if (quantity > 0) {
-//             e.preventDefault();
-//             quantity = parseInt($('#quantity').val());
-//             quantity -= 1;
-//             $('#quantity').val(quantity);
-
-//         }
-//     })
-// });

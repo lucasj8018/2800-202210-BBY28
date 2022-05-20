@@ -1067,6 +1067,47 @@ app.get("/displayPreviousCarts", async function (req, res){
 })
 
 
+app.get("/displayPreviousOrder", async function (req, res){
+  if (req.session.loggedIn){
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+
+    db.connect();
+
+    let orderId = req.query.id;
+    console.log(orderId);
+    let orderQuery = "SELECT * FROM bby_28_prevcart where historyID = ?";
+    let [orderResults, fields] = await db.query(orderQuery, [orderId]);
+
+    let recipeIdArray = orderResults[0].recipeIDs.split("/");
+    let qtyArray = orderResults[0].quantities.split("/");
+    let resultsArray = [];
+
+    let dishQuery = "SELECT * FROM bby_28_Recipe where id = ?";
+
+    for (let i = 0; i < recipeIdArray.length; i++) {
+      let [dishResults, fields2] = await db.query(dishQuery, recipeIdArray[i])
+      dishResults[0].quantity = qtyArray[i];
+      dishResults[0].orderId = orderResults[0].historyID;
+      resultsArray = resultsArray.concat(dishResults[0]);
+    }
+
+    res.json(resultsArray);
+    db.end();
+
+  } else {
+    res.redirect("/");
+  }
+
+})
+
+
+
 
 // For page not found 404 error
 app.use(function (req, res, next) {

@@ -102,13 +102,24 @@ ready(async function () {
         <td id="dateCol"><b>Date</b></td>
         <td id="statusCol"><b>Status</b></td>
         <td id="viewCol"></td>
-    </tr>
-`;
+    </tr>`;
     for (let i = 0; i < data.length; i++){
       prevcart += `<tr><td>` + data[i].timestamp + `</td>
       <td class='status'>Complete</td>
-      <td><button type="button" class="btn btn-danger" id='` + data[i].historyID + `'>View</button></td>
-      </tr>`
+      <td>
+      <p>
+      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample`+ data[i].historyID +`" 
+      aria-expanded="false" aria-controls="collapseExample" name=`+ data[i].historyID +` id="button`+ data[i].historyID +`" onclick="displayPreviousOrder(this.name)">
+        View
+      </button>
+      </p>      
+      </td>
+      </tr>
+      <tr><td colspan="3">
+      <div class="collapse" id="collapseExample`+ data[i].historyID +`">
+      <div class="card card-body" id="prevOrder`+ data[i].historyID +`"></div>
+      </div>
+      </td></tr>`
     }
     prevcart += `</table>`;
     document.getElementById("shoppingCartHistory").innerHTML = prevcart;
@@ -204,6 +215,43 @@ function addQuantity(name){
   postAddQuantity({
     cookID: cook,
     recipeID: recipe
+  })
+}
+
+function displayPreviousOrder(name) {
+  fetch("/displayPreviousOrder?id=" + name)
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+
+    let orderId = data[0].orderId;
+    let totalPrice = 0;
+    let totalQty = 0;
+
+    // Populates the previous shopping cart table with dish items the user has added
+    let previousCartTable = "<table id='cartTable' class='table table-light table-striped'>";
+    previousCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
+    for (let i = 0; i < data.length; i++){
+      totalQty += parseInt(data[i].quantity);
+      totalPrice += data[i].price * data[i].quantity;
+
+      previousCartTable += "<tr>" +
+      "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' alt='cartImg'></td>" +
+      "<td>" + data[i].name + "</td>" +
+      "<td>$" + data[i].price + "</td>" +
+      "<td>" + data[i].quantity + "</td>" +
+      "</tr>"
+    }
+    previousCartTable += "</table>";
+    let orderInfo = "<h2>Your Order</h2><h2>Total Price: "+ totalPrice +"$</h2><h2>Total Items: "+ totalQty +"</h2>";
+    orderInfo += previousCartTable;
+
+    document.getElementById("prevOrder" + orderId).innerHTML = orderInfo;
+    
+  })
+  .catch (function (error){
+    console.log(error);
   })
 }
 
