@@ -1137,7 +1137,12 @@ async function init(){
   });
   db.connect();
   let query = `use heroku_57edae262e0f938;
-  alter table bby_28_user add kitchenName varchar(100);`
+  delete from bby_28_user where privatekitchenowner = 0;
+  insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
+values
+		("Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Ad", "Min", "Surrey, B.C.", false, true),
+    ("Regular", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Reg", "Ular", "Surrey, B.C.", false, false)
+;`
   await db.query(query);
   let seeTables = `show tables;`;
   let [tables, tableFields] = await db.query(seeTables);
