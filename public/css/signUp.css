@@ -65,7 +65,8 @@ body {
 
 #fName {
     grid-column: 2 / span 2;
-    grid-row: 4 / span 1; 
+    grid-row: 4 / span 1;
+    width: 100%; 
 }
 
 #lName {
@@ -79,6 +80,7 @@ div label  {
 
 #inputUsername, #inputPassword, #inputFName, #inputLName {
     font-size: 10pt;
+    width: 100%;
 }
 
 .col-sm-2 {
@@ -118,7 +120,7 @@ div label  {
 }
 
 #backButton {
-    grid-column: 3 / span 1;
+    grid-column: 2 / span 2;
     grid-row: 6 / span 1;
     text-align: center;
     background-color: #FFF3DF;
@@ -156,15 +158,13 @@ div label  {
 
     #username, #password, #address {
         font-size: 18pt;
-        min-width: 550px;
+        min-width: 500px;
     }
 
     #fName, #lName {
         font-size: 16pt;
-    }
-
-    #lName {
-        min-width: 300px;
+        min-width: 200px;
+        max-width: 200px;
     }
 
     #inputUsername, #inputPassword, #inputFName, #inputLName {
@@ -172,7 +172,7 @@ div label  {
     }
 
     .col-sm-2 {
-        width: 20vw;
+        width: 80%;
     }
 
     #backButtonLabel, #createAccountButtonLabel{
