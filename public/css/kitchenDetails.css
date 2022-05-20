@@ -44,17 +44,6 @@ body {
     background-color: azure;
 }
 
-#knife1 {
-    grid-column: 3 / span 1;
-    grid-row: 2 / span 1;
-    width: 75%;
-    height: auto;
-    justify-self: end;
-    z-index: 2;
-    margin-top: 140px;
-
-}
-
 #recipes {
     grid-column: 2 / span 2;
     grid-row: 2 / span 2;
@@ -82,14 +71,14 @@ body {
 
 table {
     table-layout: fixed;
-    width: 300px;
+    width: 100%;
     border-collapse: separate;
-    border-spacing: 1px 20px;
+    border-spacing: 1px 40px;
+    justify-content: center;
 }
 
 td {
-    margin-left: 5px;
-    margin-right: 5px;
+    padding-left: 10px;
     font-size: 14pt;
 }
 
@@ -103,23 +92,14 @@ td {
     color: #FFF3DF;
     text-decoration: none;
     padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     border-radius: 5px;
 }
 
 .viewButton:hover {
     background-color: #BB1B05;
     color: #FFF3DF;
-}
-
-#knife2 {
-    grid-column: 3 / span 1;
-    grid-row: 4 / span 1;
-    width: 75%;
-    margin-bottom: -50px;
-    height: auto;
-    justify-self: end;
-    align-self: start;
-    z-index: 2;
 }
 
 #dishes {
@@ -196,7 +176,7 @@ td {
         grid-column: 2 / span 1;
         grid-row: 1 / span 1;
         margin-top: 100px;
-        font-size: 36pt;
+        font-size: 42pt;
     }
 
     #recipes {
@@ -220,9 +200,8 @@ td {
 
     table {
         table-layout: fixed;
-        width: 700px;
         border-collapse: separate;
-        border-spacing: 3px 20px;
+        border-spacing: 3px 60px;
     }
 
     td {
@@ -234,14 +213,9 @@ td {
         height: 125px;
     }
 
-    #knife1 {
-        grid-column: 2 / span 1;
-        grid-row: 3 / span 1;
-        width: 35%;
-        justify-self: end;
-        z-index: 2;
-        margin-top: -50px;
-        margin-right: -75px;
+    .viewButton {
+        padding-left: 30px;
+        padding-right: 30px;
     }
 
     #dishes {
@@ -264,16 +238,6 @@ td {
         font-size: 24pt;
         text-align: center;
         font-family: 'on_my_wayregular';
-    }
-
-    #knife2 {
-        grid-column: 2 / span 1;
-        grid-row: 4 / span 1;
-        width: 35%;
-        justify-self: end;
-        z-index: 2;
-        margin-top: 140px;
-        margin-right: -75px;
     }
 
     #addButtonDIV {

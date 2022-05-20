@@ -30,14 +30,14 @@ ready(async function () {
           recipeTable += "<tr>" +
             "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
             "<td><p class='name'>" + data[i].name + "</p></td>" +
-            "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + " '>View Dish</a></td>" +
+            "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + " '>View</a></td>" +
             "</tr>";
 
         } else if (data[i].purchaseable == 1) {
           dishTable += "<tr>" +
             "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
             "<td><p class='name'>" + data[i].name + "</p></td>" +
-            "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + "'>View Dish</a></td>" +
+            "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + "'>View</a></td>" +
             "</tr>";
 
         }
