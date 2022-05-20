@@ -1136,10 +1136,77 @@ async function init(){
   multipleStatements: true
   });
   db.connect();
-  let query = `show tables`
-  let [tables, tablefields] = await db.query(query);
-  let users = 'select * from bby_28_user';
-  let [userList, userfields] = await db.query(users);
+  let query = `use heroku_57edae262e0f938;
+  CREATE TABLE IF NOT EXISTS BBY_28_User(
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      username varchar(100) NOT NULL UNIQUE,
+      password varchar(100) NOT NULL,
+      fName varchar(100) NOT NULL,
+      lName varchar(100) NOT NULL,
+      location varchar(100),
+      isPrivateKitchenOwner boolean DEFAULT false,
+      kitchenName varchar(100),
+      isAdmin boolean DEFAULT false,
+      avatarPath varchar(100) DEFAULT 'defaultAvatar.jpg'
+  );
+  CREATE TABLE IF NOT EXISTS BBY_28_Recipe(
+    id int NOT NULL AUTO_INCREMENT,
+      userID int NOT NULL,
+      name varchar(100),
+      description text,
+      purchaseable boolean DEFAULT false,
+      price float DEFAULT 0,
+      recipePath varchar(100),
+      CONSTRAINT FK_RecipeUser FOREIGN KEY (userID)
+      REFERENCES BBY_28_User(id)
+      ON DELETE CASCADE,
+      CONSTRAINT UC_Recipe UNIQUE (id, userID)
+  );
+  CREATE TABLE IF NOT EXISTS BBY_28_RecipeIngredients(
+    recipeID int NOT NULL,
+      recipeUserID int NOT NULL,
+      ingredient varchar(100),
+      CONSTRAINT FK_IngredientRecipeID FOREIGN KEY (recipeID)
+      REFERENCES BBY_28_Recipe(id)
+      ON DELETE CASCADE,
+      CONSTRAINT FK_IngredientRecipeUserID FOREIGN KEY (recipeUserID)
+      REFERENCES BBY_28_Recipe(userID)
+      ON DELETE CASCADE,
+      CONSTRAINT UC_RecipeIngredients UNIQUE (recipeID, recipeUserID)
+  );
+  CREATE TABLE IF NOT EXISTS BBY_28_ShoppingCart(
+    customerID int NOT NULL,
+      cookID int NOT NULL,
+      recipeID int NOT NULL,
+      quantity int DEFAULT 1,
+      CONSTRAINT FK_ShoppingCartCustomer FOREIGN KEY (customerID)
+      REFERENCES BBY_28_User(id)
+      ON DELETE CASCADE,
+      CONSTRAINT FK_ShoppingCartCook FOREIGN KEY (cookID)
+      REFERENCES BBY_28_Recipe(userID)
+      ON DELETE CASCADE,
+      CONSTRAINT FK_ShoppingCartRecipe FOREIGN KEY (recipeID)
+      REFERENCES BBY_28_Recipe(id)
+      ON DELETE CASCADE,
+      CONSTRAINT UC_ShoppingCart UNIQUE (customerID, cookID, recipeID)
+  );
+
+  CREATE TABLE IF NOT EXISTS BBY_28_PrevCart(
+    customerID int NOT NULL,
+      cookIDs varchar(100),
+      recipeIDs varchar(100),
+      quantities varchar(100),
+      timestamp varchar(100),
+      historyID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      CONSTRAINT FK_PrevCartCustomer FOREIGN KEY (customerID)
+      REFERENCES BBY_28_User(id)
+      ON DELETE CASCADE
+  );`
+  await db.query(query);
+  let seeTables = `show tables;`;
+  let [tables, tableFields] = await db.query(seeTables);
+  let seeUsers = `select * from bby_28_user;`;
+  let [users, userFields] = await db.query(seeUsers);
   console.log(tables);
   console.log(users);
   db.end();
