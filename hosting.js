@@ -1149,7 +1149,7 @@ values
   let seeUsers = `select * from bby_28_user;`;
   let [users, userFields] = await db.query(seeUsers);
   let seeRecipes = `select * from bby_28_recipe;`;
-  let [recipes, recipesFields] = await db.query(seeUsers);
+  let [recipes, recipesFields] = await db.query(seeRecipes);
   console.log(tables);
   console.log(users);
   console.log(recipes);

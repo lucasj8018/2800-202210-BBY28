@@ -47,8 +47,8 @@ ready(async function () {
       document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
 
       dishName = data[0].name;
-      unitPrice = (Math.round(data[0].price * 100) / 100).toFixed(2);
-      document.getElementById("subtotal").innerHTML = unitPrice;
+      unitPrice = (Math.round(data[0].price * 100) / 100);
+      document.getElementById("subtotal").innerHTML = unitPrice.toFixed(2);
 
       var qty = 0;
       var subtotal;
