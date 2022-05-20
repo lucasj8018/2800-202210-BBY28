@@ -114,7 +114,7 @@ ready(async function () {
       <td class='status'>Complete</td>
       <td>
       <p>
-      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample`+ data[i].historyID +`" 
+      <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample`+ data[i].historyID +`" 
       aria-expanded="false" aria-controls="collapseExample" name=`+ data[i].historyID +` id="button`+ data[i].historyID +`" onclick="displayPreviousOrder(this.name)">
         View
       </button>
