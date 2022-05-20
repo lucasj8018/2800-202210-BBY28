@@ -1127,10 +1127,24 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
+async function init(){
+  const db = await mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+  user: "bbcec9e55759dc",
+  password: "9be02f5e",
+  database: "heroku_57edae262e0f938",
+  multipleStatements: true
+  });
+  db.connect();
+  let query = "drop table bby_28_recipe;"
+  await db.query(query);
+  db.end();
+}
 
 // Run the heroku server
 let port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log("A Bite of Home listening on port " + port + "!");
+  init();
 })
