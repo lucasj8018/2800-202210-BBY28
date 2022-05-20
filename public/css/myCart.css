@@ -98,7 +98,7 @@ td {
     width: 19px;
 }
 
-#quantity {
+.quantity {
     padding-left: 8px;
     padding-right: 8px;
 }
@@ -108,7 +108,7 @@ td {
     padding-right: 10px;
 }
 
-.trash {
+.itemDelete {
     width: 20px;
     height: 20px;
     margin-right: 5px;
@@ -119,19 +119,14 @@ img {
     height: 70px;
 }
 
-#cartMenu {
-    position: sticky;
-    bottom: -55px;
-    background-color: white;
-    padding-bottom: 20px;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-top: 285px;
-}
 
 #total {
     font-size: 16pt;
     text-align: right;
+}
+
+#totalItems {
+    float: left;
 }
 
 #checkoutDiv {
@@ -140,18 +135,20 @@ img {
     justify-content: space-between;
 }
 
-#deleteCart {
+#deleteCartButton {
     background-color: #FFF3DF;
     color: black !important;
     border-color: #FFF3DF !important;
+    margin-left: 5px;
 }
 
-#deleteCart:hover {
+#deleteCartButton:hover {
     background-color: #E4D1B1 !important;
 }
 
 #checkout {
     background-color: #DE2007;
+    margin-right: 5px;
 }
 
 #checkout:hover {

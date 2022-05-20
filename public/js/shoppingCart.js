@@ -11,25 +11,31 @@ ready(async function () {
       document.getElementById("shoppingCart").innerHTML = "<h1>Shopping Cart is Empty.</h1><h2><a href='/map'>Head to the map to add some items!</a></h2>";
     } else {
       // Populates shopping cart table with items the user has added
-      let shoppingCartTable = "<h1>Your Order</h1><h2 id='totalItems'></h2><h2 id='totalPrice'></h2><table id='cartTable' class='table table-light table-striped'>";
-      shoppingCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
+      let shoppingCartTable = "<table id='cartTable'>";
+      shoppingCartTable += "<tr id='tableHeader'><td id='imageCol'><b>Image</b></td><td id='dishCol'><b>Dish</b></td><td id='priceCol'><b>Price</b></td><td id='quantityCol'><b>Quantity</b></td><td id='deleteCol'></td></tr>";
       for (let i = 0; i < data.length; i++){
         shoppingCartTable += "<tr>" +
-        "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' alt='cartImg'></td>" +
-        "<td>" + data[i].name + "</td>" +
-        "<td name='itemPrice'>$" + data[i].price + "</td>" +
-        "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='subQuantity(this.name)'>-</button> <span name='quantity'>" + data[i].quantity +
-        "</span><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>+</button>" +
+        "<td><img src='./img/" + data[i].recipePath + "' id='image' alt='cartImg'></td>" +
+        "<td id='dish' class='name'>" + data[i].name + "</td>" +
+        "<td id='price' class='money' name='itemPrice'>$" + data[i].price + "</td>" +
+        "<td><input type='image' src='/img/subtract.png' id='subtract' class='quantityButton' alt='subtractSign' name=" + data[i].cookID + "_" + data[i].recipeID + "' onclick='subQuantity(this.name)'><span class='quantity' name='quantity'>" + data[i].quantity +
+        "</span><input type='image' src='/img/add.png' id='add' class='quantityButton' alt='addSign' name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>" +
         "<br/><div id='" + data[i].cookID + "_" + data[i].recipeID + "_sub'></div></td>" +
-        "<td><button name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'>Delete</button></td>" +
+        "<td><input type='image' src='/img/trash.png' class='itemDelete' name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'></td>" +
         "</tr>"
       }
-      shoppingCartTable += "</table><div id='deleteCart'><button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/></div>";
-      shoppingCartTable += "<div id='checkoutDiv'><button id='checkout'>Checkout</button><br/></div>"
+
+      shoppingCartTable += "</table><div id='cartMenu'><p id='total'><span id='totalItems'></span><span id='totalPrice'></span></p>" +
+      "<div id='checkoutDiv'><button type='button' id='deleteCartButton' class='btn btn-outline-info'>Delete Cart</button>" +
+      "<p class='cartStatus'>Status: <span id='completion' class='status'>Incomplete</span></p>" +
+          "<button type='button' id='checkout' class='btn btn-outline-info'>Checkout</button>" +
+      "</div>";
+
+      shoppingCartTable += "<h2 id='totalItems'></h2><h2 id='totalPrice'></h2>";
       document.getElementById("shoppingCart").innerHTML = shoppingCartTable;
 
     document.getElementById("deleteCartButton").addEventListener("click", function (){
-      document.getElementById("deleteCart").innerHTML = "<button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/>";
+      document.getElementById("cartMenu").innerHTML = "<button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/>";
       let confirmButton = document.createElement('button');
       confirmButton.innerText = "Confirm";
       confirmButton.className = 'btn btn-success'
@@ -39,7 +45,7 @@ ready(async function () {
           recipeID: -1
         });
       };
-      document.getElementById("deleteCart").appendChild(confirmButton);
+      document.getElementById("cartMenu").appendChild(confirmButton);
 
 
       let cancelButton = document.createElement('button');
@@ -48,7 +54,7 @@ ready(async function () {
       cancelButton.onclick = function(){
         location.reload();
       };
-      document.getElementById("deleteCart").appendChild(cancelButton);
+      document.getElementById("cartMenu").appendChild(cancelButton);
 
     });
     document.getElementById('checkout').addEventListener("click", function (){
@@ -230,7 +236,7 @@ function displayPreviousOrder(name) {
     let totalQty = 0;
 
     // Populates the previous shopping cart table with dish items the user has added
-    let previousCartTable = "<table id='cartTable' class='table table-light table-striped'>";
+    let previousCartTable = "<table id='cartTable2' class='table table-light table-striped'>";
     previousCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
     for (let i = 0; i < data.length; i++){
       totalQty += parseInt(data[i].quantity);
