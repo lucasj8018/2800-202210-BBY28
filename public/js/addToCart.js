@@ -47,7 +47,7 @@ ready(async function () {
       document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
 
       dishName = data[0].name;
-      unitPrice = (Math.round(data[0].price * 100) / 100);
+      unitPrice = (Math.ceil(data[0].price * 100) / 100);
       unitPrice = parseFloat(unitPrice).toFixed(2)
       document.getElementById("subtotal").innerHTML = unitPrice;
 
