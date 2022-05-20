@@ -1136,8 +1136,9 @@ async function init(){
   multipleStatements: true
   });
   db.connect();
-  let query = "drop table bby_28_recipe;"
-  await db.query(query);
+  let query = `Show tables`
+  let [tables, fields] = await db.query(query);
+  console.log(tables);
   db.end();
 }
 
