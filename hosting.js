@@ -1136,9 +1136,60 @@ async function init(){
   multipleStatements: true
   });
   db.connect();
-  let query = `Show tables`
-  let [tables, fields] = await db.query(query);
-  console.log(tables);
+  let query = `CREATE TABLE IF NOT EXISTS BBY_28_Recipe(
+    id int NOT NULL AUTO_INCREMENT,
+      userID int NOT NULL,
+      name varchar(100),
+      description text,
+      purchaseable boolean DEFAULT false,
+      price float DEFAULT 0,
+      recipePath varchar(100),
+      CONSTRAINT FK_RecipeUser FOREIGN KEY (userID)
+      REFERENCES BBY_28_User(id)
+      ON DELETE CASCADE,
+      CONSTRAINT UC_Recipe UNIQUE (id, userID)
+  );
+  CREATE TABLE IF NOT EXISTS BBY_28_RecipeIngredients(
+    recipeID int NOT NULL,
+      recipeUserID int NOT NULL,
+      ingredient varchar(100),
+      CONSTRAINT FK_IngredientRecipeID FOREIGN KEY (recipeID)
+      REFERENCES BBY_28_Recipe(id)
+      ON DELETE CASCADE,
+      CONSTRAINT FK_IngredientRecipeUserID FOREIGN KEY (recipeUserID)
+      REFERENCES BBY_28_Recipe(userID)
+      ON DELETE CASCADE,
+      CONSTRAINT UC_RecipeIngredients UNIQUE (recipeID, recipeUserID)
+  );
+  CREATE TABLE IF NOT EXISTS BBY_28_ShoppingCart(
+    customerID int NOT NULL,
+      cookID int NOT NULL,
+      recipeID int NOT NULL,
+      quantity int DEFAULT 1,
+      CONSTRAINT FK_ShoppingCartCustomer FOREIGN KEY (customerID)
+      REFERENCES BBY_28_User(id)
+      ON DELETE CASCADE,
+      CONSTRAINT FK_ShoppingCartCook FOREIGN KEY (cookID)
+      REFERENCES BBY_28_Recipe(userID)
+      ON DELETE CASCADE,
+      CONSTRAINT FK_ShoppingCartRecipe FOREIGN KEY (recipeID)
+      REFERENCES BBY_28_Recipe(id)
+      ON DELETE CASCADE,
+      CONSTRAINT UC_ShoppingCart UNIQUE (customerID, cookID, recipeID)
+  );
+
+  CREATE TABLE IF NOT EXISTS BBY_28_PrevCart(
+    customerID int NOT NULL,
+      cookIDs varchar(100),
+      recipeIDs varchar(100),
+      quantities varchar(100),
+      timestamp varchar(100),
+      historyID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      CONSTRAINT FK_PrevCartCustomer FOREIGN KEY (customerID)
+      REFERENCES BBY_28_User(id)
+      ON DELETE CASCADE
+  );`
+
   db.end();
 }
 
