@@ -32,7 +32,7 @@ ready(async function () {
 
       if (data[0].purchaseable == 1) {
         receipeDishDetails += `<ul class="list-group list-group-flush" id="addToCartDiv">
-                <li class="list-group-item" id="dish-price">Price($CAD):  ` + Math.round(data[0].price * 100) / 100 + `<span id="numberOfDishes"><a type="button"><img src="/img/subtract.png" id="subtract" class="quantityButton"
+                <li class="list-group-item" id="dish-price">Price($CAD):  ` + (Math.round(data[0].price * 100) / 100).toFixed(2) + `<span id="numberOfDishes"><a type="button"><img src="/img/subtract.png" id="subtract" class="quantityButton"
                 alt="subtractSign"></a><span id="quantity">1</span><a type="button"><img src="/img/add.png"
                 id="add" class="quantityButton" alt="addSign"></a></span><span id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></span></li>
                 <li class="list-group-item"><span>Subtotal($CAD): </span><span id="subtotal"></span></li></div>
