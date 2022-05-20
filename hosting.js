@@ -1137,7 +1137,7 @@ async function init(){
   });
   db.connect();
   let query = `use heroku_57edae262e0f938;
-  delete from bby_28_user where privatekitchenowner = 0;
+  delete from bby_28_user where isPrivateKitchenOwner = 0;
   insert ignore into BBY_28_User (username, password, fName, lName, location, isPrivateKitchenOwner, isAdmin)
 values
 		("Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "Ad", "Min", "Surrey, B.C.", false, true),
