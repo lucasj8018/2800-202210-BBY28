@@ -89,9 +89,8 @@ body {
 #add-to-cart {
     margin-left: 40px;
     background-color: #DE2007;
-    padding-top: 10px;
-    padding-bottom: 10px;
     border-radius: 5px;
+    float: right
 }
 
 #add-to-cart:hover {
@@ -101,6 +100,22 @@ body {
 #addToCartButtonLabel {
     color: #FFF3DF !important;
 }
+
+#goBack {
+    background-color: #FFFF;
+    border-radius: 5px;
+    float: right;
+}
+
+#goBackButton {
+    color: #DE2007 !important;    
+    border: 1px solid #DE2007;
+}
+
+#goBackButton:hover {
+    font-weight: bold;
+}
+
 
 @media only screen and (max-width: 400px) {
 

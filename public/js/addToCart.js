@@ -35,57 +35,63 @@ ready(async function () {
                 <li class="list-group-item" id="dish-price">Price($CAD):  ` + (Math.round(data[0].price * 100) / 100).toFixed(2) + `<span id="numberOfDishes"><a type="button"><img src="/img/subtract.png" id="subtract" class="quantityButton"
                 alt="subtractSign"></a><span id="quantity">1</span><a type="button"><img src="/img/add.png"
                 id="add" class="quantityButton" alt="addSign"></a></span><span id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></span></li>
-                <li class="list-group-item"><span>Subtotal($CAD): </span><span id="subtotal"></span></li></div>
+                <li class="list-group-item"><span>Subtotal($CAD): </span><span id="subtotal"></span><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li></div>
             </ul>`
+        document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
+
+        dishName = data[0].name;
+        unitPrice = (Math.ceil(data[0].price * 100) / 100);
+        unitPrice = parseFloat(unitPrice).toFixed(2)
+        document.getElementById("subtotal").innerHTML = unitPrice;
+
+        var qty = 0;
+        var subtotal;
+
+        document.getElementById("add").addEventListener("click", function (e) {
+          e.preventDefault();
+          if (qty <= 100) {
+            qty++;
+            subtotal = unitPrice * qty;
+            document.getElementById("quantity").innerHTML = qty;
+            document.getElementById("subtotal").innerHTML = subtotal;
+          }
+        })
+
+        document.getElementById("subtract").addEventListener("click", function (e) {
+          e.preventDefault();
+          if (qty > 1) {
+            qty--;
+            subtotal = unitPrice * qty;
+            document.getElementById("quantity").innerHTML = qty;
+            document.getElementById("subtotal").innerHTML = subtotal;
+          }
+        })
+
+        document.getElementById("add-to-cart").addEventListener("click", function (e) {
+          e.preventDefault();
+
+          postData({
+            cookId: userId,
+            recipeId: recipeDishId,
+            qty: qty
+          })
+
+          window.location.href = "/kitchenDetails?id=" + userId;
+        })
 
       } else {
         receipeDishDetails += `<ul class="list-group list-group-flush">
-            <li class="list-group-item" id="dish-price">Price($CAD): N/A</li>
+            <li class="list-group-item" id="dish-price"><span>Price($CAD): N/A</span><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li>
             </ul></div>`
+
+        document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
       }
 
-      document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
-
-      dishName = data[0].name;
-      unitPrice = (Math.ceil(data[0].price * 100) / 100);
-      unitPrice = parseFloat(unitPrice).toFixed(2)
-      document.getElementById("subtotal").innerHTML = unitPrice;
-
-      var qty = 0;
-      var subtotal;
-
-      document.getElementById("add").addEventListener("click", function (e) {
+      document.getElementById("goBackButton").addEventListener("click", function (e) {
         e.preventDefault();
-        if (qty <= 100) {
-          qty++;
-          subtotal = unitPrice * qty;
-          document.getElementById("quantity").innerHTML = qty;
-          document.getElementById("subtotal").innerHTML = subtotal;
-        }
-      })
-
-      document.getElementById("subtract").addEventListener("click", function (e) {
-        e.preventDefault();
-        if (qty > 1) {
-          qty--;
-          subtotal = unitPrice * qty;
-          document.getElementById("quantity").innerHTML = qty;
-          document.getElementById("subtotal").innerHTML = subtotal;
-        }
-      })
-
-      document.getElementById("add-to-cart").addEventListener("click", function (e) {
-        e.preventDefault();
-
-        postData({
-          cookId: userId,
-          recipeId: recipeDishId,
-          qty: qty
-        })
-
         window.location.href = "/kitchenDetails?id=" + userId;
-
       })
+
     })
     .catch(function (error) {
       console.log(error);
