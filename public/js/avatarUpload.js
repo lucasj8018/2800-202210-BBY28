@@ -3,6 +3,7 @@
 // It posts the registration form data to the server.
 //----------------------------------------------------------------------------------
 "use strict";
+
 ready(function () {
 
   const upLoadAvatarForm = document.getElementById("upload-avatar-form");
@@ -24,8 +25,11 @@ ready(function () {
       body: avatarFormData
     };
 
-    fetch("/upload-avatar", options).then(function (res) {
-      window.location.replace("/profile");
+    fetch("/upload-avatar", options).then(async function (res) {
+      let parsedData = await res.json();
+      if (parsedData.status == "success") {
+        window.location.replace("/profile");
+      }
     }).catch(function (err) {
       ("Error:", err)
     });
@@ -44,5 +48,3 @@ function ready(callbackFunc) {
     document.addEventListener("DOMContentLoaded", callbackFunc);
   }
 }
-
-

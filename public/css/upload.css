@@ -247,7 +247,26 @@ body {
 }
 
 #recipeDish-submit {
-    margin: auto;
+    margin: auto;  
+    padding:5px;   
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    background-color: #DE2007;
+    color: #FFF3DF;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 50%;
+    border-radius: 25px;
+    text-decoration: none;  
+    margin-top: 5px;
+}
+
+
+#upload-status {
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
 }
 
 #finishButtonDiv {
@@ -326,6 +345,11 @@ body {
 
     #photoUpload {
         grid-column: 1 / span 2;
+        display: flex;
+    }
+
+    #recipeDish-submit {
+        width: 20%;
     }
 
     #buttons {
@@ -340,5 +364,13 @@ body {
     #next {
         margin: auto;
         padding: 0 30px;
+    }
+
+    #upload-status {
+        text-align: center;
+    }
+
+    #uploadForm-status {
+        text-align: center;
     }
 }

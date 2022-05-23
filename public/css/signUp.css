@@ -137,6 +137,15 @@ div label  {
     grid-row: 4 / span 1;
 }
 
+.col-form-label:after {
+    content:" *";
+    color: #FFF3DF;
+}
+
+#asterisk {
+    color: #FFF3DF;
+}
+
 @media only screen and (min-width: 576px) {
 
     #login {

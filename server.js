@@ -156,6 +156,7 @@ async function updateUserAvatar(req, res) {
   await db.query(updateAvatar, avatarInfo);
   db.end();
 
+  res.send({ status: "success", msg: "Photo uploaded" });
 }
 
 app.get("/kitchenRegistration", function (req, res) {
@@ -695,6 +696,7 @@ var RecipeDishPhoto = "";
 //----------------------------------------------------------------------------------------
 app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async function (req, res) {
   RecipeDishPhoto = req.files[0].filename;
+  res.send({ status: "success", msg: "Photo uploaded" });
 
 });
 

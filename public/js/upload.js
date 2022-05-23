@@ -6,114 +6,128 @@
 "use strict";
 ready(function () {
 
-    let isRecipeOrDish;
-    let isPurchaseable = document.getElementById("inputPrice");
+  let isRecipeOrDish;
+  let isPurchaseable = document.getElementById("inputPrice");
 
-    document.getElementById("recipeChoice").addEventListener("change", function(e) {
-        e.preventDefault();
-        if (document.getElementById("recipeChoice").checked) {
-            isPurchaseable.disabled = true;
-            isRecipeOrDish= "recipe";
-        } 
-    })
+  document.getElementById("recipeChoice").addEventListener("change", function (e) {
+    e.preventDefault();
+    if (document.getElementById("recipeChoice").checked) {
+      isPurchaseable.disabled = true;
+      isRecipeOrDish = "recipe";
+    }
+  })
 
-    document.getElementById("dishChoice").addEventListener("change", function(e) {
-        e.preventDefault();
-        if (document.getElementById("dishChoice").checked) {
-            isPurchaseable.disabled = false;
-            isRecipeOrDish = "dish";
-        } 
-    })
+  document.getElementById("dishChoice").addEventListener("change", function (e) {
+    e.preventDefault();
+    if (document.getElementById("dishChoice").checked) {
+      isPurchaseable.disabled = false;
+      isRecipeOrDish = "dish";
+    }
+  })
 
-    const upLoadRecipeDishForm = document.getElementById("upload-recipeDish-form");
-    upLoadRecipeDishForm.addEventListener("submit", uploadRecipeDish);
+  const upLoadRecipeDishForm = document.getElementById("upload-recipeDish-form");
+  upLoadRecipeDishForm.addEventListener("submit", uploadRecipeDish);
 
-    document.getElementById("finishButton").addEventListener("click", function (e) {
-        e.preventDefault();
+  document.getElementById("finishButton").addEventListener("click", function (e) {
+    e.preventDefault();
 
-        let foodPrice = document.getElementById("inputPrice").value;
-        let foodName = document.getElementById("inputName").value;
-        let foodIngredients = document.getElementById("inputIngredients").value;
-        let foodDescription = document.getElementById("inputDescription").value;
-        console.log(foodName);
+    let foodPrice = document.getElementById("inputPrice").value;
+    let foodName = document.getElementById("inputName").value;
+    let foodIngredients = document.getElementById("inputIngredients").value;
+    let foodDescription = document.getElementById("inputDescription").value;
+    console.log(foodName);
 
+    if (document.getElementById("recipeChoice").checked) {
+      if (foodName == "" || foodDescription == "") {
+        document.getElementById("uploadForm-status").innerHTML = "Please enter your recipe name and description.";
 
-        if (document.getElementById("recipeChoice").checked) {
-            postData({
-                name: foodName,
-                description: foodDescription,
-                recipeOrDish: isRecipeOrDish
-            })
-
-        } else if (document.getElementById("dishChoice").checked) {
-            postData({
-                name: foodName,
-                price: foodPrice,
-                description: foodDescription,
-                recipeOrDish: isRecipeOrDish
-            })
-        }
+      } else {
+        postData({
+          name: foodName,
+          description: foodDescription,
+          recipeOrDish: isRecipeOrDish,
+          ingredient: foodIngredients
+        })
         window.location.replace("/kitchenDetails?id=loggedinUser");
+      }
+    } else if (document.getElementById("dishChoice").checked) {
+      if (foodName == "" || foodDescription == "" || foodPrice == "") {
+        document.getElementById("uploadForm-status").innerHTML = "Please enter your dish name, price, and description.";
 
-    });
+      } else {
+        postData({
+          name: foodName,
+          price: foodPrice,
+          description: foodDescription,
+          recipeOrDish: isRecipeOrDish
+        })
+        window.location.replace("/kitchenDetails?id=loggedinUser");
+      }
+    } else {
+      document.getElementById("uploadForm-status").innerHTML = "Please selet uploding a recipe / dish.";
+    }
+
+  });
 })
 
 function round() {
-    let price = document.getElementById("inputPrice").value;
-    if ((price * 100) % 1 != 0) {
-        let roundedPrice = Math.round(price * 100) / 100;
-        document.getElementById("inputPrice").value = roundedPrice;
-    }
+  let price = document.getElementById("inputPrice").value;
+  if ((price * 100) % 1 != 0) {
+    let roundedPrice = Math.round(price * 100) / 100;
+    document.getElementById("inputPrice").value = roundedPrice;
+  }
 };
 
 
 async function postData(data) {
-    try {
-      let resObject = await fetch("/upload-recipe-dish", {
-        method: 'POST',
-        headers: {
-          "Accept": 'application/json',
-          "Content-Type": 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      let parsedData = await resObject.json();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function uploadRecipeDish(e) {
-    e.preventDefault();
-
-    const recipeDishUpload = document.querySelector('#recipeDish-upload');
-    const recipeDishForm = new FormData();
-
-    for (let i = 0; i < recipeDishUpload.files.length; i++) {
-      // put the images from the input into the form data
-      recipeDishForm.append("files", recipeDishUpload.files[i]);
-    }
-
-    const options = {
+  try {
+    let resObject = await fetch("/upload-recipe-dish", {
       method: 'POST',
-      body: recipeDishForm
-    };
+      headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    let parsedData = await resObject.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-    document.getElementById("upload-status").innerHTML = "Photo uploaded"
+async function uploadRecipeDish(e) {
+  e.preventDefault();
 
-    fetch("/upload-recipe-dish-photo", options).then(function (res) {
-    }).catch(function (err) {
-      ("Error:", err)
-    });
+  const recipeDishUpload = document.querySelector('#recipeDish-upload');
+  const recipeDishForm = new FormData();
 
+  for (let i = 0; i < recipeDishUpload.files.length; i++) {
+    // put the images from the input into the form data
+    recipeDishForm.append("files", recipeDishUpload.files[i]);
   }
 
+  const options = {
+    method: 'POST',
+    body: recipeDishForm
+  };
 
-  // This function checks whether page is loaded
-function ready(callbackFunc) {
-    if (document.readyState != "loading") {
-        callbackFunc();
-    } else {
-        document.addEventListener("DOMContentLoaded", callbackFunc);
+  fetch("/upload-recipe-dish-photo", options).then(async function (res) {
+    let parsedData = await res.json();
+    if (parsedData.status == "success") {
+      document.getElementById("upload-status").innerHTML = parsedData.msg;
     }
+  }).catch(function (err) {
+    ("Error:", err)
+  });
+
+}
+
+
+// This function checks whether page is loaded
+function ready(callbackFunc) {
+  if (document.readyState != "loading") {
+    callbackFunc();
+  } else {
+    document.addEventListener("DOMContentLoaded", callbackFunc);
+  }
 }
