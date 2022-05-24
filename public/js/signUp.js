@@ -28,7 +28,7 @@ ready(function () {
     xmlHttp.send(paramsData);
   }
 
-  // Takes the form entry information and post to the server
+  // Takes the sign up form data and post to the server
   document.getElementById("createAccountButtonLabel").addEventListener("click", function (e) {
     e.preventDefault();
     let username = document.getElementById("inputUsername");
@@ -60,7 +60,9 @@ ready(function () {
 
 });
 
-// This function checks whether page is loaded
+//-------------------------------------------------------------------------------------------
+// This function is called to check whether the page is laoded.
+//-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();

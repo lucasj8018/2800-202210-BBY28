@@ -1,12 +1,13 @@
 "use strict";
 
-//-----------------------------------------------------------------------------------
-// This function is called when the profile page first loads. It gets the user data 
-// and populate on the profile card.  It displays the user list dashboard if it logged
-// in as an admin user.  It also listens to post request to send updated profile data
-// or dashboard updates to the server and save to the database.
-//-----------------------------------------------------------------------------------
-"use strict";
+//----------------------------------------------------------------------------------------------
+// This function is called whne the recipe/dish detail page first loads.  It adds a quantity
+// selection and subtotal field for the dish detail.  It adds listeners to the plus and minus button
+// to allow user to add or minus quantity and display the subtotal accordingly.  When the user clicks
+// the add to cart button.  It will post the dish name, quantity, and subtotal to the server and
+// redirct to the recipe/dish list page.  It also has a go back button to only redirect back to 
+// the recipe/dish page.
+//-----------------------------------------------------------------------------------------------
 ready(async function () {
   var url = document.URL;
   const id = url.substring(url.lastIndexOf('=') + 1).split("/");
@@ -100,16 +101,9 @@ ready(async function () {
 });
 
 //----------------------------------------------------------------------------------------------
-// This function checks whether page is loaded.
+// This function listens to a post request to send the dish name, quantity, and subtotal data to
+// the server.  It is called when the user clicks the add to cart button on the dish detail page.
 //-----------------------------------------------------------------------------------------------
-function ready(callbackFunc) {
-  if (document.readyState != "loading") {
-    callbackFunc();
-  } else {
-    document.addEventListener("DOMContentLoaded", callbackFunc);
-  }
-}
-
 async function postData(data) {
   try {
     let resObject = await fetch("/add-to-shoppingcart", {
@@ -123,5 +117,16 @@ async function postData(data) {
     let parsedData = await resObject.json();
   } catch (error) {
     console.log(error);
+  }
+}
+
+//----------------------------------------------------------------------------------------------
+// This function checks whether page is loaded.
+//-----------------------------------------------------------------------------------------------
+function ready(callbackFunc) {
+  if (document.readyState != "loading") {
+    callbackFunc();
+  } else {
+    document.addEventListener("DOMContentLoaded", callbackFunc);
   }
 }

@@ -11,6 +11,8 @@ var google;
 //----------------------------------------------------------------------------------------
 ready(function () {
 
+  window.initMap = initMap;
+
   fetch("/map-data")
     .then((response) => {
       return response.json();
@@ -57,8 +59,6 @@ async function initMap() {
   }
 
 }
-
-window.initMap = initMap;
 
 //-------------------------------------------------------------------------------------------
 // This function is called when the function initMap() is executed.  It reads the registered 
@@ -111,8 +111,9 @@ function geocodeAddress() {
   }
 }
 
-
-// This function checks whether page is loaded
+//-------------------------------------------------------------------------------------------
+// This function is called to check whether the page is laoded.
+//-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();

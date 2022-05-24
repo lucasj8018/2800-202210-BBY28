@@ -31,91 +31,94 @@ app.use(session({
   saveUninitialized: true
 }));
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the profile page if the user is logged in and otherwise redirect
+// the user to the login page.
+//----------------------------------------------------------------------------------------------
 app.get("/", function (req, res) {
 
   if (req.session.loggedIn) {
     res.redirect("/profile");
 
   } else {
-    // retrieve and send the index.html document from the file system
     let login = fs.readFileSync("./app/html/login.html", "utf8");
     res.send(login);
   }
-
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the mycart page if the user is logged in and otherwise redirect
+// the user to the login page.
+//----------------------------------------------------------------------------------------------
 app.get("/myCart", function (req, res){
   if (req.session.loggedIn){
     let myCart = fs.readFileSync("./app/html/myCart.html", "utf8");
     res.send(myCart);
   } else {
-    // If users not logged in, redirecte to login page
     res.redirect("/");
   }
 
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the kitchen order page if the user is logged in and otherwise 
+// redirects the user to the login page.
+//----------------------------------------------------------------------------------------------
 app.get("/kitchenOrders", function (req, res){
   if (req.session.loggedIn){
     let kitchenOrders = fs.readFileSync("./app/html/kitchenOrders.html", "utf8");
     res.send(kitchenOrders);
   } else {
-    // If users not logged in, redirecte to login page
     res.redirect("/");
   }
 
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the sign up page.
+//----------------------------------------------------------------------------------------------
 app.get("/signUp", function (req, res) {
   let signUp = fs.readFileSync("./app/html/signUp.html", "utf8");
   res.send(signUp);
 });
 
-// Directing to home page
-app.get("/login", function (req, res) {
-
-  if (req.session.loggedIn) {
-    res.redirect("/profile");
-    connectToMySQL(req, res);
-
-  } else {
-    // If users not logged in, redirect to login page
-    res.redirect("/");
-  }
-});
-
+//----------------------------------------------------------------------------------------------
+// This get request path loads the contact page.
+//----------------------------------------------------------------------------------------------
 app.get("/contact", function (req, res) {
   let contact = fs.readFileSync("./app/html/contact.html", "utf8");
   res.send(contact);
 })
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the profile page after the user is logged in.
+//----------------------------------------------------------------------------------------------
 app.get("/profile", function (req, res) {
 
-  // check for a session 
   if (req.session.loggedIn) {
     let userProfile = fs.readFileSync("./app/html/profile.html", "utf8");
     res.send(userProfile);
 
   } else {
-    // If users not logged in, rediret to login page
     res.redirect("/");
   }
-
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path calls the checkUser(req, res) function when a user is logged in and 
+// redirects to the profile page.
+//----------------------------------------------------------------------------------------------
 app.get("/display-profile", function (req, res) {
 
-  // check for a session 
   if (req.session.loggedIn) {
     checkUsers(req, res);
 
   } else {
-    // If users not logged in, redirect to login page
     res.redirect("/");
   }
 });
 
-// Multer to upload user avatar photos
+// Set up multer to upload user avatar photos
 const avatarStorage = multer.diskStorage({
   destination: function (req, file, callbackFunc) {
     callbackFunc(null, "./public/img/")
@@ -126,17 +129,20 @@ const avatarStorage = multer.diskStorage({
 });
 const uploadAvatar = multer({ storage: avatarStorage });
 
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 // This post request is called to receive the updated user profile picture and update it
 // on the bby_28_user table in the database.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res) {
 
   await updateUserAvatar(req, res);
   res.redirect("/profile");
-
 });
 
+//----------------------------------------------------------------------------------------------
+// This function is called when a post request is called to receive the updated user 
+// profile data and update it on the bby_28_user table in the database.
+//----------------------------------------------------------------------------------------------
 async function updateUserAvatar(req, res) {
 
   const db = await mysql.createConnection({
@@ -159,6 +165,9 @@ async function updateUserAvatar(req, res) {
   res.send({ status: "success", msg: "Photo uploaded" });
 }
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the kithcen registration page if the user is logged in.
+//----------------------------------------------------------------------------------------------
 app.get("/kitchenRegistration", function (req, res) {
   if (req.session.loggedIn) {
     res.send(fs.readFileSync("./app/html/kitchenRegistration.html", "utf8"));
@@ -168,6 +177,10 @@ app.get("/kitchenRegistration", function (req, res) {
   }
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path reads and send the kitchen detail data if the logged-in user has a 
+// registered kitchen.  Otherwise redirect to the kitchen registration page.
+//----------------------------------------------------------------------------------------------
 app.get("/kitchenDetails", async function (req, res) {
 
   const db = await mysql.createConnection({
@@ -194,13 +207,14 @@ app.get("/kitchenDetails", async function (req, res) {
     }
 
   } else {
-    // If users not logged in, redirect to login page
     res.redirect("/");
   }
-
   db.end();
 })
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the add to cart page if the user is logged in.
+//----------------------------------------------------------------------------------------------
 app.get("/addToCart", function(req, res) {
   if (req.session.loggedIn) {
     res.send(fs.readFileSync("./app/html/addToCart.html", "utf8"));
@@ -209,6 +223,9 @@ app.get("/addToCart", function(req, res) {
   }
 })
 
+//----------------------------------------------------------------------------------------------
+// This get request path loads the recipe/dish upload page if the user is logged in.
+//----------------------------------------------------------------------------------------------
 app.get("/upload", function (req, res) {
 
   if (req.session.loggedIn) {
@@ -216,11 +233,14 @@ app.get("/upload", function (req, res) {
     res.send(upload);
 
   } else {
-    // If users not logged in, redirect to login page
     res.redirect("/");
   }
 })
 
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the user data from the BBY_28_User table to the user
+// dashboard.
+//----------------------------------------------------------------------------------------------
 app.get("/user-dashboard", async function (req, res) {
   const db = await mysql.createConnection({
     host: "localhost",
@@ -237,17 +257,15 @@ app.get("/user-dashboard", async function (req, res) {
     res.json(results);
 
   } else {
-    // Send format error message for exception
-    res.send({ status: "fail", msg: "Wrong data format" });
+    res.send({ status: "fail", msg: "Fail to send data" });
   }
-
   db.end();
 });
 
-//----------------------------------------------------------------------------------------
-// This function is called when a post request is called to receive the updated user 
-// profile data and update it on the bby_28_user table in the database.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This function is called when the post request path /update-profile is triggered to receive 
+// the updated user profile data and update it on the bby_28_user table in the database.
+//----------------------------------------------------------------------------------------------
 async function updateUserProfile(req, res) {
 
   res.setHeader("Content-Type", "application/json");
@@ -279,22 +297,19 @@ async function updateUserProfile(req, res) {
     await db.query(updateNotPassword, userInfo);
 
   }
-
   db.end();
-
 }
 
-//----------------------------------------------------------------------------------------
-// Listens to a post request to receive the user sign up data and call the registerPrivateKitchen() 
-// function.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This post request path calls the updateUserProfile(req, res) function.
+//----------------------------------------------------------------------------------------------
 app.post('/update-profile', function (req, res) {
   updateUserProfile(req, res);
 });
 
-//----------------------------------------------------------------------------------------
-// Listens to a get routing request and loads the kitchenMap.html page.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This get request path loads the kitchen map page if the user is logged in.
+//----------------------------------------------------------------------------------------------
 app.get("/map", function (req, res) {
 
   // check for a session 
@@ -303,16 +318,14 @@ app.get("/map", function (req, res) {
     res.send(kitchenMap);
 
   } else {
-    // If users not logged in, rediret to login page
     res.redirect("/");
   }
-
 });
 
-//----------------------------------------------------------------------------------------
-// Listens to a get request to retrieve registered private kitchen addresses from the 
-// bby_28_user table and send to the client-side kitchenMap.js
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the registered private kitchen data from the BBY_28_User
+// table.
+//----------------------------------------------------------------------------------------------
 app.get("/map-data", async function (req, res) {
 
   const db = await mysql.createConnection({
@@ -334,11 +347,12 @@ app.get("/map-data", async function (req, res) {
     // Send format error message for exception
     res.send({ status: "fail", msg: "Wrong data format" });
   }
-
   db.end();
 });
 
-// Log out and redirect to login page
+//----------------------------------------------------------------------------------------------
+// This get request path ends the session of the logged in user and redirect to the login page.
+//----------------------------------------------------------------------------------------------
 app.get("/logout", function (req, res) {
 
   if (req.session) {
@@ -346,19 +360,16 @@ app.get("/logout", function (req, res) {
       if (error) {
         res.status(400).send("Fail to log out")
       } else {
-        // session deleted, redirect to login page
         res.redirect("/");
       }
     });
   }
 });
 
-
-
-//------------------------------------------------------------------------------------
-// This function is called when user trys to log in to the home page. It autheticates
-// the user record in the database and creates a session if a signed up user is found.
-//------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This function is called when the user trys to log in to the profile(home) page. It autheticates
+// the user recod in the BBY_28_User table and creates a seesion if a matched user is found.
+//----------------------------------------------------------------------------------------------
 async function checkAuthetication(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -402,15 +413,14 @@ async function checkAuthetication(req, res) {
       msg: "Invalid credentials."
     });
   }
-
   db.end();
 }
 
-//-----------------------------------------------------------------------------------------
-// This function is called when user trys to redirect to the profile page. It checks 
-// whether the logged-in user is a regular or admin user and loads the contents accordingly
-// on the profile page.
-//-----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This function is called when the user trys to redirect to the profile page.  It chekcs whether
+// the logged-in user is a regular or admin user and loads the content accordingly on the profile
+// page.
+//----------------------------------------------------------------------------------------------
 async function checkUsers(req, res) {
 
   const db = await mysql.createConnection({
@@ -430,22 +440,20 @@ async function checkUsers(req, res) {
   if (userResults.length == 1) {
     res.json(userResults);
   }
-
   db.end();
 }
 
-// Receives ajaxPOST call from the client side. Call the checkAuthetication(req, res)
-// function to validate the form entry information from the user.
+//----------------------------------------------------------------------------------------------
+// This post request path calls the checkAuthetication(req, res) function.
+//----------------------------------------------------------------------------------------------
 app.post("/login", function (req, res) {
-
   checkAuthetication(req, res);
 });
 
-
-//----------------------------------------------------------------------------------------
-// This function is called when user trys to sign up an account on the signUp page.  The
-// function reads the input values and save to the bby_28_user table in the database.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This function is called when the user trys to signup an account on the sigh-up page.  It reads
+// the input field values and save to the BBY_28_User table.
+//----------------------------------------------------------------------------------------------
 async function signUpUser(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -481,19 +489,20 @@ async function signUpUser(req, res) {
     res.send({ status: "success", msg: "Account  created" });
 
   }
-
-
   db.end();
 }
 
-//----------------------------------------------------------------------------------------
-// Listens to a post request to receive the user sign up data and call the signUpUser() 
-// function.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This post request path calls the signUpUser(req, res) function.
+//----------------------------------------------------------------------------------------------
 app.post("/signing-up", function (req, res) {
   signUpUser(req, res);
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the private kitchen registration data in the BBY_28_User 
+// table.
+//----------------------------------------------------------------------------------------------
 app.get("/check-kitchen-registration", async function (req, res) {
   const db = await mysql.createConnection({
     host: "localhost",
@@ -510,17 +519,15 @@ app.get("/check-kitchen-registration", async function (req, res) {
     res.json(results);
 
   } else {
-    // Send format error message for exception
-    res.send({ status: "fail", msg: "Wrong data format" });
+    res.send({ status: "fail", msg: "Fail to read data" });
   }
-
   db.end();
 });
 
-//----------------------------------------------------------------------------------------
-// This function is called when a post request is received to receive the private kitchen 
-// registration data and insert it into the bby_28_user table in the database.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This function is called with a post request path /register-kitchen to insert the private 
+// kitchen registration data into the BBY_28_User table.
+//----------------------------------------------------------------------------------------------
 async function registerPrivateKitchen(req, res) {
 
   res.setHeader("Content-Type", "application/json");
@@ -544,19 +551,25 @@ async function registerPrivateKitchen(req, res) {
   db.end();
 }
 
-//----------------------------------------------------------------------------------------
-// Listens to a post request to receive the user sign up data and call the registerPrivateKitchen() 
-// function.
-//----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------- 
+// This post request path calls the registerPrivateKitchen(req, res) function.
+//----------------------------------------------------------------------------------------------
 app.post('/register-kitchen', function (req, res) {
   registerPrivateKitchen(req, res);
 
 });
 
+//----------------------------------------------------------------------------------------------
+// This post request path calls the adminAddUser(req, res) function.
+//----------------------------------------------------------------------------------------------
 app.post('/addUser', function (req, res) {
   adminAddUser(req, res);
 });
 
+//----------------------------------------------------------------------------------------------
+// This function adds a new user to the BBY_28_User table with an admin user account.  It hashes
+// the added user password.  This function is called by the post request path /addUser.
+//----------------------------------------------------------------------------------------------
 async function adminAddUser(req, res) {
   res.setHeader("Content-Type", "application/json");
   var userUsername = req.body.username;
@@ -584,14 +597,21 @@ async function adminAddUser(req, res) {
     [userUsername, userPassword, userFirst, userLast, isAdmin]
   ];
   await db.query(addUser, [userInfo]);
-
   db.end();
 }
 
+//----------------------------------------------------------------------------------------------
+// This post request path calls the deleteUser(req, res) function.
+//----------------------------------------------------------------------------------------------
 app.post('/deleteUser', function (req, res) {
   deleteUser(req, res);
 });
 
+//----------------------------------------------------------------------------------------------
+// This function deletes a user in the BBY_28_User table with an admin user account. It also 
+// ensure at least one admin account is remained in the table and the logged-in user cannot 
+// delete itself. This function is called by the post request path /deleteUser.
+//----------------------------------------------------------------------------------------------
 async function deleteUser(req, res) {
   res.setHeader("Content-Type", "application/json");
   var userID = req.body.id;
@@ -638,14 +658,20 @@ async function deleteUser(req, res) {
     ];
     await db.query(deleteUser, [userInfo]);
   }
-
   db.end();
 }
 
+//----------------------------------------------------------------------------------------------
+// This post request path calls the updateUserDashboard(req, res) function.
+//----------------------------------------------------------------------------------------------
 app.post("/updateUserDashboard", function (req, res) {
   updateUserDashboard(req, res);
 });
 
+//----------------------------------------------------------------------------------------------
+// This function insert the added new user to the dasboard list.  This function is called by the 
+// post request path /updateUserDashboard.
+//----------------------------------------------------------------------------------------------
 async function updateUserDashboard(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
@@ -678,7 +704,7 @@ async function updateUserDashboard(req, res) {
   db.end();
 }
 
-// Multer to upload recipe or dish pictures of the user's private kitchen menu
+// Set up multer to upload recipe/dish image file path the the BBY_28_User table for the logged-in user.
 const recipeDishStorage = multer.diskStorage({
   destination: function (req, file, callbackFunc) {
     callbackFunc(null, "./public/img/")
@@ -690,21 +716,20 @@ const recipeDishStorage = multer.diskStorage({
 const uploadRecipeDish = multer({ storage: recipeDishStorage });
 var RecipeDishPhoto = "";
 
-//----------------------------------------------------------------------------------------
-// This post request is called to receive the uploaded recipe or dish picture and update it
-// in the BBY_28_Recipe table.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This post request path stores the uploaded image filename path in the RecipeDishPhoto 
+// variable.
+//----------------------------------------------------------------------------------------------
 app.post('/upload-recipe-dish-photo', uploadRecipeDish.array("files"), async function (req, res) {
   RecipeDishPhoto = req.files[0].filename;
   res.send({ status: "success", msg: "Photo uploaded" });
 
 });
 
-
-//----------------------------------------------------------------------------------------
-// Listens to a post request to receive the upload recipe or dish form data and save it to 
-// the bby_28_recipe table
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This post request path saves the recipe/dish form data to the BBY_28_Recipe table for th
+// logged-in user.
+//----------------------------------------------------------------------------------------------
 app.post('/upload-recipe-dish', async function (req, res) {
   res.setHeader("Content-Type", "application/json");
 
@@ -728,35 +753,37 @@ app.post('/upload-recipe-dish', async function (req, res) {
 
   await db.query(addRecipeOrDish, [recipeOrDishInfo]);
   db.end();
-
 });
 
+// //----------------------------------------------------------------------------------------------
+// // This function updates the profile image path of the logged-in user in the BBY_28_User. This 
+// // function is called by the post request path /
+// //----------------------------------------------------------------------------------------------
+// async function updateUserAvatar(req, res) {
 
-async function updateUserAvatar(req, res) {
+//   const db = await mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "comp2800",
+//     multipleStatements: true
+//   });
 
-  const db = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
-    multipleStatements: true
-  });
+//   db.connect();
 
-  db.connect();
+//   let updateAvatar = "use comp2800; UPDATE BBY_28_User SET avatarPath = ? WHERE id = ?";
+//   let avatarInfo = [
+//     req.files[0].filename, req.session.userId
+//   ];
+//   await db.query(updateAvatar, avatarInfo);
+//   db.end();
 
-  let updateAvatar = "use comp2800; UPDATE BBY_28_User SET avatarPath = ? WHERE id = ?";
-  let avatarInfo = [
-    req.files[0].filename, req.session.userId
-  ];
-  await db.query(updateAvatar, avatarInfo);
-  db.end();
+// }
 
-}
-
-//-----------------------------------------------------------------------------------------
-// Listens to a get request and checks the id of the user on the path.  It then reads the 
-// recipe and dish data from the BBY_28_Recipe table and send to the client-side kitchenDetails.js.
-//-----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the kitchen name and recipe&dish data from the BBY_28_User
+// and BBY_28_Recipe tables respectively.
+//----------------------------------------------------------------------------------------------
 app.get("/kitchen-details", async function (req, res) {
 
   // check for a session 
@@ -787,11 +814,14 @@ app.get("/kitchen-details", async function (req, res) {
     db.end();
 
   } else {
-    // If users not logged in, redirect to login page
     res.redirect("/");
   }
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the shopping cart data from the BBY_28_ShoppingCart 
+// table.  It is triggered when the shopping cart page is loaded.
+//----------------------------------------------------------------------------------------------
 app.get("/displayShoppingCart", async function (req, res) {
   if (req.session.loggedIn) {
     const db = await mysql.createConnection({
@@ -820,13 +850,20 @@ app.get("/displayShoppingCart", async function (req, res) {
   } else {
     res.redirect("/");
   }
-
 });
 
+//----------------------------------------------------------------------------------------------
+// This post request path calls the deleteCartItem(req, res) function. It is triggered when the
+// delete button is clicked on the item list of the shopping cart page.
+//----------------------------------------------------------------------------------------------
 app.post("/deleteCartItem", function (req, res) {
   deleteCartItem(req, res);
 })
 
+//----------------------------------------------------------------------------------------------
+// This function deletes an item data on the BBY_28_Shoppingcart table.  It is called by the 
+// post request path /deleteCartItem.
+//----------------------------------------------------------------------------------------------
 async function deleteCartItem(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
@@ -853,14 +890,21 @@ async function deleteCartItem(req, res) {
     await db.query(deleteQuery, deleteValues);
     res.send({ status: "success", msg: "Item deleted" });
   }
-
   db.end();
 }
 
+//----------------------------------------------------------------------------------------------
+// This post request path calls the subQuantity(req, res) function. It is triggered when the
+// the user clicks on the minus button the item row.
+//----------------------------------------------------------------------------------------------
 app.post("/subQuantity", function (req, res) {
   subQuantity(req, res);
 })
 
+//----------------------------------------------------------------------------------------------
+// This function update the quantity of the item on the BBY_28_Shoppingcart table.  It is called 
+// by the post request path /subQuantity.
+//----------------------------------------------------------------------------------------------
 async function subQuantity(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
@@ -888,14 +932,21 @@ async function subQuantity(req, res) {
     await db.query(subQuery, subValues);
     res.send({ status: "success", msg: "Quantity decreased" });
   }
-
   db.end();
 }
 
+//----------------------------------------------------------------------------------------------
+// This post request path calls the addQuantity(req, res) function. It is triggered when the
+// the user clicks on the plus button the item row.
+//----------------------------------------------------------------------------------------------
 app.post("/addQuantity", function (req, res) {
   addQuantity(req, res);
 })
 
+//----------------------------------------------------------------------------------------------
+// This function update the quantity of the item on the BBY_28_Shoppingcart table.  It is called 
+// by the post request path /addQuantity.
+//----------------------------------------------------------------------------------------------
 async function addQuantity(req, res) {
   res.setHeader("Content-Type", "application/json");
   const db = await mysql.createConnection({
@@ -966,26 +1017,24 @@ app.get("/checkoutCart", async function (req, res){
 
 })
 
-
-//----------------------------------------------------------------------------------------
-// Listens to a get routing request and loads the addToCart.html page.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This get request path loads the add to cart page.
+//----------------------------------------------------------------------------------------------
 app.get("/recipe-dish", function (req, res) {
 
-  // check for a session 
   if (req.session.loggedIn) {
     let dishDetail = fs.readFileSync("./app/html/addToCart.html", "utf8");
     res.send(dishDetail);
 
   } else {
-    // If users not logged in, rediret to login page
     res.redirect("/");
   }
 });
 
-//----------------------------------------------------------------------------------------
-// Listens to a get request and reads data from the database for the requested recipe or dish.
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the recipe/dish data from the BBY_28_Recipe table.  It 
+// is trigggered when the user clicks the item view button of the recipe/dish list.
+//----------------------------------------------------------------------------------------------
 app.get("/recipe-dish-data", async function (req, res) {
 
   if (req.session.loggedIn) {
@@ -1007,15 +1056,14 @@ app.get("/recipe-dish-data", async function (req, res) {
     if (results.length != 0) {
       res.json(results);
     }
-  
     db.end();
   }
 });
 
-//----------------------------------------------------------------------------------------
-// Listens to a post request to receive the add-to-shoppingcart dish data and save it to 
-// the bby_28_Shoppingcart table
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+// This post request path saves the dish data to the BBY_28_Shoppingcart table.  It is triggered
+// when the user clicks the add to cart button on the dish detial page.
+//----------------------------------------------------------------------------------------------
 app.post('/add-to-shoppingcart', async function (req, res) {
   res.setHeader("Content-Type", "application/json");
 
@@ -1036,6 +1084,10 @@ app.post('/add-to-shoppingcart', async function (req, res) {
 
 });
 
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the history order data from the BBY_28_Prevcart table.
+// It is triggered when the shopping cart page is loaded.
+//----------------------------------------------------------------------------------------------
 app.get("/displayPreviousCarts", async function (req, res){
   if (req.session.loggedIn) {
     const db = await mysql.createConnection({
@@ -1062,7 +1114,11 @@ app.get("/displayPreviousCarts", async function (req, res){
   }
 })
 
-
+//----------------------------------------------------------------------------------------------
+// This get request path reads and sends the order detail data from both the BBY_28_Prevcart and 
+// BBY_28_Recipe tables.  It is triggered when the user clicks the view button of the order in the
+// history order list.
+//----------------------------------------------------------------------------------------------
 app.get("/displayPreviousOrder", async function (req, res){
   if (req.session.loggedIn){
     const db = await mysql.createConnection({
@@ -1098,11 +1154,11 @@ app.get("/displayPreviousOrder", async function (req, res){
   } else {
     res.redirect("/");
   }
-
 })
 
-
-// For page not found 404 error
+//----------------------------------------------------------------------------------------------
+// Display the page not found 404 error
+//----------------------------------------------------------------------------------------------
 app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
 });
@@ -1120,10 +1176,10 @@ async function connectToMySQL(req, res) {
   await connection.end();
 }
 
-
+//----------------------------------------------------------------------------------------------
 // Run the local server on port 8000
+//----------------------------------------------------------------------------------------------
 let port = 8000;
-
 app.listen(port, function () {
   console.log("A Bite of Home listening on port " + port + "!");
 });

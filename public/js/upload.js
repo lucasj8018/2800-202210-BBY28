@@ -1,9 +1,9 @@
+"use strict";
 //-------------------------------------------------------------------------------
 // This function is called when the recipe/dish upload page first loads. It listens 
-// to request on recipe or dish uplad and it will then post the upload form data to 
+// to request on recipe or dish upload and it will then post the upload form data to 
 // the server.
 //--------------------------------------------------------------------------------
-"use strict";
 ready(function () {
 
   let isRecipeOrDish;
@@ -70,6 +70,10 @@ ready(function () {
   });
 })
 
+//-------------------------------------------------------------------------------------------
+// This function rounds the input price field on the recipe/dish upload form to two decimal
+// places.  It is called when the user enter a price on the price field.
+//-------------------------------------------------------------------------------------------
 function round() {
   let price = document.getElementById("inputPrice").value;
   if ((price * 100) % 1 != 0) {
@@ -78,7 +82,10 @@ function round() {
   }
 };
 
-
+//-------------------------------------------------------------------------------------------
+// This function listens to a post request to send the recipe/dish upload form data to the 
+// server.  It is called when the user clicks the finish button on the recipe/dish upload page.
+//-------------------------------------------------------------------------------------------
 async function postData(data) {
   try {
     let resObject = await fetch("/upload-recipe-dish", {
@@ -95,6 +102,10 @@ async function postData(data) {
   }
 }
 
+//-------------------------------------------------------------------------------------------
+// This function listens to a post request to send the uploaded image file data to the server.
+// It is called when the user clicks the upload photo button on the recipe/dish upload page.
+//-------------------------------------------------------------------------------------------
 async function uploadRecipeDish(e) {
   e.preventDefault();
 
@@ -102,7 +113,6 @@ async function uploadRecipeDish(e) {
   const recipeDishForm = new FormData();
 
   for (let i = 0; i < recipeDishUpload.files.length; i++) {
-    // put the images from the input into the form data
     recipeDishForm.append("files", recipeDishUpload.files[i]);
   }
 
@@ -122,8 +132,9 @@ async function uploadRecipeDish(e) {
 
 }
 
-
-// This function checks whether page is loaded
+//----------------------------------------------------------------------------------------------
+// This function checks whether page is loaded.
+//----------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();

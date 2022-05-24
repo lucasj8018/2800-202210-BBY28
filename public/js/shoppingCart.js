@@ -1,4 +1,6 @@
 "use strict";
+
+
 ready(async function () {
 
   fetch("/displayShoppingCart")
@@ -224,6 +226,12 @@ function addQuantity(name){
   })
 }
 
+//----------------------------------------------------------------------------------------------
+// This function listens to a get request to populate the order history as a list.  Each list 
+// item has the total price and quantity of the entire order and eahc dish item has teh image,
+// name, unit price, and ordered quantity.  This function is called when the user clicks the 
+// view button for each order.
+//----------------------------------------------------------------------------------------------
 function displayPreviousOrder(name) {
   fetch("/displayPreviousOrder?id=" + name)
   .then((response) => {
@@ -235,7 +243,7 @@ function displayPreviousOrder(name) {
     let totalPrice = 0;
     let totalQty = 0;
 
-    // Populates the previous shopping cart table with dish items the user has added
+    // Populates the previous shopping cart table with the dish items that the user has added
     let previousCartTable = "<table id='cartTable2' class='table table-light table-striped'>";
     previousCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
     for (let i = 0; i < data.length; i++){
@@ -263,7 +271,7 @@ function displayPreviousOrder(name) {
 
 //----------------------------------------------------------------------------------------------
 // This function checks whether page is loaded.
-//-----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();

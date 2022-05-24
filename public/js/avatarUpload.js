@@ -3,7 +3,6 @@
 // It posts the registration form data to the server.
 //----------------------------------------------------------------------------------
 "use strict";
-
 ready(function () {
 
   const upLoadAvatarForm = document.getElementById("upload-avatar-form");
@@ -34,13 +33,11 @@ ready(function () {
       ("Error:", err)
     });
   }
-
-
 });
 
-
-
-// This function checks whether page is loaded
+//-------------------------------------------------------------------------------------------
+// This function is called to check whether the page is laoded.
+//-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();

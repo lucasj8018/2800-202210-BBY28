@@ -39,7 +39,6 @@ ready(async function () {
             "<td><p class='name'>" + data[i].name + "</p></td>" +
             "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + "'>View</a></td>" +
             "</tr>";
-
         }
       }
       recipeTable += "</table>";
@@ -52,12 +51,11 @@ ready(async function () {
     .catch(function (error) {
       console.log(error);
     })
-
 });
 
 //----------------------------------------------------------------------------------------------
 // This function checks whether page is loaded.
-//-----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();
