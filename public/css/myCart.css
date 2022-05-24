@@ -208,7 +208,7 @@ img {
     border-color: #BB1B05 !important;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
     
     #cartTitle {
         font-size: 32pt;

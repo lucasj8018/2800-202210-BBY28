@@ -90,6 +90,13 @@ ready(async function () {
 
       document.getElementById("goBackButton").addEventListener("click", function (e) {
         e.preventDefault();
+
+        postData({
+          cookId: userId,
+          recipeId: recipeDishId,
+          qty: qty + 1
+        })
+
         window.location.href = "/kitchenDetails?id=" + userId;
       })
 
