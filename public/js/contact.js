@@ -18,7 +18,7 @@ document.getElementById("bite").addEventListener("click", function() {
 
 biteCount++;
 
-if (biteCount == 4) {
+if (biteCount == 1) {
     playCrunch();
     document.getElementById("chefHat1Image").className = "chefHatVisible";
     document.getElementById("chefHat2Image").className = "chefHatVisible";
