@@ -5,7 +5,7 @@ html {
 body {
     height: 100%;
     display: grid;
-    grid-template-columns: 5% 90% 5%;
+    grid-template-columns: 10% 80% 10%;
     font-family: 'latolight';
     background-color: #c49a68;
     background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
@@ -15,10 +15,12 @@ body {
 ::-webkit-scrollbar {
     width: 8px;
 }
+
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: red;
 }
+
 ::-webkit-scrollbar-track {
     background-color: azure;
 }
@@ -34,7 +36,6 @@ body {
     text-align: center;
     font-size: 24pt;
     align-self: center;
-    margin-top: 50px;
 }
 
 #orderList {
@@ -43,10 +44,10 @@ body {
     background-color: white;
     border-radius: 10px;
     box-shadow: 5px 10px grey;
-    padding-bottom: 50px;
+    padding: 20px;
     min-height: 450px;
-    margin-top: 75px;
     overflow: auto;
+    width: 80vw;
 }
 
 #tableHeader {
@@ -97,7 +98,6 @@ td {
 }
 
 @media only screen and (min-width: 600px) {
-    
     #orderTitle {
         font-size: 32pt;
     }
@@ -107,7 +107,7 @@ td {
     }
 
     #orderList {
-        width: 60%;
+        width: 500px;
         justify-self: center;
     }
 
@@ -121,5 +121,29 @@ td {
     
     #quantityCol {
         font-size: 24pt;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .navbar-brand {
+        font-size: 12pt;
+    }
+
+    #orderTitle {
+        font-size: 24pt;
+    }
+
+    #usernameCol, #dishCol, #quantityCol {
+        font-size: 12pt;
+    }
+
+    .col-md-4 {
+        font-size: 4vw;
+        padding-right: 7px;
+    }
+
+    #contact, #faq {
+        font-size: 4vw;
+        padding: 0px 5px 10px 0px;
     }
 }
