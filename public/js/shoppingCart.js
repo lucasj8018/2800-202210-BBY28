@@ -1,6 +1,11 @@
 "use strict";
 
-
+//----------------------------------------------------------------------------------------------
+// This function is called when the myCart page loads. It gets the shoppingCart data and populates
+// it in the shopping cart table. It also gets the prevcart data and populates it into the previous
+// shopping cart table. It also listens to post requests to send updates to the quantity of items,
+// the deletion of items, and the deletion of the entire cart.
+//----------------------------------------------------------------------------------------------
 ready(async function () {
 
   fetch("/displayShoppingCart")
@@ -27,6 +32,7 @@ ready(async function () {
         "</tr>"
       }
 
+      // Adds buttons to allow the user to delete the shopping cart.
       shoppingCartTable += "</table><div id='cartMenu'><p id='total'><span id='totalItems'></span><span id='totalPrice'></span></p>" +
       "<div id='checkoutDiv'><button type='button' id='deleteCartButton' class='btn btn-outline-info'>Delete Cart</button>" +
       "<p class='cartStatus'>Status: <span id='completion' class='status'>Incomplete</span></p>" +
@@ -36,6 +42,8 @@ ready(async function () {
       shoppingCartTable += "<p id='totalItems'></p><p id='totalPrice'></p>";
       document.getElementById("shoppingCart").innerHTML = shoppingCartTable;
 
+
+      // Adds event listener to the deleteCartButton and confirms that the user wants to delete the cart with a second button.
     document.getElementById("deleteCartButton").addEventListener("click", function (){
       document.getElementById("cartMenu").innerHTML = "<span id='deleteCartMsg'>Delete Shopping Cart?</span><br/><br/>";
       let confirmButton = document.createElement('button');
@@ -59,7 +67,9 @@ ready(async function () {
       document.getElementById("cartMenu").appendChild(cancelButton);
 
     });
-    document.getElementById('checkout').addEventListener("click", function (){
+
+      // Adds event listener to the checkout button and confirms that the user wants to checkout the cart with a second button.
+      document.getElementById('checkout').addEventListener("click", function (){
       document.getElementById("cartMenu").innerHTML = "<span id='checkoutMsg'>Checkout?</span><br/><br/>";
       let confirmButton = document.createElement('a');
       confirmButton.innerText = "Confirm";
@@ -100,6 +110,8 @@ ready(async function () {
     console.log(error);
   })
 
+
+  // Displays the previous cart orders by fetching the data from prevcart tables and populates it in the order history table.
   fetch("/displayPreviousCarts")
   .then((response) => {
     return response.json();
@@ -137,6 +149,9 @@ ready(async function () {
   })
 });
 
+//-----------------------------------------------------------------------------------
+// This is a post request to delete an item in the cart.
+//-----------------------------------------------------------------------------------
 async function postDeleteItem(data){
   try {
     let resObject = await fetch("/deleteCartItem", {
@@ -156,6 +171,9 @@ async function postDeleteItem(data){
   }
 }
 
+//-----------------------------------------------------------------------------------
+// This is a post request to decrease the quantity of an item in the cart.
+//-----------------------------------------------------------------------------------
 async function postSubQuantity(data){
   try {
     let resObject = await fetch("/subQuantity", {
@@ -177,6 +195,9 @@ async function postSubQuantity(data){
   }
 }
 
+//-----------------------------------------------------------------------------------
+// This is a post request to increase the quantity of an item in the cart.
+//-----------------------------------------------------------------------------------
 async function postAddQuantity(data){
   try {
     let resObject = await fetch("/addQuantity", {
@@ -196,6 +217,8 @@ async function postAddQuantity(data){
   }
 }
 
+// This function takes the id's of the cook and recipe which are stored in the table and performs a post request
+// to delete the item that the user clicked.
 function deleteItemClicked(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -206,6 +229,8 @@ function deleteItemClicked(name){
   });
 }
 
+// This function takes the id's of the cook and recipe which are stored in the table and performs a post request
+// to decrease the quantity of an item.
 function subQuantity(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -216,6 +241,8 @@ function subQuantity(name){
   })
 }
 
+// This function takes the id's of the cook and recipe which are stored in the table and performs a post request
+// to increase the quantity of an item.
 function addQuantity(name){
   let ids = name.split('_');
   let cook = ids[0];
