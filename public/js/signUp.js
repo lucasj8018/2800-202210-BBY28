@@ -36,7 +36,7 @@ ready(function () {
     let firstName = document.getElementById("inputFName");
     let lastName = document.getElementById("inputLName");
 
-    if (username.value == "" || password.value == "" || firstName.value == "" || lastName == "") {
+    if (username.value == "" || password.value == "" || firstName.value == "" || lastName.value == "") {
       document.getElementById("invalidUser").innerHTML = "Please enter the required info";
 
     } else {
