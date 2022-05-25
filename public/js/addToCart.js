@@ -53,7 +53,7 @@ ready(async function () {
 
         document.getElementById("add").addEventListener("click", function (e) {
           e.preventDefault();
-          if (qty <= 100) {
+          if (qty < 100) {
             qty++;
             subtotal = unitPrice * qty;
             document.getElementById("quantity").innerHTML = qty;
