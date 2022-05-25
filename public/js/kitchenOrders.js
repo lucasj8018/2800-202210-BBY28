@@ -19,7 +19,9 @@ ready(async function () {
         // `<td><button type="button" class="btn btn-outline-info done">Done</button></td>` +
         `</tr>`
       }
-
+      if (table == ""){
+        table = `<td colspan='3'>No orders check back later.</td>`
+      }
       document.getElementById("orders").innerHTML = table;
     })
     .catch(function (error) {
