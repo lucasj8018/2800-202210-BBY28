@@ -124,25 +124,26 @@ Content of the project folder:
 ## How to work on the project
 
 1. Tools or softwares needed:
-        * language(s): JavaScript, CSS, HTML
-        * IDEs: choose one of your choice
-        * Database(s): MySQL and clearDB
-        * Web server: Node.js and Express.js
-        * Hosting: Heroku
+* language(s): JavaScript, CSS, HTML
+* IDEs: choose one of your choice 
+* Database(s): MySQL and clearDB
+* Web server: Node.js and Express.js
+* Hosting: Heroku      
+
 
 2. Node.js packages required:
-        * express
-        * express-session
-        * mysql2/promise
-        * fs
-        * jsdom
-        * multer
+* express
+* express-session
+* mysql2/promise
+* fs
+* jsdom
+* multer
 
 3. APIs used:
-        * Fetch API
-        * Geolocation API
-        * Google Maps JavaScript API
-        * Google Geocoding API
+* Fetch API
+* Geolocation API
+* Google Maps JavaScript API
+* Google Geocoding API
 
 4. Instruction steps:
         a. Clone the repo to your local computer
@@ -154,34 +155,47 @@ Content of the project folder:
         e. Follow the hosting instruction when deploying the app on Heroku (<a href="https://docs.google.com/document/d/1OnuuTzOxSyabAC3ZbcVcGcFtAuglWvNnpsQ0b0NmYnI/edit?usp=sharing">hosting instruction</a>)
 
 5. Test logs:
-        * Testing history: https://docs.google.com/spreadsheets/d/1BaGcirS0AbYg3EW1lw9u5DNY-KnCG-EgBnTn_Z_cFP0/edit?usp=sharing 
+* <a href="https://docs.google.com/spreadsheets/d/1BaGcirS0AbYg3EW1lw9u5DNY-KnCG-EgBnTn_Z_cFP0/edit?usp=sharing">Testing history</a>
 
 ## How to use the product features
-        * Find private kitchens: click on the "Find Recipe/Dish" button to redirect to the kitchen map page.  A google map is diplayed and centered based on the logged-in user's device lcoation.  Click on the markers to look at the private kitchen name and address detail.  Click on the "View Detail" button to see the private kitchen detail.
+* Find private kitchens: 
+Click on the "Find Recipe/Dish" button to redirect to the kitchen map page.  A google map is diplayed and centered based on the logged-in user's device lcoation.  Click on the markers to look at the private kitchen name and address detail.  Click on the "View Detail" button to see the private kitchen detail.
 
-        * Register private kitchen: click on the "Register My Private Kitchen" to redirect to the kitchen registration page.  Fill in the form to register your private kitchen.  Your private kitchen address will now be displayed as a marker on the map.
+* Register private kitchen: 
+Click on the "Register My Private Kitchen" to redirect to the kitchen registration page.  Fill in the form to register your private kitchen.  Your private kitchen address will now be displayed as a marker on the map.
 
-        * Upload recipe/dish: click on the "View My Private Kitchen's Details" button to redirect to your kitchen detail page.  Click on the "Add Recipe/dish" button to redirect to the recipe/dish upload page.  Fill in the form to upload recipe/dish.
+* Upload recipe/dish: 
+Click on the "View My Private Kitchen's Details" button to redirect to your kitchen detail page.  Click on the "Add Recipe/dish" button to redirect to the recipe/dish upload page.  Fill in the form to upload recipe/dish.
 
-        * Order dish: go to the private kitchen map and select a private kithen to view its list of dishes availiable to order.  Click on the "View" button to see the dish detail.  Select the dish quantity and click on the "Add to cart" button to add the dish to the shopping cart.
+* Order dish: 
+Go to the private kitchen map and select a private kithen to view its list of dishes availiable to order.  Click on the "View" button to see the dish detail.  Select the dish quantity and click on the "Add to cart" button to add the dish to the shopping cart.
 
-        * Edit shopping cart: click on the +/- button to adjust the item quantity.  Click on the trash can button to delete one item.  Click on the "Delete Cart" button to delete the entire shopping cart. Click on the "Checkout" button to submit the order.
+* Edit shopping cart: 
+Click on the +/- button to adjust the item quantity.  Click on the trash can button to delete one item.  Click on the "Delete Cart" button to delete the entire shopping cart. Click on the "Checkout" button to submit the order.
 
-        * View order history: view your order history list on the "My Cart History" section on the shopping cart page.  Click on the "View" button on each row to expand a window that displays the order details.  Click on the "View" button again to collapse the window.
+* View order history: 
+View your order history list on the "My Cart History" section on the shopping cart page.  Click on the "View" button on each row to expand a window that displays the order details.  Click on the "View" button again to collapse the window.
 
-        * View incoming dish order:  if you are a registered private kitchen owner, click on the "My Private Kitchen's Orders" button to see a list of the dishes ordered by the customers.
+* View incoming dish order:  
+If you are a registered private kitchen owner, click on the "My Private Kitchen's Orders" button to see a list of the dishes ordered by the customers.
 
-        * Signup: click on the sign up button to redirec to the sign up page.  Fill in the form to create a new account.  
+* Signup: 
+Click on the sign up button to redirec to the sign up page.  Fill in the form to create a new account.  
 
-        * Signin: Sign in with your credentials to use the app. 
+* Signin: 
+Sign in with your credentials to use the app. 
 
-        * Update profile: Click on the "Choose Files" button to selet an image to be uploaded.  Click on the "Upload" button to upload the image.  Click on "Edit" button to edit the user information.  Click on the "Save" button to save the information.
+* Update profile: 
+Click on the "Choose Files" button to selet an image to be uploaded.  Click on the "Upload" button to upload the image.  Click on "Edit" button to edit the user information.  Click on the "Save" button to save the information.
 
-        * Admin user function: View a user dashboard list on the profile page.  Use the "Add User" card to create a new user.  Use the "Admin User" toggle button to set the new user as admin or not.  Click on the "Add User" button to submit the form.  Click on the "Edit" button on each row of the dashboard list to update the username and password of that user.  Click on the "Save" button the submit the information.  Click on the "Delete" button to delete that user.
+* Admin user function: 
+View a user dashboard list on the profile page.  Use the "Add User" card to create a new user.  Use the "Admin User" toggle button to set the new user as admin or not.  Click on the "Add User" button to submit the form.  Click on the "Edit" button on each row of the dashboard list to update the username and password of that user.  Click on the "Save" button the submit the information.  Click on the "Delete" button to delete that user.
 
-        * View contact: click on the Contact text on the footer to redirect to the contact page and see the developer information
+* View contact: 
+Click on the Contact text on the footer to redirect to the contact page and see the developer information
 
-        * Easter egg: click on the Contact text on the footer to redirect to the contact page.  Click on the "Bite" word on the title 4 times to see a chef hat added to the developers' profile photo and a crucnh sound is made.
+* Easter egg: 
+Click on the Contact text on the footer to redirect to the contact page.  Click on the "Bite" word on the title 4 times to see a chef hat added to the developers' profile photo and a crucnh sound is made.
 
 ## Resources and Reference
 - In-app icons from Feather v4.28.0 (Open Source https://feathericons.com/)
