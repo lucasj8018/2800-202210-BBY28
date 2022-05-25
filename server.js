@@ -10,6 +10,7 @@ const {
   JSDOM
 } = require('jsdom');
 const multer = require("multer");
+const { waitForDebugger } = require("inspector");
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -1097,6 +1098,63 @@ app.get("/displayPreviousOrder", async function (req, res){
     res.redirect("/");
   }
 
+})
+
+app.get("/displayKitchenOrders", async function (req, res){
+  if (req.session.loggedIn){
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+
+    db.connect();
+
+    let query = "SELECT * FROM BBY_28_prevcart";
+    let [resultsArray, fields] = await db.query(query);
+
+    let customerOrders = [];
+    let recipeOrders = [];
+    let quantityOrders = []
+
+    for (let i = 0; i < resultsArray.length; i++){
+      let customer = resultsArray[i].customerID;
+      let cooks = (resultsArray[i].cookIDs).split("/");
+      let recipes = (resultsArray[i].recipeIDs).split("/");
+      let quantities = (resultsArray[i].quantities).split("/");
+
+      for (let j = 0; j < cooks.length; j++){
+        if (cooks[j] == req.session.userId){
+          customerOrders[customerOrders.length] = customer;
+          recipeOrders[recipeOrders.length] = parseInt(recipes[j]);
+          quantityOrders[quantityOrders.length] = parseInt(quantities[j]);
+        }
+      }
+    }
+
+    let results = [];
+
+    for (let i = 0; i < customerOrders.length; i++){
+      let query = "SELECT name from bby_28_recipe where id = ? and userID = ?";
+      let values = [
+        recipeOrders[i], req.session.userId
+      ];
+      let [queryResults, queryFields] = await db.query(query, values);
+      let [customerResults, customerFields] = await db.query("SELECT username from bby_28_user where id = ?", customerOrders[i]);
+      results[results.length] = {
+        customer: customerResults[0].username,
+        recipe: queryResults[0].name,
+        quantity: quantityOrders[i]
+      }
+    }
+    res.json(results);
+    db.end();
+
+  } else {
+    res.redirect("/");
+  }
 })
 
 

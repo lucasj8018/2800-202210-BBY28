@@ -67,7 +67,7 @@ ready(async function () {
         <a href="/map" class="buttonLabel" id="viewKitchens">Find Recipes/Dishes</a>
         <a href="/myCart" class="buttonLabel" id="myCart">View My Cart</a>
         <a href="/kitchenRegistration" class="buttonLabel" id="registerKitchen">Register My Private Kitchen</a>
-        <a href="#" class="buttonLabel" id="kitchenOrders">View My Private Kitchen's Orders</a>
+        <a href="/kitchenOrders" class="buttonLabel" id="kitchenOrders">View My Private Kitchen's Orders</a>
         <a href="/kitchenDetails?id=loggedinUser" class="buttonLabel" id="viewMyKitchen">View My Private Kitchen's Details</a>
 
         `;
