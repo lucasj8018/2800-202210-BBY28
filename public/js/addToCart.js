@@ -48,7 +48,7 @@ ready(async function () {
         unitPrice = parseFloat(unitPrice).toFixed(2)
         document.getElementById("subtotal").innerHTML = unitPrice;
 
-        var qty = 0;
+        var qty = 1;
         var subtotal;
 
         document.getElementById("add").addEventListener("click", function (e) {
