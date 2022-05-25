@@ -183,33 +183,34 @@ app.get("/kitchenRegistration", function (req, res) {
 //----------------------------------------------------------------------------------------------
 app.get("/kitchenDetails", async function (req, res) {
 
-  const db = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
-    multipleStatements: true
-  });
-
   if (req.session.loggedIn) {
 
+    let idOfResponse = req.query["id"];
+
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
     db.connect();
 
     const [results, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [req.session.userId]);
     if (results.length == 1) {
-      if (results[0].isPrivateKitchenOwner) {
-        let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
-        res.send(kitchenDetails);
+      if (!results[0].isPrivateKitchenOwner && idOfResponse == "loggedinUser") {
+        res.redirect("/kitchenRegistration");
 
       } else {
-        res.redirect("/kitchenRegistration");
+        let kitchenDetails = fs.readFileSync("./app/html/kitchenDetails.html", "utf8");
+        res.send(kitchenDetails);
       }
     }
+    db.end();
 
   } else {
     res.redirect("/");
   }
-  db.end();
 })
 
 //----------------------------------------------------------------------------------------------
@@ -226,11 +227,27 @@ app.get("/addToCart", function(req, res) {
 //----------------------------------------------------------------------------------------------
 // This get request path loads the recipe/dish upload page if the user is logged in.
 //----------------------------------------------------------------------------------------------
-app.get("/upload", function (req, res) {
+app.get("/upload", async function (req, res) {
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "comp2800",
+    multipleStatements: true
+  });
+
+  db.connect();
 
   if (req.session.loggedIn) {
-    let upload = fs.readFileSync("./app/html/upload.html", "utf8");
-    res.send(upload);
+
+    const [results, fields] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [req.session.userId]);
+    if (results.length == 1) {
+      if (results[0].isPrivateKitchenOwner) {
+        let upload = fs.readFileSync("./app/html/upload.html", "utf8");
+        res.send(upload);
+      }
+    }
 
   } else {
     res.redirect("/");
@@ -754,31 +771,6 @@ app.post('/upload-recipe-dish', async function (req, res) {
   await db.query(addRecipeOrDish, [recipeOrDishInfo]);
   db.end();
 });
-
-// //----------------------------------------------------------------------------------------------
-// // This function updates the profile image path of the logged-in user in the BBY_28_User. This 
-// // function is called by the post request path /
-// //----------------------------------------------------------------------------------------------
-// async function updateUserAvatar(req, res) {
-
-//   const db = await mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "comp2800",
-//     multipleStatements: true
-//   });
-
-//   db.connect();
-
-//   let updateAvatar = "use comp2800; UPDATE BBY_28_User SET avatarPath = ? WHERE id = ?";
-//   let avatarInfo = [
-//     req.files[0].filename, req.session.userId
-//   ];
-//   await db.query(updateAvatar, avatarInfo);
-//   db.end();
-
-// }
 
 //----------------------------------------------------------------------------------------------
 // This get request path reads and sends the kitchen name and recipe&dish data from the BBY_28_User

@@ -49,7 +49,7 @@ ready(function () {
           if (parsedData.status == "fail") {
             document.getElementById("invalidUser").innerHTML = parsedData.msg;
           } else {
-            location.replace('/login');
+            location.replace('/');
           }
         }
       }, queryStr);
