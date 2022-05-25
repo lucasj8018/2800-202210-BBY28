@@ -85,13 +85,13 @@ td {
     width: 5%;
 }
 
-#done {
+.done {
     background-color: #00AD42 !important;
     border-color: #00AD42 !important;
     margin-right: 10px;
 }
 
-#done:hover {
+.done:hover {
     color: #FFF3DF !important;
     background-color: #006A28 !important;
     border-color: #006A28 !important;

@@ -10,6 +10,7 @@ const {
   JSDOM
 } = require('jsdom');
 const multer = require("multer");
+const { waitForDebugger } = require("inspector");
 
 // Map local js, css, image, icon, and font file paths to the app's virtual paths
 app.use("/text", express.static("./public/text"));
@@ -959,6 +960,10 @@ async function addQuantity(req, res) {
   db.end();
 }
 
+//----------------------------------------------------------------------------------------------
+// This get request path reads the user's input from their current shopping cart and inserts it
+// into bby_28_prevcart. It then deletes the user's current shopping cart.
+//----------------------------------------------------------------------------------------------
 app.get("/checkoutCart", async function (req, res){
   if (req.session.loggedIn){
     const db = await mysql.createConnection({
@@ -1149,24 +1154,75 @@ app.get("/displayPreviousOrder", async function (req, res){
 })
 
 //----------------------------------------------------------------------------------------------
+// This get request path reads and sends the kitchen orders data from BBY_28_prevcart and
+// bby_28_recipe and bby_28_user tables. It is triggered when the user loads the kitchen
+// orders page.
+//----------------------------------------------------------------------------------------------
+app.get("/displayKitchenOrders", async function (req, res){
+  if (req.session.loggedIn){
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "comp2800",
+      multipleStatements: true
+    });
+
+    db.connect();
+
+    let query = "SELECT * FROM BBY_28_prevcart";
+    let [resultsArray, fields] = await db.query(query);
+
+    let customerOrders = [];
+    let recipeOrders = [];
+    let quantityOrders = []
+
+    for (let i = 0; i < resultsArray.length; i++){
+      let customer = resultsArray[i].customerID;
+      let cooks = (resultsArray[i].cookIDs).split("/");
+      let recipes = (resultsArray[i].recipeIDs).split("/");
+      let quantities = (resultsArray[i].quantities).split("/");
+
+      for (let j = 0; j < cooks.length; j++){
+        if (cooks[j] == req.session.userId){
+          customerOrders[customerOrders.length] = customer;
+          recipeOrders[recipeOrders.length] = parseInt(recipes[j]);
+          quantityOrders[quantityOrders.length] = parseInt(quantities[j]);
+        }
+      }
+    }
+
+    let results = [];
+
+    for (let i = 0; i < customerOrders.length; i++){
+      let query = "SELECT name from bby_28_recipe where id = ? and userID = ?";
+      let values = [
+        recipeOrders[i], req.session.userId
+      ];
+      let [queryResults, queryFields] = await db.query(query, values);
+      let [customerResults, customerFields] = await db.query("SELECT username from bby_28_user where id = ?", customerOrders[i]);
+      results[results.length] = {
+        customer: customerResults[0].username,
+        recipe: queryResults[0].name,
+        quantity: quantityOrders[i]
+      }
+    }
+    res.json(results);
+    db.end();
+
+  } else {
+    res.redirect("/");
+  }
+})
+
+
+//----------------------------------------------------------------------------------------------
 // Display the page not found 404 error
 //----------------------------------------------------------------------------------------------
 app.use(function (req, res, next) {
   res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
 });
 
-async function connectToMySQL(req, res) {
-  const mysql = require("mysql2/promise");
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
-    multipleStatements: true
-  });
-  connection.connect();
-  await connection.end();
-}
 
 //----------------------------------------------------------------------------------------------
 // Run the local server on port 8000
