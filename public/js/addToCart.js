@@ -57,7 +57,7 @@ ready(async function () {
             qty++;
             subtotal = unitPrice * qty;
             document.getElementById("quantity").innerHTML = qty;
-            document.getElementById("subtotal").innerHTML = subtotal;
+            document.getElementById("subtotal").innerHTML = subtotal.toFixed(2);
           }
         })
 
