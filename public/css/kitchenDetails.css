@@ -4,7 +4,6 @@
          url('../font/on_my_way/on_my_way_free_version-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
 body {
@@ -13,22 +12,6 @@ body {
     background-color: #c49a68;
     background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
     padding-bottom: 150px;
-}
-
-#navbar {
-    grid-column: 1 / span 4;
-    grid-row: 1 / span 1;
-}
-
-#kitchenName {
-    grid-column: 2 / span 2;
-    grid-row: 2 / span 1;
-    align-self: start;
-    justify-self: center;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 32pt;
-    font-family: 'on_my_wayregular';
 }
 
 ::-webkit-scrollbar {
@@ -44,57 +27,73 @@ body {
     background-color: azure;
 }
 
+#navbar {
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 1;
+}
+
+#kitchenName {
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 1;
+    align-self: start;
+    justify-self: center;
+    text-align: center;
+    font-size: 36pt;
+    font-family: 'on_my_wayregular';
+    margin-top: 20px;
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 1px 40px;
+    justify-content: center;
+    width: 100%;
+}
+
+td {
+    font-size: 16pt;
+    padding-left: 10px;
+}
+
 #recipes {
     grid-column: 2 / span 2;
     grid-row: 2 / span 2;
-    background-color: white;
-    border-radius: 10px;
     height: 500px;
     width: 85%;
+    background-color: white;
+    box-shadow: 5px 10px grey;
+    border-radius: 10px;
+    z-index: 1;
+    text-align: center;
+    overflow-y: auto;
     margin-top: 170px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 60px;
     padding-bottom: 20px;
-    z-index: 1;
-    box-shadow: 5px 10px grey;
-    overflow-y: auto;
-    text-align: center;
 }
 
 #recipeTitle {
-    font-size: 20pt;
+    font-size: 28pt;
     font-family: 'on_my_wayregular';
     text-align: center;
     background-color: white;
 }
 
-table {
-    table-layout: fixed;
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 1px 40px;
-    justify-content: center;
-}
-
-td {
-    padding-left: 10px;
-    font-size: 14pt;
-}
-
 .name {
-    margin-bottom: 0;
     word-wrap: break-word;
+    margin-bottom: 0;
 }
 
 .viewButton {
     background-color: #DE2007;
+    border-radius: 5px;
     color: #FFF3DF;
     text-decoration: none;
     padding: 10px;
     padding-left: 15px;
     padding-right: 15px;
-    border-radius: 5px;
 }
 
 .viewButton:hover {
@@ -105,47 +104,45 @@ td {
 #dishes {
     grid-column: 2 / span 2;
     grid-row: 6 / span 1;
-    background-color: white;
-    border-radius: 10px;
     height: 500px;
     width: 85vw;
-    min-height: 500px;
-    max-height: 500px;
+    background-color: white;
+    box-shadow: 5px 10px grey;
+    border-radius: 10px;
+    z-index: 1;
+    text-align: center;
+    overflow-y: auto;
     margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 20px;
-    z-index: 1;
-    box-shadow: 5px 10px grey;
-    overflow-y: auto;
-    text-align: center;
 }
 
 #dishesTitle {
-    font-size: 20pt;
+    font-size: 28pt;
     font-family: 'on_my_wayregular';
+    background-color: white;
     text-align: center;
     position: sticky;
     top: 0;
-    background-color: white;
 }
 
 #addButtonDIV {
     grid-column: 2 / span 2;
     grid-row: 7 / span 1;
-    margin-top: 150px;
     justify-self: center;
+    margin-top: 150px;
 }
 
 #addButton {
-    text-align: center;
     background-color: #DE2007;
-    text-decoration: none;
+    border-radius: 25px;
     color: #FFF3DF;
+    text-align: center;
+    text-decoration: none;
     padding: 20px;
     padding-left: 50px;
     padding-right: 50px;
-    border-radius: 25px;
 }
 
 #addButton:hover {
@@ -157,12 +154,12 @@ td {
     grid-row: 9 / span 1;
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (max-width: 300px) {
     
     body {
         display: grid;
         grid-template-rows: 10% 5% 30% 30% 5% 0% 0% 0%;
-        grid-template-columns: 15% 70% 15%;
+        grid-template-columns: 10% 80% 10%;
         font-family: 'latolight';
     }
 
@@ -172,23 +169,33 @@ td {
         height: 100%;
     }
 
+    table {
+        table-layout: fixed;
+        border-collapse: separate;
+        border-spacing: 1px 30px;
+    }
+
+    td {
+        font-size: 12pt;
+    } 
+
     #kitchenName {
         grid-column: 2 / span 1;
         grid-row: 1 / span 1;
+        font-size: 32pt;
         margin-top: 100px;
-        font-size: 42pt;
     }
 
     #recipes {
         grid-column: 2 / span 1;
         grid-row: 3 / span 1;
-        height: 600px;
-        width: 70vw;
+        height: 450px;
+        width: 100%;
         display: inline-block;
-        margin-top: 0;
         text-align: center; 
         position: relative;
-        overflow-y: auto; 
+        overflow-y: auto;
+        margin-top: 0;
         margin-bottom: 10px;  
     }
 
@@ -198,6 +205,66 @@ td {
         font-size: 24pt;
     }
 
+    .foodImg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .viewButton {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    #dishes {
+        grid-column: 2 / span 1;
+        grid-row: 4 / span 1;
+        height: 450px;
+        width: 100%;
+        display: inline-block;
+        text-align: center; 
+        position: relative;
+        overflow-y: auto;
+        margin-top: 75px;
+        margin-bottom: 30px; 
+    }
+
+    #dishesTitle {
+        grid-column: 3 / span 1;
+        grid-row: 1 / span 1;
+        font-size: 24pt;
+        font-family: 'on_my_wayregular';
+        text-align: center;
+    }
+
+    #addButtonDIV {
+        grid-column: 2 / span 1;
+        grid-row: 5 / span 1; 
+        margin-top: 250px;
+    }
+
+    #addButton {
+        font-size: 12pt;
+        padding: 15px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    
+    body {
+        display: grid;
+        grid-template-rows: 10% 5% 30% 30% 5%;
+        grid-template-columns: 10% 80% 10%;
+        font-family: 'latolight';
+    }
+
+    #navbar {
+        grid-column: 1 / span 3;
+        grid-row: 1 / span 1;
+        height: 100%;
+    }
+
     table {
         table-layout: fixed;
         border-collapse: separate;
@@ -205,12 +272,38 @@ td {
     }
 
     td {
-        font-size: 16pt;
+        font-size: 20pt;
     } 
 
+    #kitchenName {
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
+        font-size: 42pt;
+        margin-top: 100px;
+    }
+
+    #recipes {
+        grid-column: 2 / span 1;
+        grid-row: 3 / span 1;
+        height: 600px;
+        width: 100%;
+        display: inline-block;
+        text-align: center; 
+        position: relative;
+        overflow-y: auto;
+        margin-top: 0;
+        margin-bottom: 10px;  
+    }
+
+    #recipeTitle {
+        grid-column: 3 / span 1;
+        grid-row: 1 / span 1;
+        font-size: 32pt;
+    }
+
     .foodImg {
-        width: 125px;
-        height: 125px;
+        width: 150px;
+        height: 150px;
     }
 
     .viewButton {
@@ -221,21 +314,20 @@ td {
     #dishes {
         grid-column: 2 / span 1;
         grid-row: 4 / span 1;
-        min-height: 600px;
-        max-height: 600px;
-        width: 70vw;
+        height: 600px;
+        width: 100%;
         display: inline-block;
-        margin-top: 200px;
         text-align: center; 
         position: relative;
-        overflow-y: auto; 
+        overflow-y: auto;
+        margin-top: 200px;
         margin-bottom: 30px; 
     }
 
     #dishesTitle {
         grid-column: 3 / span 1;
         grid-row: 1 / span 1;
-        font-size: 24pt;
+        font-size: 32pt;
         text-align: center;
         font-family: 'on_my_wayregular';
     }

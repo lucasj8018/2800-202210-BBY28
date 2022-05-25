@@ -14,7 +14,7 @@ ready(async function () {
     })
     .then((data) => {
       userData = data;
-      document.getElementById("welcomeUsername").innerHTML = userData[0].fName;
+      document.getElementById("profileTitle").innerHTML = userData[0].username + "'s Profile";
       document.getElementById("avatarPath").src = "./img/" + userData[0].avatarPath;
       document.getElementById("firstNameInput").value = userData[0].fName;
       document.getElementById("lastNameInput").value = userData[0].lName;
@@ -63,7 +63,7 @@ ready(async function () {
 
       } else {
         document.getElementById("buttonMenu").innerHTML = `
-        <p id="question"><b>What would you like to do?</b></p>
+        <p id="question"><b>I would like to...</b></p>
         <a href="/map" class="buttonLabel" id="viewKitchens">Find Recipes/Dishes</a>
         <a href="/myCart" class="buttonLabel" id="myCart">View My Cart</a>
         <a href="/kitchenRegistration" class="buttonLabel" id="registerKitchen">Register My Private Kitchen</a>

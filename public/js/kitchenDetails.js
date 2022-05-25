@@ -14,6 +14,7 @@ ready(async function () {
     })
     .then((data) => {
 
+      document.getElementById("kitchenTitle").innerHTML = data[data.length -1].kitchenName;
       document.getElementById("currentKitchen").innerHTML = data[data.length -1].kitchenName;
       
       if (id == data[data.length - 1].loggedinId || id == "loggedinUser") {
@@ -28,14 +29,14 @@ ready(async function () {
       for (let i = 0; i < data.length - 1; i++) {
         if (data[i].purchaseable == 0) {
           recipeTable += "<tr>" +
-            "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
+            "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='No image provided'></td>" +
             "<td><p class='name'>" + data[i].name + "</p></td>" +
             "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + " '>View</a></td>" +
             "</tr>";
 
         } else if (data[i].purchaseable == 1) {
           dishTable += "<tr>" +
-            "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='dishImg'></td>" +
+            "<td><img src='./img/" + data[i].recipePath + "' width='100' height='100' class='foodImg' alt='No image provided'></td>" +
             "<td><p class='name'>" + data[i].name + "</p></td>" +
             "<td><a class='viewButton' href='/recipe-dish?id=" + data[i].userID + "/" + data[i].id + "'>View</a></td>" +
             "</tr>";
