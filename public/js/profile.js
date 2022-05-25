@@ -63,7 +63,7 @@ ready(async function () {
 
       } else {
         document.getElementById("buttonMenu").innerHTML = `
-        <p id="question"><b>What would you like to do?</b></p>
+        <p id="question"><b>I would like to...</b></p>
         <a href="/map" class="buttonLabel" id="viewKitchens">Find Recipes/Dishes</a>
         <a href="/myCart" class="buttonLabel" id="myCart">View My Cart</a>
         <a href="/kitchenRegistration" class="buttonLabel" id="registerKitchen">Register My Private Kitchen</a>
