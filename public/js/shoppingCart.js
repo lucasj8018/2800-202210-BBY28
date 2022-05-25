@@ -14,7 +14,7 @@ ready(async function () {
   })
   .then((data) => {
     if (data[0].recipePath == "EmptyShoppingCart"){
-      // If the shopping cart is empty it will prompt the user to go to the map to add items.
+      // If the shopping cart is empty it will prompt the user to go to the map to add items
       document.getElementById("shoppingCart").innerHTML = "<p id='emptyCartMsg'>Shopping Cart is Empty.</p><h2><a id='mapLink' href='/map'>Head to the map to add some items!</a></h2>";
     } else {
       // Populates shopping cart table with items the user has added
@@ -32,7 +32,7 @@ ready(async function () {
         "</tr>"
       }
 
-      // Adds buttons to allow the user to delete the shopping cart.
+      // Adds buttons to allow the user to delete the shopping cart
       shoppingCartTable += "</table><div id='cartMenu'><p id='total'><span id='totalItems'></span><span id='totalPrice'></span></p>" +
       "<div id='checkoutDiv'><button type='button' id='deleteCartButton' class='btn btn-outline-info'>Delete Cart</button>" +
       "<p class='cartStatus'>Status: <span id='completion' class='status'>Incomplete</span></p>" +
@@ -43,7 +43,7 @@ ready(async function () {
       document.getElementById("shoppingCart").innerHTML = shoppingCartTable;
 
 
-      // Adds event listener to the deleteCartButton and confirms that the user wants to delete the cart with a second button.
+      // Adds event listener to the deleteCartButton and confirms that the user wants to delete the cart with a second button
     document.getElementById("deleteCartButton").addEventListener("click", function (){
       document.getElementById("cartMenu").innerHTML = "<span id='deleteCartMsg'>Delete Shopping Cart?</span><br/><br/>";
       let confirmButton = document.createElement('button');
@@ -68,7 +68,7 @@ ready(async function () {
 
     });
 
-      // Adds event listener to the checkout button and confirms that the user wants to checkout the cart with a second button.
+      // Adds event listener to the checkout button and confirms that the user wants to checkout the cart with a second button
       document.getElementById('checkout').addEventListener("click", function (){
       document.getElementById("cartMenu").innerHTML = "<span id='checkoutMsg'>Checkout?</span><br/><br/>";
       let confirmButton = document.createElement('a');
@@ -111,7 +111,7 @@ ready(async function () {
   })
 
 
-  // Displays the previous cart orders by fetching the data from prevcart tables and populates it in the order history table.
+  // Displays the previous cart orders by fetching the data from prevcart tables and populates it in the order history table
   fetch("/displayPreviousCarts")
   .then((response) => {
     return response.json();
@@ -218,7 +218,7 @@ async function postAddQuantity(data){
 }
 
 // This function takes the id's of the cook and recipe which are stored in the table and performs a post request
-// to delete the item that the user clicked.
+// to delete the item that the user clicked
 function deleteItemClicked(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -230,7 +230,7 @@ function deleteItemClicked(name){
 }
 
 // This function takes the id's of the cook and recipe which are stored in the table and performs a post request
-// to decrease the quantity of an item.
+// to decrease the quantity of an item
 function subQuantity(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -242,7 +242,7 @@ function subQuantity(name){
 }
 
 // This function takes the id's of the cook and recipe which are stored in the table and performs a post request
-// to increase the quantity of an item.
+// to increase the quantity of an item
 function addQuantity(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -254,9 +254,9 @@ function addQuantity(name){
 }
 
 //----------------------------------------------------------------------------------------------
-// This function listens to a get request to populate the order history as a list.  Each list 
-// item has the total price and quantity of the entire order and eahc dish item has teh image,
-// name, unit price, and ordered quantity.  This function is called when the user clicks the 
+// This function listens to a get request to populate the order history as a list. Each list 
+// item has the total price and quantity of the entire order and each dish item has the image,
+// name, unit price, and ordered quantity. This function is called when the user clicks the 
 // view button for each order.
 //----------------------------------------------------------------------------------------------
 function displayPreviousOrder(name) {

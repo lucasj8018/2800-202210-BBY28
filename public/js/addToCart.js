@@ -2,7 +2,7 @@
 
 //----------------------------------------------------------------------------------------------
 // This function is called when the recipe/dish detail page first loads. It adds a quantity
-// selection and subtotal field for the dish detail. It adds listeners to the plus and minus button
+// selection and subtotal field for the dish detail. It adds listeners to the plus and minus buttons
 // to allow user to add or minus quantity and display the subtotal accordingly. When the user clicks
 // the "Add to Cart" button, it will post the dish name, quantity, and subtotal to the server and
 // redirect to the kitchenDetails page. If it is a recipe instead of a dish, the price and add to 

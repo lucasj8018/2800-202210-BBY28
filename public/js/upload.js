@@ -72,7 +72,7 @@ ready(function () {
 
 //-------------------------------------------------------------------------------------------
 // This function rounds the input price field on the recipe/dish upload form to two decimal
-// places.  It is called when the user enter a price on the price field.
+// places. It is called when the user enter a price on the price field.
 //-------------------------------------------------------------------------------------------
 function round() {
   let price = document.getElementById("inputPrice").value;
@@ -84,7 +84,7 @@ function round() {
 
 //-------------------------------------------------------------------------------------------
 // This function listens to a post request to send the recipe/dish upload form data to the 
-// server.  It is called when the user clicks the finish button on the recipe/dish upload page.
+// server. It is called when the user clicks the finish button on the recipe/dish upload page.
 //-------------------------------------------------------------------------------------------
 async function postData(data) {
   try {

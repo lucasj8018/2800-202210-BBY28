@@ -1,6 +1,6 @@
 "use strict";
 
-// Plays the crunch.mp3 audio.
+// Plays the crunch.mp3 audio
 function playCrunch(){
     let crunch = new Audio("./mp3/crunch.mp3");
     crunch.play();

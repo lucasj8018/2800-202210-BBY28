@@ -23,7 +23,7 @@ ready(async function () {
 
       // If the user has no orders display a message telling the user to check back later.
       if (table == ""){
-        table = `<td colspan='3'>No orders check back later.</td>`
+        table = `<td colspan='3'>No orders. Please check back later.</td>`
       }
       document.getElementById("orders").innerHTML = table;
     })

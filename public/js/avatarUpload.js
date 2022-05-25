@@ -36,7 +36,7 @@ ready(function () {
 });
 
 //-------------------------------------------------------------------------------------------
-// This function is called to check whether the page is laoded.
+// This function is called to check whether the page is loaded.
 //-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
