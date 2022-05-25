@@ -1224,19 +1224,6 @@ app.use(function (req, res, next) {
 });
 
 
-async function connectToMySQL(req, res) {
-  const mysql = require("mysql2/promise");
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "comp2800",
-    multipleStatements: true
-  });
-  connection.connect();
-  await connection.end();
-}
-
 //----------------------------------------------------------------------------------------------
 // Run the local server on port 8000
 //----------------------------------------------------------------------------------------------
