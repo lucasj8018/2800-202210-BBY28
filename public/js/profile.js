@@ -14,7 +14,7 @@ ready(async function () {
     })
     .then((data) => {
       userData = data;
-      document.getElementById("welcomeUsername").innerHTML = userData[0].fName;
+      document.getElementById("profileTitle").innerHTML = userData[0].username + "'s Profile";
       document.getElementById("avatarPath").src = "./img/" + userData[0].avatarPath;
       document.getElementById("firstNameInput").value = userData[0].fName;
       document.getElementById("lastNameInput").value = userData[0].lName;
