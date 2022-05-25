@@ -147,7 +147,6 @@ div label  {
 }
 
 @media only screen and (min-width: 576px) {
-
     #login {
         grid-template-columns: 45% 10% 45%;
         width: 460px;
