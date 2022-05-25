@@ -1,6 +1,11 @@
 "use strict";
 
-
+//----------------------------------------------------------------------------------------------
+// This function is called when the myCart page loads. It gets the shoppingCart data and populates
+// it in the shopping cart table. It also gets the prevcart data and populates it into the previous
+// shopping cart table. It also listens to post requests to send updates to the quantity of items,
+// the deletion of items, and the deletion of the entire cart.
+//----------------------------------------------------------------------------------------------
 ready(async function () {
 
   fetch("/displayShoppingCart")
@@ -9,8 +14,8 @@ ready(async function () {
   })
   .then((data) => {
     if (data[0].recipePath == "EmptyShoppingCart"){
-      // If the shopping cart is empty it will prompt the user to go to the map to add items.
-      document.getElementById("shoppingCart").innerHTML = "<h1>Shopping Cart is Empty.</h1><h2><a href='/map'>Head to the map to add some items!</a></h2>";
+      // If the shopping cart is empty it will prompt the user to go to the map to add items
+      document.getElementById("shoppingCart").innerHTML = "<p id='emptyCartMsg'>Shopping Cart is Empty.</p><h2><a id='mapLink' href='/map'>Head to the map to add some items!</a></h2>";
     } else {
       // Populates shopping cart table with items the user has added
       let shoppingCartTable = "<table id='cartTable'>";
@@ -27,17 +32,20 @@ ready(async function () {
         "</tr>"
       }
 
+      // Adds buttons to allow the user to delete the shopping cart
       shoppingCartTable += "</table><div id='cartMenu'><p id='total'><span id='totalItems'></span><span id='totalPrice'></span></p>" +
       "<div id='checkoutDiv'><button type='button' id='deleteCartButton' class='btn btn-outline-info'>Delete Cart</button>" +
       "<p class='cartStatus'>Status: <span id='completion' class='status'>Incomplete</span></p>" +
           "<button type='button' id='checkout' class='btn btn-outline-info'>Checkout</button>" +
       "</div>";
 
-      shoppingCartTable += "<h2 id='totalItems'></h2><h2 id='totalPrice'></h2>";
+      shoppingCartTable += "<p id='totalItems'></p><p id='totalPrice'></p>";
       document.getElementById("shoppingCart").innerHTML = shoppingCartTable;
 
+
+      // Adds event listener to the deleteCartButton and confirms that the user wants to delete the cart with a second button
     document.getElementById("deleteCartButton").addEventListener("click", function (){
-      document.getElementById("cartMenu").innerHTML = "<button class='btn btn-danger' id='deleteCartButton'>Delete Shopping Cart?</button><br/><br/>";
+      document.getElementById("cartMenu").innerHTML = "<span id='deleteCartMsg'>Delete Shopping Cart?</span><br/><br/>";
       let confirmButton = document.createElement('button');
       confirmButton.innerText = "Confirm";
       confirmButton.className = 'btn btn-success'
@@ -59,13 +67,15 @@ ready(async function () {
       document.getElementById("cartMenu").appendChild(cancelButton);
 
     });
-    document.getElementById('checkout').addEventListener("click", function (){
-      document.getElementById("checkoutDiv").innerHTML = "<button id='checkout'>Checkout</button><br/>";
+
+      // Adds event listener to the checkout button and confirms that the user wants to checkout the cart with a second button
+      document.getElementById('checkout').addEventListener("click", function (){
+      document.getElementById("cartMenu").innerHTML = "<span id='checkoutMsg'>Checkout?</span><br/><br/>";
       let confirmButton = document.createElement('a');
       confirmButton.innerText = "Confirm";
       confirmButton.className = 'btn btn-success'
       confirmButton.href = "/checkoutCart"
-      document.getElementById("checkoutDiv").appendChild(confirmButton);
+      document.getElementById("cartMenu").appendChild(confirmButton);
 
 
       let cancelButton = document.createElement('button');
@@ -74,7 +84,7 @@ ready(async function () {
       cancelButton.onclick = function(){
         location.reload();
       };
-      document.getElementById("checkoutDiv").appendChild(cancelButton);
+      document.getElementById("cartMenu").appendChild(cancelButton);
     });
 
     let prices = document.getElementsByName("itemPrice");
@@ -100,6 +110,8 @@ ready(async function () {
     console.log(error);
   })
 
+
+  // Displays the previous cart orders by fetching the data from prevcart tables and populates it in the order history table
   fetch("/displayPreviousCarts")
   .then((response) => {
     return response.json();
@@ -137,6 +149,9 @@ ready(async function () {
   })
 });
 
+//-----------------------------------------------------------------------------------
+// This is a post request to delete an item in the cart.
+//-----------------------------------------------------------------------------------
 async function postDeleteItem(data){
   try {
     let resObject = await fetch("/deleteCartItem", {
@@ -156,6 +171,9 @@ async function postDeleteItem(data){
   }
 }
 
+//-----------------------------------------------------------------------------------
+// This is a post request to decrease the quantity of an item in the cart.
+//-----------------------------------------------------------------------------------
 async function postSubQuantity(data){
   try {
     let resObject = await fetch("/subQuantity", {
@@ -177,6 +195,9 @@ async function postSubQuantity(data){
   }
 }
 
+//-----------------------------------------------------------------------------------
+// This is a post request to increase the quantity of an item in the cart.
+//-----------------------------------------------------------------------------------
 async function postAddQuantity(data){
   try {
     let resObject = await fetch("/addQuantity", {
@@ -196,6 +217,8 @@ async function postAddQuantity(data){
   }
 }
 
+// This function takes the id's of the cook and recipe which are stored in the table and performs a post request
+// to delete the item that the user clicked
 function deleteItemClicked(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -206,6 +229,8 @@ function deleteItemClicked(name){
   });
 }
 
+// This function takes the id's of the cook and recipe which are stored in the table and performs a post request
+// to decrease the quantity of an item
 function subQuantity(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -216,6 +241,8 @@ function subQuantity(name){
   })
 }
 
+// This function takes the id's of the cook and recipe which are stored in the table and performs a post request
+// to increase the quantity of an item
 function addQuantity(name){
   let ids = name.split('_');
   let cook = ids[0];
@@ -227,9 +254,9 @@ function addQuantity(name){
 }
 
 //----------------------------------------------------------------------------------------------
-// This function listens to a get request to populate the order history as a list.  Each list 
-// item has the total price and quantity of the entire order and eahc dish item has teh image,
-// name, unit price, and ordered quantity.  This function is called when the user clicks the 
+// This function listens to a get request to populate the order history as a list. Each list 
+// item has the total price and quantity of the entire order and each dish item has the image,
+// name, unit price, and ordered quantity. This function is called when the user clicks the 
 // view button for each order.
 //----------------------------------------------------------------------------------------------
 function displayPreviousOrder(name) {
@@ -245,7 +272,7 @@ function displayPreviousOrder(name) {
 
     // Populates the previous shopping cart table with the dish items that the user has added
     let previousCartTable = "<table id='cartTable2' class='table table-light table-striped'>";
-    previousCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
+    previousCartTable += "<tr><th>Image</th><th>Name</th><th>Price</th><th>Quantity</th></tr>";
     for (let i = 0; i < data.length; i++){
       totalQty += parseInt(data[i].quantity);
       totalPrice += data[i].price * data[i].quantity;

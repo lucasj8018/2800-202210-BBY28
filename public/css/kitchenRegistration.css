@@ -1,12 +1,10 @@
-/* The css is written in the order that each element appears in the html page. */
-
 html {
     height: 100%;
 }
 
 body {
     display: grid;
-    grid-template-columns: 7% 86% 7%;
+    grid-template-columns: 10% 80% 10%;
     font-family: 'latolight';
     background-color: #c49a68;
     background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
@@ -15,10 +13,12 @@ body {
 ::-webkit-scrollbar {
     width: 8px;
 }
+
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: red;
 }
+
 ::-webkit-scrollbar-track {
     background-color: azure;
 }
@@ -34,42 +34,30 @@ body {
     align-self: end;
     justify-self: center;
     text-align: center;
-    font-size: 32pt;
-    margin-top: 20px;
-}
-
-#knife {
-    grid-column: 2 / span 1;
-    grid-row: 3 / span 1;
-    width: 50%;
-    align-self: start;
-    justify-self: end;
-    position: relative;
-    top: 100px;
-    left: 30px;
-    z-index: 2;
+    font-size: 28pt;
+    margin: 50px;
 }
 
 #registration-form {
     grid-column: 2 / span 1;
-    font-size: 20pt;
+    font-size: 16pt;
     display: grid;
-    grid-template-areas: 
-    'name name'
-    'street street'
-    'city pc'
-    'buttons buttons';
-    grid-gap: 10px;
-    margin-top: 50px;
-    margin-bottom: 100px;
-    padding: 3vh;
+    margin-bottom: 75px;
     background-color: white;
-    border-radius: 10px;
     box-shadow: 5px 10px grey;
+    border-radius: 10px;
+    padding: 50px;
+    justify-self: center;
+    width: 80vw;
+}
+
+.mb-3 {
+    justify-self: center;
+    width: 50vw;
 }
 
 .col-sm-2 {
-    width: auto;
+    width: 100%;
 }
 
 .form-control {
@@ -78,27 +66,27 @@ body {
 }
     
 #kitchen-name {
-    grid-area: name;
+    grid-row: 1;
     display: grid;
 }
 
 #street {
-    grid-area: street;
+    grid-row: 2;
     display: grid;
 }
 
 #city {
-    grid-area: city;
+    grid-row: 3;
     display: grid;
 }
 
 #postal-code {
-    grid-area: pc;
+    grid-row: 4;
     display: grid;
 }
 
 #buttons {
-    grid-area: buttons;
+    grid-row: 5;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-gap: 10px;
@@ -157,31 +145,22 @@ body {
 }
 
 
-@media only screen and (min-width: 1000px) {
-    #knife {
-        width: 30%;
-        align-self: start;
-        justify-self: center;
-        position: relative;
-        top: 110px;
-        left: 260px;
-        z-index: 2;
+@media only screen and (min-width: 600px) {
+    #kitchenRegistrationTitle {
+        font-size: 32pt;
+    }
+
+    .mb-3 {
+        width: 450px;
     }
 
     #registration-form {
-        font-size: 16pt;
-        width: 500px;
-        margin: auto;
-        margin-bottom: 100px;
-        grid-template-columns: 50% 50%; 
+        font-size: 20pt;
+        max-width: 600px;
     }
 
-    #input-kitchen-name, #input-street {
-        width: 455px;
-    }
-
-    #buttons {
-        justify-content: center;
+    #input-kitchen-name {
+        padding-right: 0;
     }
 
     #cancel {
@@ -192,5 +171,15 @@ body {
     #next {
         margin: auto;
         padding: 0 30px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    #kitchenRegistrationTitle {
+        font-size: 24pt;
+    }
+    
+    #registration-form {
+        font-size: 12pt;
     }
 }

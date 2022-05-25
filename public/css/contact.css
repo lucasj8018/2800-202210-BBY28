@@ -35,39 +35,29 @@ body {
     align-self: center;
     justify-self: center;
     text-align: center;
-    font-size: 30pt;
+    font-size: 28pt;
     margin-top: 20px;
     margin-bottom: 50px;
-}
-
-#knife {
-    grid-column: 2 / span 1;
-    grid-row: 5 / span 1;
-    height: auto;
-    width: 200px;
-    margin-top: -30px;
-    margin-right: -35px;
-    justify-self: end;
-    z-index: 1;
 }
 
 #teamInfo {
     grid-column: 2 / span 1;
     grid-row: 5 / span 1;
-    display: grid;
-    grid-template-columns: 5% 90% 5%;
-    grid-template-rows: 5% 19% 5% 19% 5% 19% 5% 19% 2%;
+    min-height: 1800px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 5px 10px grey;
-    min-height: 1800px;
+    display: grid;
+    grid-template-columns: 5% 90% 5%;
+    grid-template-rows: 5% 19% 5% 19% 5% 19% 5% 19% 2%;
 }
 
 .name {
     font-size: 16pt;
+    margin-bottom: 0 !important;
 }
 
-.email {
+.email, .role {
     font-size: 12pt;
 }
 
@@ -83,14 +73,15 @@ body {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
     text-align: center;
-    margin-top: 55px;
-    margin-left: -10px;
     z-index: 1;
+    margin-top: 67px;
+    margin-left: -10px;
+
 }
 
 #chefHat1Image {
-    height: auto;
     width: 140px;
+    height: auto;
 }
 
 #lucas {
@@ -108,10 +99,10 @@ body {
     align-self: center;
 }
 
-#lucasImage {
-    border-radius: 10px;
-    height: 200px;
+.teamMemberPhoto {
     width: 200px;
+    height: 200px;
+    border-radius: 10px;
 }
 
 #lucasDescription {
@@ -119,7 +110,7 @@ body {
     grid-row: 3 / span 1;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 50% 50% 50%;
 }
 
 #lucasName {
@@ -128,9 +119,15 @@ body {
     text-align: center;
 }
 
-#lucasEmail {
+#lucasRole {
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
+    text-align: center;
+}
+
+#lucasEmail {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
     text-align: center;
 }
 
@@ -138,14 +135,14 @@ body {
     grid-column: 2 / span 1;
     grid-row: 3 / span 1;
     text-align: center;
-    margin-top: 55px;
-    margin-left: -5px;
     z-index: 1;
+    margin-top: 62px;
+    margin-left: -5px;
 }
 
 #chefHat2Image {
-    height: auto;
     width: 135px;
+    height: auto;
 }
 
 #justin {    
@@ -163,18 +160,12 @@ body {
     align-self: center;
 }
 
-#justinImage {
-    border-radius: 10px;
-    height: 200px;
-    width: 200px;
-}
-
 #justinDescription {
     grid-column: 1 / span 1;
     grid-row: 3 / span 1;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 50% 50% 50%;
 }
 
 #justinName {
@@ -183,9 +174,15 @@ body {
     text-align: center;
 }
 
-#justinEmail {
+#justinRole {
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
+    text-align: center;
+}
+
+#justinEmail {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
     text-align: center;
 }
 
@@ -193,14 +190,14 @@ body {
     grid-column: 2 / span 1;
     grid-row: 5 / span 1;
     text-align: center;
-    margin-top: 38px;
-    margin-left: 3px;
     z-index: 1;
+    margin-top: 48px;
+    margin-left: 3px;
 }
 
 #chefHat3Image {
-    height: auto;
     width: 160px;
+    height: auto;
 }
 
 #owen {
@@ -218,18 +215,12 @@ body {
     align-self: center;
 }
 
-#owenImage {
-    border-radius: 10px;
-    height: 200px;
-    width: 200px;
-}
-
 #owenDescription {
     grid-column: 1 / span 1;
     grid-row: 3 / span 1;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 50% 50% 50%;
 }
 
 #owenName {
@@ -238,9 +229,15 @@ body {
     text-align: center;
 }
 
-#owenEmail {
+#owenRole {
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
+    text-align: center;
+}
+
+#owenEmail {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
     text-align: center;
 }
 
@@ -248,14 +245,14 @@ body {
     grid-column: 2 / span 1;
     grid-row: 7 / span 1;
     text-align: center;
-    margin-top: 30px;
-    margin-right: 8px;
     z-index: 1;
+    margin-top: 40px;
+    margin-right: 8px;
 }
 
 #chefHat4Image {
-    height: auto;
     width: 177px;
+    height: auto;
 }
 
 #sarah {
@@ -273,18 +270,12 @@ body {
     align-self: center;
 }
 
-#sarahImage {
-    border-radius: 10px;
-    height: 200px;
-    width: 200px;
-}
-
 #sarahDescription {
     grid-column: 1 / span 1;
     grid-row: 3 / span 1;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 50% 50% 50%;
 }
 
 #sarahName {
@@ -293,47 +284,54 @@ body {
     text-align: center;
 }
 
-#sarahEmail {
+#sarahRole {
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
     text-align: center;
 }
 
-@media only screen and (min-width: 1000px) {
-    body {
-        display: grid;
-        grid-template-columns: 25% 50% 25%;
-    }
+#sarahEmail {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    text-align: center;
+}
 
-    #knife {
-        height: auto;
-        width: 325px;
-        margin-top: -50px;
-        margin-right: -65px;
+@media only screen and (max-width: 300px) {
+
+    #teamTitle {
+        font-size: 24pt;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+
+    #teamTitle {
+        font-size: 32pt;
     }
 
     #teamInfo {
         grid-template-columns: 5% 42.5% 5% 42.5% 5%;
         grid-template-rows: 10% 40% 10% 40%;
         min-height: 800px;
+        padding-bottom: 85px;
     }
 
     .name {
-        font-size: 18pt;
+        font-size: 20pt;
     }
 
-    .email {
-        font-size: 14pt;
+    .email, .role {
+        font-size: 16pt;
     }
 
     #chefHat1Div {
-        margin-top: 70px;
+        margin-top: 95px;
     }
 
     #chefHat2Div {
         grid-column: 4 / span 1;
         grid-row: 1 / span 1;
-        margin-top: 66px;
+        margin-top: 93px;
     }
     
     #justin {    
@@ -344,7 +342,7 @@ body {
     #chefHat3Div {
         grid-column: 2 / span 1;
         grid-row: 3 / span 1;
-        margin-top: 53px;
+        margin-top: 79px;
     }
     
     #owen {    
@@ -355,7 +353,7 @@ body {
     #chefHat4Div {
         grid-column: 4 / span 1;
         grid-row: 3 / span 1;
-        margin-top: 45px;
+        margin-top: 70px;
     }
     
     #sarah {    

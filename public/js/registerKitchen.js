@@ -32,7 +32,7 @@ ready(function () {
 
     } else {
       if (isRegistered) {
-        document.getElementById("status-message").innerHTML = "You have an registered address.  Please confirm to update the address";
+        document.getElementById("status-message").innerHTML = "You have a registered address.  Please confirm to update the address";
         let confirmButton = document.createElement('a');
         confirmButton.innerText = "Confirm";
         confirmButton.className = 'btn btn-success';
@@ -108,7 +108,7 @@ async function postData(data) {
 }
 
 //-------------------------------------------------------------------------------------------
-// This function is called to check whether the page is laoded.
+// This function is called to check whether the page is loaded.
 //-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {

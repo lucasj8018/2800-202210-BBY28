@@ -1,12 +1,13 @@
 "use strict";
 
 //----------------------------------------------------------------------------------------------
-// This function is called whne the recipe/dish detail page first loads.  It adds a quantity
-// selection and subtotal field for the dish detail.  It adds listeners to the plus and minus button
-// to allow user to add or minus quantity and display the subtotal accordingly.  When the user clicks
-// the add to cart button.  It will post the dish name, quantity, and subtotal to the server and
-// redirct to the recipe/dish list page.  It also has a go back button to only redirect back to 
-// the recipe/dish page.
+// This function is called when the recipe/dish detail page first loads. It adds a quantity
+// selection and subtotal field for the dish detail. It adds listeners to the plus and minus buttons
+// to allow user to add or minus quantity and display the subtotal accordingly. When the user clicks
+// the "Add to Cart" button, it will post the dish name, quantity, and subtotal to the server and
+// redirect to the kitchenDetails page. If it is a recipe instead of a dish, the price and add to 
+// cart functions will not appear. It also has a "Go Back" button to redirect the user back to the
+// kitchenDetails page. 
 //-----------------------------------------------------------------------------------------------
 ready(async function () {
   var url = document.URL;
@@ -22,23 +23,25 @@ ready(async function () {
     })
     .then((data) => {
 
-      let receipeDishDetails = "";
-      receipeDishDetails = `<div id="dish-description">
+      document.getElementById("foodTitle").innerHTML = data[0].name
+
+      let recipeDishDetails = "";
+      recipeDishDetails = `<div id="dish-description">
         <div class="card">
-            <img src=./img/` + data[0].recipePath + ` class="card-img-top" alt="" id="dish-photo">
+            <img src=./img/` + data[0].recipePath + ` class="card-img-top" alt="No image" id="dish-photo">
             <div class="card-body">
-                <h5 class="dish-name"><b>` + data[0].name + `</b></h5>
+                <p class="dish-name"><b>` + data[0].name + `</b></p>
                 <p class="dish-description">` + data[0].description + `</p>
             </div>`
 
       if (data[0].purchaseable == 1) {
-        receipeDishDetails += `<ul class="list-group list-group-flush" id="addToCartDiv">
+        recipeDishDetails += `<ul class="list-group list-group-flush" id="addToCartDiv">
                 <li class="list-group-item" id="dish-price">Price($CAD):  ` + (Math.round(data[0].price * 100) / 100).toFixed(2) + `<span id="numberOfDishes"><a type="button"><img src="/img/subtract.png" id="subtract" class="quantityButton"
                 alt="subtractSign"></a><span id="quantity">1</span><a type="button"><img src="/img/add.png"
-                id="add" class="quantityButton" alt="addSign"></a></span><span id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></span></li>
-                <li class="list-group-item"><span>Subtotal($CAD): </span><span id="subtotal"></span><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li></div>
+                id="add" class="quantityButton" alt="addSign"></a></span><div id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></div></li>
+                <li class="list-group-item"><span id="subtitleLabel">Subtotal($CAD): </span><span id="subtotal"></span><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li></div>
             </ul>`
-        document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
+        document.getElementById("recipeDishDetails").innerHTML = recipeDishDetails;
 
         dishName = data[0].name;
         unitPrice = (Math.ceil(data[0].price * 100) / 100);
@@ -81,11 +84,11 @@ ready(async function () {
         })
 
       } else {
-        receipeDishDetails += `<ul class="list-group list-group-flush">
-            <li class="list-group-item" id="dish-price"><span>Price($CAD): N/A</span><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li>
+        recipeDishDetails += `<ul class="list-group list-group-flush">
+            <li class="list-group-item" id="dish-price"><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li>
             </ul></div>`
 
-        document.getElementById("recipeDishDetails").innerHTML = receipeDishDetails;
+        document.getElementById("recipeDishDetails").innerHTML = recipeDishDetails;
       }
 
       document.getElementById("goBackButton").addEventListener("click", function (e) {

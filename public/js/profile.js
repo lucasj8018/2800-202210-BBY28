@@ -14,15 +14,17 @@ ready(async function () {
     })
     .then((data) => {
       userData = data;
-      document.getElementById("welcomeUsername").innerHTML = userData[0].fName;
+      document.getElementById("profileTitle").innerHTML = userData[0].username + "'s Profile";
       document.getElementById("avatarPath").src = "./img/" + userData[0].avatarPath;
       document.getElementById("firstNameInput").value = userData[0].fName;
       document.getElementById("lastNameInput").value = userData[0].lName;
       document.getElementById("usernameInput").value = userData[0].username;
       document.getElementById("passwordInput").value = "●●●●●●●●";
 
+      // Customizes the welcome on the profile page with the user's username
       document.getElementById("welcomeUsername").innerHTML = userData[0].username;
 
+      // Creates an Add User div
       if (userData[0].isAdmin) {
         document.getElementById("title").innerHTML = "Admin User Profile";
         document.getElementById("adminAdd").innerHTML = `
@@ -63,11 +65,11 @@ ready(async function () {
 
       } else {
         document.getElementById("buttonMenu").innerHTML = `
-        <p id="question"><b>What would you like to do?</b></p>
+        <p id="question"><b>I would like to...</b></p>
         <a href="/map" class="buttonLabel" id="viewKitchens">Find Recipes/Dishes</a>
         <a href="/myCart" class="buttonLabel" id="myCart">View My Cart</a>
         <a href="/kitchenRegistration" class="buttonLabel" id="registerKitchen">Register My Private Kitchen</a>
-        <a href="#" class="buttonLabel" id="kitchenOrders">View My Private Kitchen's Orders</a>
+        <a href="/kitchenOrders" class="buttonLabel" id="kitchenOrders">View My Private Kitchen's Orders</a>
         <a href="/kitchenDetails?id=loggedinUser" class="buttonLabel" id="viewMyKitchen">View My Private Kitchen's Details</a>
 
         `;
@@ -80,8 +82,8 @@ ready(async function () {
     })
 
   //-----------------------------------------------------------------------------------
-  // This is a get repsone to populate the profile card with the user's last name, first
-  // name, username, and password data in the BBY28_Users.
+  // This is a get response to populate the profile card with the user's last name, first
+  // name, username, and password data in the BBY28_Users table.
   //-----------------------------------------------------------------------------------
   await fetch("/user-dashboard")
     .then((response) => {
@@ -122,7 +124,7 @@ ready(async function () {
 
   //-----------------------------------------------------------------------------------
   // This function is called when the save button of the user profile template is pressed.
-  // It gets the undpated prfile info and post to the server.
+  // It gets the unpdated profile info and post to the server.
   //-----------------------------------------------------------------------------------
   async function postData(data) {
     try {
@@ -191,7 +193,7 @@ async function postDataUser(data) {
 
 //-----------------------------------------------------------------------------------
 // This function is called when the an admin user is logged in and the user dashboard
-// loads.  It then adds a listener to the add user button and calls the postDataUser()
+// loads. It then adds a listener to the add user button and calls the postDataUser()
 // function.
 //-----------------------------------------------------------------------------------
 function addUserButtonListener() {
@@ -241,7 +243,7 @@ async function postDeleteUser(data) {
 }
 
 //-----------------------------------------------------------------------------------
-// This is an onclick function attached to the delete button on the dashboard.  It 
+// This is an onclick function attached to the delete button on the dashboard. It 
 // calls the postDeleteUser() function when the button is clicked.
 //-----------------------------------------------------------------------------------
 function deleteClicked(name) {
@@ -252,7 +254,7 @@ function deleteClicked(name) {
 }
 
 //-----------------------------------------------------------------------------------
-// This is an onclick function attached to the edit button on the dashboard.  It enables 
+// This is an onclick function attached to the edit button on the dashboard. It enables 
 // the username and password input field to be editable.
 //-----------------------------------------------------------------------------------
 function editClicked(name) {
@@ -261,8 +263,8 @@ function editClicked(name) {
 }
 
 //-----------------------------------------------------------------------------------
-// This is an onclick function attached to the save button on the dashboard.  It calls 
-// the postUpdateDashboard function.
+// This is an onclick function attached to the save button on the dashboard. It calls 
+// the postUpdateDashboard() function.
 //-----------------------------------------------------------------------------------
 function saveClicked(name) {
   postUpdateDashboard({

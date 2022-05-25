@@ -6,7 +6,7 @@ var google;
 
 //----------------------------------------------------------------------------------------
 // This function is called when the kitchenMap.html page finishes loading. It sends a
-// request to the server to retrieve the addresses of the registrated pritvate kitchen
+// request to the server to retrieve the addresses of the registrated private kitchen
 // from the database
 //----------------------------------------------------------------------------------------
 ready(function () {
@@ -28,8 +28,8 @@ ready(function () {
 });
 
 //-------------------------------------------------------------------------------------------
-// This initMap() function template cames from Google's maps javascript API document example.
-// This function is called when the Find Private Kitchen page loads and it add a google map
+// This initMap() function template cames from Google's Map JavaScript API document example.
+// This function is called when the Find Private Kitchen page loads and it add a Google map
 // that is centered based on the geolocation of the user's device.
 //-------------------------------------------------------------------------------------------
 async function initMap() {
@@ -61,10 +61,10 @@ async function initMap() {
 }
 
 //-------------------------------------------------------------------------------------------
-// This function is called when the function initMap() is executed.  It reads the registered 
+// This function is called when the function initMap() is executed. It reads the registered 
 // private kitchen address of the user and geocode it into the latitude and longtitude value 
-// with Google's geocoder API.  It then sets a marker on the app and a popup window event 
-// listerner is also added to display the kitchen info when clicked on.
+// with Google's geocoder API. It then sets a marker on the app and a popup window event 
+// listener is also added to display the kitchen info when clicked on.
 //-------------------------------------------------------------------------------------------
 function geocodeAddress() {
 
@@ -112,7 +112,7 @@ function geocodeAddress() {
 }
 
 //-------------------------------------------------------------------------------------------
-// This function is called to check whether the page is laoded.
+// This function is called to check whether the page is loaded.
 //-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
