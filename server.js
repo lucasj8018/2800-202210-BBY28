@@ -1062,7 +1062,7 @@ app.get("/recipe-dish-data", async function (req, res) {
 
 //----------------------------------------------------------------------------------------------
 // This post request path saves the dish data to the BBY_28_Shoppingcart table.  It is triggered
-// when the user clicks the add to cart button on the dish detial page.
+// when the user clicks the add to cart button on the dish detail page.
 //----------------------------------------------------------------------------------------------
 app.post('/add-to-shoppingcart', async function (req, res) {
   res.setHeader("Content-Type", "application/json");
