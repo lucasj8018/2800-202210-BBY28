@@ -5,7 +5,7 @@ html {
 body {
     height: 100%;
     display: grid;
-    grid-template-columns: 5% 90% 5%;
+    grid-template-columns: 10% 80% 10%;
     font-family: 'latolight';
     font-size: 16pt;
     background-image: url("/img/spices.jpg");
@@ -41,8 +41,8 @@ body {
     border-radius: 10%;
     font-size: 12pt;
     padding: 5vw;
-    justify-content: center;
     margin: auto;
+    width: 80vw;
 }
 
 div label  {
@@ -65,19 +65,18 @@ div label  {
 }
 
 #fName {
-    grid-column: 1 / span 1;
+    grid-column: 1 / span 3;
     grid-row: 4 / span 1;
-    width: 100%; 
 }
 
 #lName {
-    grid-column: 3 / span 1;
-    grid-row: 4 / span 1; 
+    grid-column: 1 / span 3;
+    grid-row: 5 / span 1; 
 }
 
 #invalidUser {
     grid-column: 1 / span 3;
-    grid-row: 5 / span 1;
+    grid-row: 6 / span 1;
     margin-top: 2vh;
     text-align: center;
     color: #FFF3DF;
@@ -86,7 +85,7 @@ div label  {
 
 #backButton {
     grid-column: 1 / span 1;
-    grid-row: 6 / span 1;
+    grid-row: 7 / span 1;
     text-align: center;
     background-color: #FFF3DF;
     border-radius: 25px;
@@ -106,7 +105,7 @@ div label  {
 
 #createAccountButton {
     grid-column: 3 / span 1;
-    grid-row: 6 / span 1;
+    grid-row: 7 / span 1;
     text-align: center;
     background-color: #DE2007;
     height: 100%;
@@ -138,7 +137,7 @@ div label  {
 }
 
 .col-form-label:after {
-    content:" *";
+    content: " *";
     color: #FFF3DF;
 }
 
@@ -153,15 +152,9 @@ div label  {
         padding: 30px;
     }
 
-    #username, #password, #address {
-        font-size: 18pt;
-        min-width: 500px;
-    }
-
-    #fName, #lName {
+    #username, #password, #address, #fName, #lName {
         font-size: 16pt;
-        min-width: 200px;
-        max-width: 200px;
+        min-width: 500px;
     }
 
     #inputUsername, #inputPassword, #inputFName, #inputLName {
@@ -178,6 +171,23 @@ div label  {
 }
 
 @media only screen and (max-width: 300px) {
+    #login {
+        font-size: 10pt;
+    }
+
+    #username, #password, #address, #fName, #lName{
+        font-size: 12pt;
+        height: 50px;
+    }
+    
+    #inputUsername, #inputPassword, #inputFName, #inputLName {
+        font-size: 8pt;
+    }
+
+    #backButton {
+        height: 35px;
+    }
+
     .col-md-4 {
         font-size: 4vw;
         padding-right: 7px;
