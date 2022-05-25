@@ -1241,7 +1241,8 @@ app.get("/displayKitchenOrders", async function (req, res){
 // Display the page not found 404 error
 //----------------------------------------------------------------------------------------------
 app.use(function (req, res, next) {
-  res.status(404).send("<html><head><title>Page not found!</title></head><body><p>Nothing here.</p></body></html>");
+  let pageNotFound = fs.readFileSync("./app/html/pageNotFound.html", "utf8");
+  res.status(404).send(pageNotFound);
 });
 
 
