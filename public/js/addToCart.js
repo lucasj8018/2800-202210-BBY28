@@ -48,16 +48,16 @@ ready(async function () {
         unitPrice = parseFloat(unitPrice).toFixed(2)
         document.getElementById("subtotal").innerHTML = unitPrice;
 
-        var qty = 0;
+        var qty = 1;
         var subtotal;
 
         document.getElementById("add").addEventListener("click", function (e) {
           e.preventDefault();
-          if (qty <= 100) {
+          if (qty < 100) {
             qty++;
             subtotal = unitPrice * qty;
             document.getElementById("quantity").innerHTML = qty;
-            document.getElementById("subtotal").innerHTML = subtotal;
+            document.getElementById("subtotal").innerHTML = subtotal.toFixed(2);
           }
         })
 

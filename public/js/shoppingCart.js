@@ -28,7 +28,7 @@ ready(async function () {
         "<td><input type='image' src='/img/subtract.png' id='subtract' class='quantityButton' alt='subtractSign' name=" + data[i].cookID + "_" + data[i].recipeID + "' onclick='subQuantity(this.name)'><span class='quantity' name='quantity'>" + data[i].quantity +
         "</span><input type='image' src='/img/add.png' id='add' class='quantityButton' alt='addSign' name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>" +
         "<br/><div id='" + data[i].cookID + "_" + data[i].recipeID + "_sub'></div></td>" +
-        "<td><input type='image' src='/img/trash.png' class='itemDelete' name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name)'></td>" +
+        "<td><input type='image' src='/img/trash.png' class='itemDelete' name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name, this.id)' id='deleteButton" +  i  + "'></td>" +
         "</tr>"
       }
 
@@ -219,14 +219,26 @@ async function postAddQuantity(data){
 
 // This function takes the id's of the cook and recipe which are stored in the table and performs a post request
 // to delete the item that the user clicked
-function deleteItemClicked(name){
-  let ids = name.split('_');
-  let cook = ids[0];
-  let recipe = ids[1];
-  postDeleteItem({
-    cookID: cook,
-    recipeID: recipe
-  });
+function deleteItemClicked(name, elementID){
+  let cancelID = elementID + '_d';
+  let confirmID = elementID + '_c'
+  document.getElementById(elementID).parentNode.innerHTML = "<button class='btn btn-danger' id='" + cancelID + "'>Cancel</button><button class='btn btn-success' id='"+ confirmID + "'>Confirm</button>"
+
+  document.getElementById(cancelID).addEventListener('click', function () {
+    location.reload();
+  })
+
+  document.getElementById(confirmID).addEventListener('click', function () {
+    let ids = name.split('_');
+    let cook = ids[0];
+    let recipe = ids[1];
+    postDeleteItem({
+      cookID: cook,
+     recipeID: recipe
+   });
+  })
+
+
 }
 
 // This function takes the id's of the cook and recipe which are stored in the table and performs a post request

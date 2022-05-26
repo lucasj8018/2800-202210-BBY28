@@ -33,7 +33,6 @@ ready(function () {
 
     let foodPrice = document.getElementById("inputPrice").value;
     let foodName = document.getElementById("inputName").value;
-    let foodIngredients = document.getElementById("inputIngredients").value;
     let foodDescription = document.getElementById("inputDescription").value;
     const isPhotoUploaded = document.querySelector('#recipeDish-upload');
 
@@ -50,7 +49,6 @@ ready(function () {
           name: foodName,
           description: foodDescription,
           recipeOrDish: isRecipeOrDish,
-          ingredient: foodIngredients
         })
         window.location.replace("/kitchenDetails?id=loggedinUser");
       }
@@ -71,7 +69,7 @@ ready(function () {
         window.location.replace("/kitchenDetails?id=loggedinUser");
       }
     } else {
-      document.getElementById("upload-status").innerHTML = "Please select uploding a recipe / dish.";
+      document.getElementById("upload-status").innerHTML = "Please select the recipe or dish radio button.";
     }
 
   });
