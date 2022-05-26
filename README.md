@@ -131,35 +131,35 @@ Content of the project folder:
 ## How to work on the project
 
 1. Tools or softwares needed:
-  * language(s): JavaScript, jQuery, CSS, HTML
-  * IDEs: choose one of your choice 
-  * Database(s): MySQL and clearDB
-  * Web server: Node.js and Express.js
-  * Hosting: Heroku      
+    * language(s): JavaScript, jQuery, CSS, HTML
+    * IDEs: choose one of your choice 
+    * Database(s): MySQL and clearDB
+    * Web server: Node.js and Express.js
+    * Hosting: Heroku      
 
 
 2. Node.js packages required:
-  * express
-  * express-session
-  * mysql2/promise
-  * fs
-  * jsdom
-  * multer
+    * express
+    * express-session
+    * mysql2/promise
+    * fs
+    * jsdom
+    * multer
 
 3. APIs used:
-  * Fetch API
-  * Geolocation API
-  * Google Maps JavaScript API
-  * Google Geocoding API
+    * Fetch API
+    * Geolocation API
+    * Google Maps JavaScript API
+    * Google Geocoding API
 
 4. Instruction steps:
-  1. Clone the repo to your local computer
-  2. Download and install Node.js
-  3. npm install the required node packages as listed above
-  4. Download, install, and configure MySQl (or use a software distribution platform such as XAMPP)
-  5. Run the sql file to set up the database and tables
-  6. Download and isntall Heroku and add the clearDB adds-on
-  7. Follow the hosting instruction when deploying the app on Heroku (<a href="https://docs.google.com/document/d/1OnuuTzOxSyabAC3ZbcVcGcFtAuglWvNnpsQ0b0NmYnI/edit?usp=sharing">hosting instruction</a>)
+    1. Clone the repo to your local computer
+    2. Download and install Node.js
+    3. npm install the required node packages as listed above
+    4. Download, install, and configure MySQl (or use a software distribution platform such as XAMPP)
+    5. Run the sql file to set up the database and tables
+    6. Download and isntall Heroku and add the clearDB adds-on
+    7. Follow the hosting instruction when deploying the app on Heroku (<a href="https://docs.google.com/document/d/1OnuuTzOxSyabAC3ZbcVcGcFtAuglWvNnpsQ0b0NmYnI/edit?usp=sharing">hosting instruction</a>)
 
 5. Test logs:
  * <a href="https://docs.google.com/spreadsheets/d/1BaGcirS0AbYg3EW1lw9u5DNY-KnCG-EgBnTn_Z_cFP0/edit?usp=sharing">Testing history</a>
