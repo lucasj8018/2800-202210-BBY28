@@ -216,6 +216,21 @@ body {
     margin: auto;
 }
 
+input[type=file]::file-selector-button {
+    margin: auto;  
+    padding: 5px;   
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    background-color: #DE2007;
+    color: #FFF3DF;
+    width: 110px;
+    border-radius: 25px;
+    text-decoration: none;
+    cursor: pointer; 
+    margin-top: 5px;
+}
+
 #recipeDish-submit{
     margin: auto;  
     padding: 5px;   
