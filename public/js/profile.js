@@ -93,7 +93,7 @@ ready(async function () {
       var dashboardData;
       dashboardData = data;
 
-      if (userData[0].isAdmin) {
+      if (dashboardData[0].isAdmin) {
         //Creating table
         var dashboard = "";
         let table = "<br/><br/><div id='incorrectDelete'> </div><br/><br/><div><table class='table table-light table-striped' id='userTable'><tr id='userTableHeader'>" +
@@ -119,7 +119,7 @@ ready(async function () {
 
     })
     .catch(function (error) {
-      location.reload();
+      console.log(error);
     })
 
   //-----------------------------------------------------------------------------------
