@@ -17,6 +17,19 @@ body {
     grid-row: 1 / span 1;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: red;
+}
+
+::-webkit-scrollbar-track {
+    background-color: azure;
+}
+
 #uhOh {
     grid-column: 2 / span 1;
     grid-row: 3 / span 1;
