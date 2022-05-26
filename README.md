@@ -8,6 +8,8 @@
 
 ## Project Description
 A Bite of Home is a web application that helps home chefs to start their private kitchen business easily and share their secret recipes and to help busy people purchase and enjoy homemade meals.
+
+Made for COMP 2800 and COMP 2537 Project Term 2022.
 	
 ## Technologies Used
 Technologies used for this project:
@@ -55,16 +57,18 @@ Content of the project folder:
 
         ├── img        # Folder for images used and uploaded
 
-                ├── avatar_d.png
-                ├── avatar_testing.png
                 ├── defaultAvatar.jpg
                 ├── Logo.PNG
-                ├── spices.jpg:         https://unsplash.com/photos/vA1L1jRTM70?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink
-                ├── chefHat.png:        http://www.qcustomclothing.com/white-chef-hat/374830/p
-                ├── trash.jpg:          https://www.flaticon.com/free-icon/trash_3096673?term=trash&page=1&position=1&page=1&position=1&related_id=3096673&origin=tag
-                ├── add.png:            https://www.flaticon.com/premium-icon/add_3024515?term=add&page=1&position=9&page=1&position=9&related_id=3024515&origin=search
-                ├── subtract.png:       https://www.flaticon.com/premium-icon/minimize_3024571?related_id=3024571&origin=pack
-                ├── awkwardMonkey.gif:  https://tenor.com/view/pedro-monkey-puppet-meme-awkward-gif-15268759
+                ├── spices.jpg
+                ├── chefHat.png
+                ├── trash.jpg
+                ├── add.png
+                ├── subtract.png
+                ├── awkwardMonkey.gif
+                ├── justin.jpg
+                ├── lucas.jpg
+                ├── owen.jpg
+                ├── sarah.jpg
 
         ├── mp3        # Folder for mp3 audio used
 
@@ -148,13 +152,13 @@ Content of the project folder:
 * Google Geocoding API
 
 4. Instruction steps:
-        a. Clone the repo to your local computer
-        b. Download and install Node.js
-        c. npm install the required node packages as listed above
-        d. Download, install, and configure MySQl (or use a software distribution platform such as XAMPP)
-        e. Run the sql file to set up the database and tables
-        f. Download and isntall Heroku and add the clearDB adds-on
-        e. Follow the hosting instruction when deploying the app on Heroku (<a href="https://docs.google.com/document/d/1OnuuTzOxSyabAC3ZbcVcGcFtAuglWvNnpsQ0b0NmYnI/edit?usp=sharing">hosting instruction</a>)
+* 1. Clone the repo to your local computer
+* 2. Download and install Node.js
+* 3. npm install the required node packages as listed above
+* 4. Download, install, and configure MySQl (or use a software distribution platform such as XAMPP)
+* 5. Run the sql file to set up the database and tables
+* 6. Download and isntall Heroku and add the clearDB adds-on
+* 7. Follow the hosting instruction when deploying the app on Heroku (<a href="https://docs.google.com/document/d/1OnuuTzOxSyabAC3ZbcVcGcFtAuglWvNnpsQ0b0NmYnI/edit?usp=sharing">hosting instruction</a>)
 
 5. Test logs:
 * <a href="https://docs.google.com/spreadsheets/d/1BaGcirS0AbYg3EW1lw9u5DNY-KnCG-EgBnTn_Z_cFP0/edit?usp=sharing">Testing history</a>
@@ -203,8 +207,18 @@ Click on the Contact text on the footer to redirect to the contact page. Click o
 Use the navbar links to continue to browse the app.
 
 ## Resources and Reference
-- In-app icons from Feather v4.28.0 (Open Source https://feathericons.com/)
-- Wood Pattern background: "https://www.transparenttextures.com/patterns/wood-pattern.png"
+* lato_light font: https://www.1001fonts.com/lato-font.html and https://www.fontsquirrel.com/tools/webfont-generator
+* on_my_way font: https://www.1001fonts.com/on-my-way-font.html and https://www.fontsquirrel.com/tools/webfont-generator
+* Wood Pattern background: https://www.transparenttextures.com/patterns/wood-pattern.png
+* defaultAvatar.jpg:  https://soccerpointeclaire.com/for-coaches/default-profile-pic-e1513291410505/
+* Logo.PNG:           Hand-drawn by Sarah Dong
+* spices.jpg:         https://unsplash.com/photos/vA1L1jRTM70?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink
+* chefHat.png:        http://www.qcustomclothing.com/white-chef-hat/374830/p
+* trash.jpg:          https://www.flaticon.com/free-icon/trash_3096673?term=trash&page=1&position=1&page=1&position=1&related_id=3096673&origin=tag
+* add.png:            https://www.flaticon.com/premium-icon/add_3024515?term=add&page=1&position=9&page=1&position=9&related_id=3024515&origin=search
+* subtract.png:       https://www.flaticon.com/premium-icon/minimize_3024571?related_id=3024571&origin=pack
+* awkwardMonkey.gif:  https://tenor.com/view/pedro-monkey-puppet-meme-awkward-gif-15268759
+* crunch.mp3: "https://www.zapsplat.com/music/cartoon-eat-crunch-bite-single-mid-pitched-munch/"
 
 ## Contact 
 * Justin Ng - justincng58@gmail.com - https://github.com/Katsumac
@@ -213,5 +227,4 @@ Use the navbar links to continue to browse the app.
 * Sarah Dong - sarahdn13@icloud.com - https://github.com/SarahDong123 
 
 ## Acknowledgements 
-* <a href="https://www.1001fonts.com/">1001 Fonts</a>
-* <a href="https://www.fontsquirrel.com/tools/webfont-generator">Font Squirrel Webfont Generator</a>
+We would like to thank Rahim, Carly, Chris, Nabil, Arron and other faculty from COMP 2800 and COMP 2537 for their help and support throughout the development of our web app.

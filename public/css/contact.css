@@ -76,7 +76,6 @@ body {
     z-index: 1;
     margin-top: 67px;
     margin-left: -10px;
-
 }
 
 #chefHat1Image {
@@ -300,6 +299,22 @@ body {
 
     #teamTitle {
         font-size: 24pt;
+    }
+
+    #chefHat1Div {
+        margin-top: 78px;
+    }
+
+    #chefHat2Div {
+        margin-top: 78px;
+    }
+
+    #chefHat3Div {
+        margin-top: 60px;
+    }
+
+    #chefHat4Div {
+        margin-top: 53px;
     }
 }
 

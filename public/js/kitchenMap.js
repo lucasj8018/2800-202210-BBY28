@@ -102,11 +102,8 @@ function geocodeAddress() {
               shouldFocus: false,
             });
           });
-  
-        } else {
         }
       });
-    } else {
     }
   }
 }
