@@ -299,6 +299,10 @@ td {
         font-size: 12pt;
     }
 
+    #adminAdd {
+        margin-bottom: 200px;
+    }
+
     .form-group {
         font-size: 12pt;
         margin-bottom: 10px
