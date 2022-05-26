@@ -18,13 +18,13 @@ ready(async function () {
       document.getElementById("currentKitchen").innerHTML = data[data.length -1].kitchenName;
       
       if (id == data[data.length - 1].loggedinId || id == "loggedinUser") {
-        document.getElementById("addButtonDIV").innerHTML = "<a id='addButton' href='/upload'>Add recipe/dish</a>"
+        document.getElementById("addButtonDIV").innerHTML = "<a id='addButton' href='/upload'>Add recipe/dish</a>";
       }
 
       let recipeTable = "";
       let dishTable = "";
-       recipeTable = "<p id='dishesTitle'>Recipes</p><table>"
-       dishTable = "<p id='dishesTitle'>Dishes</p><table>"
+       recipeTable = "<p id='dishesTitle'>Recipes</p><table>";
+       dishTable = "<p id='dishesTitle'>Dishes</p><table>";
 
       for (let i = 0; i < data.length - 1; i++) {
         if (data[i].purchaseable == 0) {
@@ -51,7 +51,7 @@ ready(async function () {
     })
     .catch(function (error) {
       console.log(error);
-    })
+    });
 });
 
 //----------------------------------------------------------------------------------------------

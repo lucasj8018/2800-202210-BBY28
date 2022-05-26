@@ -15,7 +15,7 @@ ready(function () {
       isPurchaseable.disabled = true;
       isRecipeOrDish = "recipe";
     }
-  })
+  });
 
   document.getElementById("dishChoice").addEventListener("change", function (e) {
     e.preventDefault();
@@ -23,7 +23,7 @@ ready(function () {
       isPurchaseable.disabled = false;
       isRecipeOrDish = "dish";
     }
-  })
+  });
 
   const upLoadRecipeDishForm = document.getElementById("upload-recipeDish-form");
   upLoadRecipeDishForm.addEventListener("submit", uploadRecipeDish);
@@ -49,7 +49,7 @@ ready(function () {
           name: foodName,
           description: foodDescription,
           recipeOrDish: isRecipeOrDish,
-        })
+        });
         window.location.replace("/kitchenDetails?id=loggedinUser");
       }
     } else if (document.getElementById("dishChoice").checked) {
@@ -65,7 +65,7 @@ ready(function () {
           price: foodPrice,
           description: foodDescription,
           recipeOrDish: isRecipeOrDish
-        })
+        });
         window.location.replace("/kitchenDetails?id=loggedinUser");
       }
     } else {
@@ -73,7 +73,7 @@ ready(function () {
     }
 
   });
-})
+});
 
 //-------------------------------------------------------------------------------------------
 // This function rounds the input price field on the recipe/dish upload form to two decimal
@@ -85,7 +85,7 @@ function round() {
     let roundedPrice = Math.round(price * 100) / 100;
     document.getElementById("inputPrice").value = roundedPrice;
   }
-};
+}
 
 //-------------------------------------------------------------------------------------------
 // This function listens to a post request to send the recipe/dish upload form data to the 
@@ -100,8 +100,7 @@ async function postData(data) {
         "Content-Type": 'application/json'
       },
       body: JSON.stringify(data)
-    })
-    let parsedData = await resObject.json();
+    });
   } catch (error) {
     console.log(error);
   }
@@ -133,7 +132,7 @@ async function uploadRecipeDish(e) {
         document.getElementById("upload-status").innerHTML = parsedData.msg;
       }
     }).catch(function (err) {
-      ("Error:", err)
+      ("Error:", err);
     });
 
   } else {

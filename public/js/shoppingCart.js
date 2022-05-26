@@ -29,7 +29,7 @@ ready(async function () {
         "</span><input type='image' src='/img/add.png' id='add' class='quantityButton' alt='addSign' name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='addQuantity(this.name)'>" +
         "<br/><div id='" + data[i].cookID + "_" + data[i].recipeID + "_sub'></div></td>" +
         "<td><input type='image' src='/img/trash.png' class='itemDelete' name='" + data[i].cookID + "_" + data[i].recipeID + "' onclick='deleteItemClicked(this.name, this.id)' id='deleteButton" +  i  + "'></td>" +
-        "</tr>"
+        "</tr>";
       }
 
       // Adds buttons to allow the user to delete the shopping cart
@@ -48,7 +48,7 @@ ready(async function () {
       document.getElementById("cartMenu").innerHTML = "<span id='deleteCartMsg'>Delete Shopping Cart?</span><br/><br/>";
       let confirmButton = document.createElement('button');
       confirmButton.innerText = "Confirm";
-      confirmButton.className = 'btn btn-success'
+      confirmButton.className = 'btn btn-success';
       confirmButton.onclick = function(){
         postDeleteItem({
           cookID: -1,
@@ -60,7 +60,7 @@ ready(async function () {
 
       let cancelButton = document.createElement('button');
       cancelButton.innerText = "Cancel";
-      cancelButton.className = 'btn btn-danger'
+      cancelButton.className = 'btn btn-danger';
       cancelButton.onclick = function(){
         location.reload();
       };
@@ -73,14 +73,14 @@ ready(async function () {
       document.getElementById("cartMenu").innerHTML = "<span id='checkoutMsg'>Checkout?</span><br/><br/>";
       let confirmButton = document.createElement('a');
       confirmButton.innerText = "Confirm";
-      confirmButton.className = 'btn btn-success'
-      confirmButton.href = "/checkoutCart"
+      confirmButton.className = 'btn btn-success';
+      confirmButton.href = "/checkoutCart";
       document.getElementById("cartMenu").appendChild(confirmButton);
 
 
       let cancelButton = document.createElement('button');
       cancelButton.innerText = "Cancel";
-      cancelButton.className = 'btn btn-danger'
+      cancelButton.className = 'btn btn-danger';
       cancelButton.onclick = function(){
         location.reload();
       };
@@ -108,7 +108,7 @@ ready(async function () {
   })
   .catch (function (error){
     console.log(error);
-  })
+  });
 
 
   // Displays the previous cart orders by fetching the data from prevcart tables and populates it in the order history table
@@ -139,14 +139,14 @@ ready(async function () {
       <div class="collapse" id="collapseExample`+ data[i].historyID +`">
       <div class="card card-body" id="prevOrder`+ data[i].historyID +`"></div>
       </div>
-      </td></tr>`
+      </td></tr>`;
     }
     prevcart += `</table>`;
     document.getElementById("shoppingCartHistory").innerHTML = prevcart;
   })
   .catch (function (error){
     console.log(error);
-  })
+  });
 });
 
 //-----------------------------------------------------------------------------------
@@ -221,12 +221,12 @@ async function postAddQuantity(data){
 // to delete the item that the user clicked
 function deleteItemClicked(name, elementID){
   let cancelID = elementID + '_d';
-  let confirmID = elementID + '_c'
-  document.getElementById(elementID).parentNode.innerHTML = "<button class='btn btn-danger' id='" + cancelID + "'>Cancel</button><button class='btn btn-success' id='"+ confirmID + "'>Confirm</button>"
+  let confirmID = elementID + '_c';
+  document.getElementById(elementID).parentNode.innerHTML = "<button class='btn btn-danger' id='" + cancelID + "'>Cancel</button><button class='btn btn-success' id='"+ confirmID + "'>Confirm</button>";
 
   document.getElementById(cancelID).addEventListener('click', function () {
     location.reload();
-  })
+  });
 
   document.getElementById(confirmID).addEventListener('click', function () {
     let ids = name.split('_');
@@ -236,7 +236,7 @@ function deleteItemClicked(name, elementID){
       cookID: cook,
      recipeID: recipe
    });
-  })
+  });
 
 
 }
@@ -250,7 +250,7 @@ function subQuantity(name){
   postSubQuantity({
     cookID: cook,
     recipeID: recipe
-  })
+  });
 }
 
 // This function takes the id's of the cook and recipe which are stored in the table and performs a post request
@@ -262,7 +262,7 @@ function addQuantity(name){
   postAddQuantity({
     cookID: cook,
     recipeID: recipe
-  })
+  });
 }
 
 //----------------------------------------------------------------------------------------------
@@ -294,7 +294,7 @@ function displayPreviousOrder(name) {
       "<td>" + data[i].name + "</td>" +
       "<td>$" + data[i].price + "</td>" +
       "<td>" + data[i].quantity + "</td>" +
-      "</tr>"
+      "</tr>";
     }
     previousCartTable += "</table>";
     let orderInfo = "<h2>Your Order</h2><h2>Total Price: $"+ totalPrice.toFixed(2) +"</h2><h2>Total Items: "+ totalQty +"</h2>";
@@ -305,7 +305,7 @@ function displayPreviousOrder(name) {
   })
   .catch (function (error){
     console.log(error);
-  })
+  });
 }
 
 //----------------------------------------------------------------------------------------------

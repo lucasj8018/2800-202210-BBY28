@@ -31,7 +31,7 @@ ready(function () {
           window.location.replace("/profile");
         }
       }).catch(function (err) {
-        ("Error:", err)
+        ("Error:", err);
       });
 
     } else {

@@ -79,7 +79,7 @@ ready(async function () {
     })
     .catch(function (error) {
       console.log(error);
-    })
+    });
 
   //-----------------------------------------------------------------------------------
   // This is a get response to populate the profile card with the user's last name, first
@@ -97,7 +97,7 @@ ready(async function () {
         //Creating table
         var dashboard = "";
         let table = "<br/><br/><div id='incorrectDelete'> </div><br/><br/><div><table class='table table-light table-striped' id='userTable'><tr id='userTableHeader'>" +
-          "<th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>"
+          "<th scope='col'>Username</th><th scope='col'>Password</th><th scope='col'>Avatar</th><th scope ='col'></th></tr>";
 
         // For loops that appends to the table the users username, password and their avatar
         for (let i = 0; i < dashboardData.length; i++) {
@@ -107,7 +107,7 @@ ready(async function () {
             "</td><td><button type='button' class='btn btn-outline-info' onclick='deleteClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Delete</a><br>" +
             "<button type='button' class='btn btn-outline-info' onclick='editClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Edit</a><br>" +
             "<button type='button' class='btn btn-outline-info' onclick='saveClicked(this.name)' name='" + dashboardData[i].id + "' style='max-width: 70px'>Save</a></td>" +
-            "</tr>"
+            "</tr>";
         }
         table += "</table></div>";
         dashboard += table;
@@ -120,7 +120,7 @@ ready(async function () {
     })
     .catch(function (error) {
       console.log(error);
-    })
+    });
 
   //-----------------------------------------------------------------------------------
   // This function is called when the save button of the user profile template is pressed.
@@ -136,7 +136,6 @@ ready(async function () {
         },
         body: JSON.stringify(data)
       });
-      let parsedData = await resObject.json();
     } catch (error) {
       console.log(error);
     }
@@ -150,7 +149,7 @@ ready(async function () {
     document.getElementById("personalInfoFields").disabled = false;
     document.getElementById("updateUserInfo").disabled = false;
     document.getElementById("editUserInfo").disabled = true;
-  })
+  });
 
   document.getElementById("updateUserInfo").addEventListener("click", function (e) {
     e.preventDefault();
@@ -159,13 +158,13 @@ ready(async function () {
       lastName: document.getElementById("lastNameInput").value,
       username: document.getElementById("usernameInput").value,
       password: document.getElementById("passwordInput").value
-    })
+    });
 
     document.getElementById("personalInfoFields").disabled = true;
     document.getElementById("editUserInfo").disabled = false;
     document.getElementById("updateUserInfo").disabled = true;
     document.getElementById("status").innerHTML = "Profile Updated";
-  })
+  });
 
 });
 
@@ -183,7 +182,6 @@ async function postDataUser(data) {
       },
       body: JSON.stringify(data)
     });
-    let parsedData = await resObject.json();
   } catch (error) {
     console.log(error);
   }
@@ -288,7 +286,6 @@ async function postUpdateDashboard(data) {
       },
       body: JSON.stringify(data)
     });
-    let parsedData = await resObject.json();
 
   } catch (error) {
     console.log(error);

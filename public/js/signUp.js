@@ -9,7 +9,7 @@ ready(function () {
 
     let paramsData = typeof data == 'string' ? data : Object.keys(data).map(
       function (k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
       }
     ).join('&');
 
@@ -21,7 +21,7 @@ ready(function () {
       } else {
         console.log(this.status);
       }
-    }
+    };
     xmlHttp.open("POST", url);
     xmlHttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

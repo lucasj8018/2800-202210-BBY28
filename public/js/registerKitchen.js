@@ -17,7 +17,7 @@ ready(function () {
     })
     .catch(function (error) {
       console.log(error);
-    })
+    });
 
 
   document.getElementById("next").addEventListener("click", function (e) {
@@ -45,15 +45,15 @@ ready(function () {
             city: kitchenCity,
             postalCode: kitchenPostalCode
           });
-        }
+        };
         document.getElementById("confirm-cancel").appendChild(confirmButton);
   
         let cancelButton = document.createElement('button');
         cancelButton.innerText = "Cancel";
-        cancelButton.className = 'btn btn-danger'
+        cancelButton.className = 'btn btn-danger';
         cancelButton.onclick = function () {
           location.reload();
-        }
+        };
         document.getElementById("confirm-cancel").appendChild(cancelButton);
   
       } else {
@@ -70,15 +70,15 @@ ready(function () {
             city: kitchenCity,
             postalCode: kitchenPostalCode
           });
-        }
+        };
         document.getElementById("confirm-cancel").appendChild(confirmButton);
   
         let cancelButton = document.createElement('button');
         cancelButton.innerText = "Cancel";
-        cancelButton.className = 'btn btn-danger'
+        cancelButton.className = 'btn btn-danger';
         cancelButton.onclick = function () {
           location.reload();
-        }
+        };
         document.getElementById("confirm-cancel").appendChild(cancelButton);
       }
     }
@@ -100,8 +100,7 @@ async function postData(data) {
         "Content-Type": 'application/json'
       },
       body: JSON.stringify(data)
-    })
-    let parsedData = await resObject.json();
+    });
   } catch (error) {
     console.log(error);
   }

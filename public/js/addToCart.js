@@ -40,12 +40,12 @@ ready(async function () {
                 alt="subtractSign"></a><span id="quantity">1</span><a type="button"><img src="/img/add.png"
                 id="add" class="quantityButton" alt="addSign"></a></span><div id="add-to-cart"><button type="button" class="btn btn-number" id="addToCartButtonLabel">Add to Cart</button></div></li>
                 <li class="list-group-item"><span id="subtitleLabel">Subtotal($CAD): </span><span id="subtotal"></span><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li></div>
-            </ul>`
+            </ul>`;
         document.getElementById("recipeDishDetails").innerHTML = recipeDishDetails;
 
         dishName = data[0].name;
         unitPrice = (Math.ceil(data[0].price * 100) / 100);
-        unitPrice = parseFloat(unitPrice).toFixed(2)
+        unitPrice = parseFloat(unitPrice).toFixed(2);
         document.getElementById("subtotal").innerHTML = unitPrice;
 
         var qty = 1;
@@ -59,7 +59,7 @@ ready(async function () {
             document.getElementById("quantity").innerHTML = qty;
             document.getElementById("subtotal").innerHTML = subtotal.toFixed(2);
           }
-        })
+        });
 
         document.getElementById("subtract").addEventListener("click", function (e) {
           e.preventDefault();
@@ -69,7 +69,7 @@ ready(async function () {
             document.getElementById("quantity").innerHTML = qty;
             document.getElementById("subtotal").innerHTML = subtotal;
           }
-        })
+        });
 
         document.getElementById("add-to-cart").addEventListener("click", function (e) {
           e.preventDefault();
@@ -78,15 +78,15 @@ ready(async function () {
             cookId: userId,
             recipeId: recipeDishId,
             qty: qty
-          })
+          });
 
           window.location.href = "/kitchenDetails?id=" + userId;
-        })
+        });
 
       } else {
         recipeDishDetails += `<ul class="list-group list-group-flush">
             <li class="list-group-item" id="dish-price"><span id="goBack"><button type="button" class="btn btn-number" id="goBackButton">Go Back</button></span></li>
-            </ul></div>`
+            </ul></div>`;
 
         document.getElementById("recipeDishDetails").innerHTML = recipeDishDetails;
       }
@@ -98,15 +98,15 @@ ready(async function () {
           cookId: userId,
           recipeId: recipeDishId,
           qty: qty + 1
-        })
+        });
 
         window.location.href = "/kitchenDetails?id=" + userId;
-      })
+      });
 
     })
     .catch(function (error) {
       console.log(error);
-    })
+    });
 
 });
 
@@ -123,8 +123,7 @@ async function postData(data) {
         "Content-Type": 'application/json'
       },
       body: JSON.stringify(data)
-    })
-    let parsedData = await resObject.json();
+    });
   } catch (error) {
     console.log(error);
   }

@@ -109,7 +109,7 @@ app.get("/signUp", function (req, res) {
 app.get("/contact", function (req, res) {
   let contact = fs.readFileSync("./app/html/contact.html", "utf8");
   res.send(contact);
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This get request path loads the profile page after the user is logged in.
@@ -142,7 +142,7 @@ app.get("/display-profile", function (req, res) {
 // Set up multer to upload user avatar photos
 const avatarStorage = multer.diskStorage({
   destination: function (req, file, callbackFunc) {
-    callbackFunc(null, "./public/img/")
+    callbackFunc(null, "./public/img/");
   },
   filename: function (req, file, callbackFunc) {
     callbackFunc(null, req.session.userId + "_avatar_" + file.originalname.split('/').pop().trim());
@@ -231,7 +231,7 @@ app.get("/kitchenDetails", async function (req, res) {
   } else {
     res.redirect("/");
   }
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This get request path loads the add to cart page if the user is logged in.
@@ -242,7 +242,7 @@ app.get("/addToCart", function(req, res) {
   } else {
     res.redirect("/");
   }
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This get request path loads the recipe/dish upload page if the user is logged in.
@@ -272,7 +272,7 @@ app.get("/upload", async function (req, res) {
   } else {
     res.redirect("/");
   }
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This get request path reads and sends the user data from the BBY_28_User table to the user
@@ -327,7 +327,7 @@ async function updateUserProfile(req, res) {
     ];
     await db.query(updateUser, userInfo);
   } else {
-    let updateNotPassword = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ? WHERE id = ?"
+    let updateNotPassword = "use comp2800; UPDATE BBY_28_User SET fName = ?, lName = ?, username = ? WHERE id = ?";
     let userInfo = [
       req.body.firstName, req.body.lastName, req.body.username, req.session.userId
     ];
@@ -395,7 +395,7 @@ app.get("/logout", function (req, res) {
   if (req.session) {
     req.session.destroy(function (error) {
       if (error) {
-        res.status(400).send("Fail to log out")
+        res.status(400).send("Fail to log out");
       } else {
         res.redirect("/");
       }
@@ -689,7 +689,7 @@ async function deleteUser(req, res) {
     res.send({
       status: "success"
     });
-    let deleteUser = "use comp2800; delete from bby_28_user where id = ?"
+    let deleteUser = "use comp2800; delete from bby_28_user where id = ?";
     let userInfo = [
       [userID]
     ];
@@ -730,7 +730,7 @@ async function updateUserDashboard(req, res) {
     ];
     await db.query(updateUser, userInfo);
   } else {
-    let updateNotPassword = "use comp2800; UPDATE BBY_28_User SET username = ? WHERE id = ?"
+    let updateNotPassword = "use comp2800; UPDATE BBY_28_User SET username = ? WHERE id = ?";
     let userInfo = [
       req.body.username, req.body.id
     ];
@@ -744,7 +744,7 @@ async function updateUserDashboard(req, res) {
 // Set up multer to upload recipe/dish image file path the the BBY_28_User table for the logged-in user.
 const recipeDishStorage = multer.diskStorage({
   destination: function (req, file, callbackFunc) {
-    callbackFunc(null, "./public/img/")
+    callbackFunc(null, "./public/img/");
   },
   filename: function (req, file, callbackFunc) {
     callbackFunc(null, req.session.userId + "_recipe_dish_" + file.originalname.split('/').pop().trim());
@@ -779,9 +779,12 @@ app.post('/upload-recipe-dish', async function (req, res) {
   });
   db.connect();
 
+  var addRecipeOrDish;
+  var recipeOrDishInfo;
+
   if (req.body.recipeOrDish == "recipe") {
-    var addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, recipePath) values ? ";
-    var recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, RecipeDishPhoto]];
+    addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, recipePath) values ? ";
+    recipeOrDishInfo = [[req.session.userId, req.body.name, req.body.description, RecipeDishPhoto]];
 
   } else if (req.body.recipeOrDish == "dish") {
     addRecipeOrDish = "use comp2800; insert ignore into BBY_28_Recipe (userID, name, description, purchaseable, price, recipePath) values ? ";
@@ -818,7 +821,7 @@ app.get("/kitchen-details", async function (req, res) {
 
     const [recipeResults, fields] = await db.execute("SELECT * FROM BBY_28_Recipe WHERE userID = ?", [idOfResponse]);
     const [userResults, fields2] = await db.execute("SELECT * FROM BBY_28_User WHERE id = ?", [idOfResponse]);
-    recipeResults.push({ loggedinId: req.session.userId, kitchenName: userResults[0].kitchenName})
+    recipeResults.push({ loggedinId: req.session.userId, kitchenName: userResults[0].kitchenName});
   
     if (recipeResults.length != 0) {
       res.json(recipeResults);
@@ -843,7 +846,7 @@ app.get("/displayShoppingCart", async function (req, res) {
       password: "",
       database: "comp2800",
       multipleStatements: true
-    })
+    });
     db.connect();
 
     let shoppingCartQuery = `
@@ -871,7 +874,7 @@ app.get("/displayShoppingCart", async function (req, res) {
 //----------------------------------------------------------------------------------------------
 app.post("/deleteCartItem", function (req, res) {
   deleteCartItem(req, res);
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This function deletes an item data on the BBY_28_Shoppingcart table.  It is called by the 
@@ -912,7 +915,7 @@ async function deleteCartItem(req, res) {
 //----------------------------------------------------------------------------------------------
 app.post("/subQuantity", function (req, res) {
   subQuantity(req, res);
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This function update the quantity of the item on the BBY_28_Shoppingcart table.  It is called 
@@ -954,7 +957,7 @@ async function subQuantity(req, res) {
 //----------------------------------------------------------------------------------------------
 app.post("/addQuantity", function (req, res) {
   addQuantity(req, res);
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This function update the quantity of the item on the BBY_28_Shoppingcart table.  It is called 
@@ -1017,13 +1020,13 @@ app.get("/checkoutCart", async function (req, res){
     quantities = quantities.slice(0, -1);
 
     let historyQuery = "insert into bby_28_prevcart (customerID, cookIDs, recipeIDs, quantities, timestamp) values ?";
-    let today = new Date().toISOString().slice(0, 10)
+    let today = new Date().toISOString().slice(0, 10);
     let historyValues = [
       [req.session.userId, cooks, recipes, quantities, today]
     ];
     await db.query(historyQuery, [historyValues]);
 
-    let deleteCurrentCart = "delete from bby_28_shoppingcart where customerID = ?"
+    let deleteCurrentCart = "delete from bby_28_shoppingcart where customerID = ?";
     await db.query(deleteCurrentCart, [req.session.userId]);
     db.end();
     res.redirect("/myCart");
@@ -1032,7 +1035,7 @@ app.get("/checkoutCart", async function (req, res){
   }
 
 
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This get request path loads the add to cart page.
@@ -1113,7 +1116,7 @@ app.get("/displayPreviousCarts", async function (req, res){
       password: "",
       database: "comp2800",
       multipleStatements: true
-    })
+    });
     db.connect();
 
     let prevCartQuery = `
@@ -1129,7 +1132,7 @@ app.get("/displayPreviousCarts", async function (req, res){
   } else {
     res.redirect("/");
   }
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This get request path reads and sends the order detail data from both the BBY_28_Prevcart and 
@@ -1159,7 +1162,7 @@ app.get("/displayPreviousOrder", async function (req, res){
     let dishQuery = "SELECT * FROM bby_28_Recipe where id = ?";
 
     for (let i = 0; i < recipeIdArray.length; i++) {
-      let [dishResults, fields2] = await db.query(dishQuery, recipeIdArray[i])
+      let [dishResults, fields2] = await db.query(dishQuery, recipeIdArray[i]);
       dishResults[0].quantity = qtyArray[i];
       dishResults[0].orderId = orderResults[0].historyID;
       resultsArray = resultsArray.concat(dishResults[0]);
@@ -1171,7 +1174,7 @@ app.get("/displayPreviousOrder", async function (req, res){
   } else {
     res.redirect("/");
   }
-})
+});
 
 //----------------------------------------------------------------------------------------------
 // This get request path reads and sends the kitchen orders data from BBY_28_prevcart and
@@ -1195,7 +1198,7 @@ app.get("/displayKitchenOrders", async function (req, res){
 
     let customerOrders = [];
     let recipeOrders = [];
-    let quantityOrders = []
+    let quantityOrders = [];
 
     for (let i = 0; i < resultsArray.length; i++){
       let customer = resultsArray[i].customerID;
@@ -1225,7 +1228,7 @@ app.get("/displayKitchenOrders", async function (req, res){
         customer: customerResults[0].username,
         recipe: queryResults[0].name,
         quantity: quantityOrders[i]
-      }
+      };
     }
     res.json(results);
     db.end();
@@ -1233,7 +1236,7 @@ app.get("/displayKitchenOrders", async function (req, res){
   } else {
     res.redirect("/");
   }
-})
+});
 
 
 

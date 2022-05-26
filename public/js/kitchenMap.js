@@ -23,7 +23,7 @@ ready(function () {
     })
     .catch(function (error) {
       console.log(error);
-    })
+    });
 
 });
 
@@ -52,7 +52,7 @@ async function initMap() {
       location.lng = loc.coords.longitude;
       map = new google.maps.Map(document.getElementById("map"), options);
 
-    })
+    });
   } else {
     console.log("geolocation not supported");
     map = new google.maps.Map(document.getElementById("map"), options);
@@ -78,7 +78,7 @@ function geocodeAddress() {
           var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
-          })
+          });
   
           // Display some popup info for each location marker
           const contentString =
@@ -105,7 +105,7 @@ function geocodeAddress() {
   
         } else {
         }
-      })
+      });
     } else {
     }
   }
