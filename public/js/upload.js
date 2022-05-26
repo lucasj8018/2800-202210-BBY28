@@ -35,11 +35,15 @@ ready(function () {
     let foodName = document.getElementById("inputName").value;
     let foodIngredients = document.getElementById("inputIngredients").value;
     let foodDescription = document.getElementById("inputDescription").value;
-    console.log(foodName);
+    const isPhotoUploaded = document.querySelector('#recipeDish-upload');
+
 
     if (document.getElementById("recipeChoice").checked) {
       if (foodName == "" || foodDescription == "") {
-        document.getElementById("uploadForm-status").innerHTML = "Please enter your recipe name and description.";
+        document.getElementById("upload-status").innerHTML = "Please enter your recipe name and description.";
+
+      } else if (isPhotoUploaded.files.length == 0) {
+        document.getElementById("upload-status").innerHTML = "Please upload a recipe photo.";
 
       } else {
         postData({
@@ -52,7 +56,10 @@ ready(function () {
       }
     } else if (document.getElementById("dishChoice").checked) {
       if (foodName == "" || foodDescription == "" || foodPrice == "") {
-        document.getElementById("uploadForm-status").innerHTML = "Please enter your dish name, price, and description.";
+        document.getElementById("upload-status").innerHTML = "Please enter your dish name, price, and description";
+
+      } else if (isPhotoUploaded.files.length == 0) {
+        document.getElementById("upload-status").innerHTML = "Please upload a dish photo.";
 
       } else {
         postData({
@@ -64,7 +71,7 @@ ready(function () {
         window.location.replace("/kitchenDetails?id=loggedinUser");
       }
     } else {
-      document.getElementById("uploadForm-status").innerHTML = "Please selet uploding a recipe / dish.";
+      document.getElementById("upload-status").innerHTML = "Please select uploding a recipe / dish.";
     }
 
   });
@@ -112,24 +119,29 @@ async function uploadRecipeDish(e) {
   const recipeDishUpload = document.querySelector('#recipeDish-upload');
   const recipeDishForm = new FormData();
 
-  for (let i = 0; i < recipeDishUpload.files.length; i++) {
-    recipeDishForm.append("files", recipeDishUpload.files[i]);
-  }
-
-  const options = {
-    method: 'POST',
-    body: recipeDishForm
-  };
-
-  fetch("/upload-recipe-dish-photo", options).then(async function (res) {
-    let parsedData = await res.json();
-    if (parsedData.status == "success") {
-      document.getElementById("upload-status").innerHTML = parsedData.msg;
+  if (recipeDishUpload.files.length != 0) {
+    for (let i = 0; i < recipeDishUpload.files.length; i++) {
+      recipeDishForm.append("files", recipeDishUpload.files[i]);
     }
-  }).catch(function (err) {
-    ("Error:", err)
-  });
+  
+    const options = {
+      method: 'POST',
+      body: recipeDishForm
+    };
+  
+    fetch("/upload-recipe-dish-photo", options).then(async function (res) {
+      let parsedData = await res.json();
+      if (parsedData.status == "success") {
+        document.getElementById("upload-status").innerHTML = parsedData.msg;
+      }
+    }).catch(function (err) {
+      ("Error:", err)
+    });
 
+  } else {
+    document.getElementById("upload-status").innerHTML = "Please select an image first";
+
+  }
 }
 
 //----------------------------------------------------------------------------------------------

@@ -14,24 +14,29 @@ ready(function () {
     const avatarUpload = document.querySelector('#avatar-upload');
     const avatarFormData = new FormData();
 
-    for (let i = 0; i < avatarUpload.files.length; i++) {
-      // put the images from the input into the form data
-      avatarFormData.append("files", avatarUpload.files[i]);
-    }
-
-    const options = {
-      method: 'POST',
-      body: avatarFormData
-    };
-
-    fetch("/upload-avatar", options).then(async function (res) {
-      let parsedData = await res.json();
-      if (parsedData.status == "success") {
-        window.location.replace("/profile");
+    if (avatarUpload.files.length != 0) {
+      for (let i = 0; i < avatarUpload.files.length; i++) {
+        // put the images from the input into the form data
+        avatarFormData.append("files", avatarUpload.files[i]);
       }
-    }).catch(function (err) {
-      ("Error:", err)
-    });
+  
+      const options = {
+        method: 'POST',
+        body: avatarFormData
+      };
+  
+      fetch("/upload-avatar", options).then(async function (res) {
+        let parsedData = await res.json();
+        if (parsedData.status == "success") {
+          window.location.replace("/profile");
+        }
+      }).catch(function (err) {
+        ("Error:", err)
+      });
+
+    } else {
+      document.getElementById("upload-status").innerHTML = "Please select an image first";
+    }
   }
 });
 

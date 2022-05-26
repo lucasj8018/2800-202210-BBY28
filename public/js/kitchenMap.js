@@ -87,7 +87,7 @@ function geocodeAddress() {
                 <div class="card-body">
                   <h5 class="card-title">` + addressData[i].kitchenName + `</h5>
                   <p class="card-text">` + addressData[i].location + `</p>
-                  <a href="/kitchenDetails?id=` + addressData[i].id + `" class="btn btn-primary">View Kitchen</a>
+                  <a href="/kitchenDetails?id=` + addressData[i].id + `" class="btn btn-danger">View Kitchen</a>
                 </div>
                 </div>`;
   

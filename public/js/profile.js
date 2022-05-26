@@ -167,8 +167,6 @@ ready(async function () {
     document.getElementById("status").innerHTML = "Profile Updated";
   })
 
-
-
 });
 
   //-----------------------------------------------------------------------------------

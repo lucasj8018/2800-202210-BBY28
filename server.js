@@ -157,7 +157,6 @@ const uploadAvatar = multer({ storage: avatarStorage });
 app.post('/upload-avatar', uploadAvatar.array("files"), async function (req, res) {
 
   await updateUserAvatar(req, res);
-  res.redirect("/profile");
 });
 
 //----------------------------------------------------------------------------------------------
@@ -790,6 +789,7 @@ app.post('/upload-recipe-dish', async function (req, res) {
   }
 
   await db.query(addRecipeOrDish, [recipeOrDishInfo]);
+  RecipeDishPhoto = "";
   db.end();
 });
 
