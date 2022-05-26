@@ -295,7 +295,6 @@ app.get("/user-dashboard", async function (req, res) {
   if (!checkAdmin[0].isAdmin){
     res.send({ status: "fail", msg: "Not admin" });
   } else {
-    console.log(results);
     if (results.length != 0) {
       res.json(results);
 
