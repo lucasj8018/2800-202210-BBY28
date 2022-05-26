@@ -31,12 +31,14 @@ body {
   padding: 2vh;
   text-align: center;
   font-size: 28pt;
-  margin: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 #locationServices {
   grid-column: 1 / span 3;
   grid-row: 2 / span 1;
+  width: 100%;
   padding: 2vh;
   text-align: center;
   font-size: 16pt;
