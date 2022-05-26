@@ -290,12 +290,20 @@ app.get("/user-dashboard", async function (req, res) {
   db.connect();
 
   const [results, fields] = await db.execute("SELECT * FROM BBY_28_user");
-  if (results.length != 0) {
-    res.json(results);
+  const [checkAdmin, adminFields] = await db.query("SELECT isAdmin FROM bby_28_user where id = ?", [req.session.userId]);
 
+  if (!checkAdmin[0].isAdmin){
+    res.send({ status: "fail", msg: "Not admin" });
   } else {
-    res.send({ status: "fail", msg: "Fail to send data" });
+    console.log(results);
+    if (results.length != 0) {
+      res.json(results);
+
+    } else {
+      res.send({ status: "fail", msg: "Fail to send data" });
+    }
   }
+
   db.end();
 });
 

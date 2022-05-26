@@ -92,8 +92,7 @@ ready(async function () {
     .then((data) => {
       var dashboardData;
       dashboardData = data;
-
-      if (dashboardData[0].isAdmin) {
+      if (dashboardData.status != 'fail') {
         //Creating table
         var dashboard = "";
         let table = "<br/><br/><div id='incorrectDelete'> </div><br/><br/><div><table class='table table-light table-striped' id='userTable'><tr id='userTableHeader'>" +
