@@ -6,7 +6,7 @@
 //--------------------------------------------------------------------------------
 ready(function () {
 
-  let isRecipeOrDish;
+  let isRecipeOrDish = 'recipe';
   let isPurchaseable = document.getElementById("inputPrice");
 
   document.getElementById("recipeChoice").addEventListener("change", function (e) {
