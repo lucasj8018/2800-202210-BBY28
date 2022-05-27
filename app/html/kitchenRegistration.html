@@ -21,41 +21,41 @@
     <!-- Navbar -->
     <div id="navbar"></div>
     
+    <!-- Page Title -->
     <div id="kitchenRegistrationTitle"><p><b>Register Your Private Kitchen</b></p></div>
-
-    <img src="./img/knife.png" id="knife" alt="knife">
 
     <!-- Registration form -->
     <form id="registration-form">
         <div class="row mb-3" id="kitchen-name">
-            <label for="input-kitchen-name" class="col-sm-2 col-form-label"><b>Kitchen name</b></label>
+            <label for="input-kitchen-name" class="col-sm-2 col-form-label"><b>Kitchen name*</b></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="input-kitchen-name">
             </div>
         </div>
         <div class="row mb-3" id="street">
-            <label for="input-street" class="col-sm-2 col-form-label"><b>Street</b></label>
+            <label for="input-street" class="col-sm-2 col-form-label"><b>Street*</b></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="input-street">
             </div>
         </div>
         <div class="row mb-3" id="city">
-            <label for="input-city" class="col-sm-2 col-form-label"><b>City</b></label>
+            <label for="input-city" class="col-sm-2 col-form-label"><b>City*</b></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="input-city">
             </div>
         </div>
         <div class="row mb-3" id="postal-code">
-            <label for="input-postal-code" class="col-sm-2 col-form-label"><b>Postal code</b></label>
+            <label for="input-postal-code" class="col-sm-2 col-form-label"><b>Postal code*</b></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="input-postal-code">
             </div>
         </div>
-        <p id="status-message"></p>
         <div id="buttons">
             <a href="/profile" id="cancel"><p id="cancel-button-label">Cancel</p></a>
-            <a href="/kitchenDetails?id=loggedinUser" id="next"><p id="next-button-label">Next</p></a>
+            <a id="next"><p id="next-button-label">Next</p></a>
         </div>
+        <div id="status-message"></div>
+        <div id="confirm-cancel"></div>
     </form>
 
     <div id="spacer">This is a spacer</div>
@@ -69,7 +69,6 @@
     </script>
     <script src="/js/skeleton.js"></script>
     <script src="/js/registerKitchen.js"></script>
-
 </body>
 
 </html>

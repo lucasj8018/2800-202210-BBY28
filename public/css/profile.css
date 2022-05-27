@@ -20,8 +20,8 @@ body {
 
 #welcome {
     text-align: center;
+    font-size: 28pt;    
     margin-top: 50px;
-    font-size: 24pt;
 }
 
 #profile {
@@ -33,32 +33,34 @@ body {
 }
 
 #avatarPath {
-    height: auto;
     width: 100%;
+    height: auto;
     justify-self: center;
     border-radius: 10px;
 }
 
 #avatar-upload {
     width: 69%;
+    font-size: 16pt;
 }
 
 #avatar-submit {
-    margin-left: 50px;
+    font-size: 16pt;
 }
 
-.card {
-    background-color: white;
-    border-radius: 10px;
+.card { 
     width: 80%;
-    margin-top: 200px;
-    margin: auto;
-    padding-bottom: 20px;
+    background-color: white;
     box-shadow: 5px 10px grey;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    margin: auto;
+    margin-top: 200px;
 }
 
 #editUserInfo {
     background-color: #FFF3DF;
+    font-size: 16pt;
     color: black;
     border-color: #FFF3DF;
 }
@@ -71,6 +73,7 @@ body {
 
 #updateUserInfo {
     background-color: #DE2007;
+    font-size: 16pt;
     color: #FFF3DF;
     border-color: #DE2007;
 }
@@ -82,18 +85,18 @@ body {
 }
 
 #buttonMenu {
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 12% 15% 12% 15% 12% 15% 12% 15% 12%;
     height: 450px;
     text-align: center;
     margin-top: 100px;
-    display: grid;
-    grid-template-columns: 10% 80% 10%;
-    grid-template-rows: 12% 15% 12% 15% 12% 15% 12% 15% 12%
 }
 
 #question {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
-    font-size: 24pt;
+    font-size: 28pt;
 }
 
 #viewKitchens {
@@ -123,17 +126,18 @@ body {
 #viewMyKitchen {
     grid-column: 2 / span 1;
     grid-row: 11 / span 1;
-    margin-top: 55px;
+    margin-top: 40px;
 }
 
 .buttonLabel {
     align-self: center;
-    text-decoration: none;
-    color: #FFF3DF;
-    margin-bottom: 70px;
-    padding: 15px;
     background-color: #DE2007;
     border-radius: 25px;
+    font-size: 16pt;
+    text-decoration: none;
+    color: #FFF3DF;
+    padding: 15px;
+    margin-bottom: 95px;
 }
 
 .buttonLabel:hover {
@@ -142,10 +146,11 @@ body {
 }
 
 #adminAdd {
-    margin-top: -325px;
+    margin-top: -465px;
 }
 
 .form-group {
+    font-size: 16pt;
     margin-bottom: 10px;
 }
 
@@ -155,11 +160,13 @@ body {
 }
 
 .input-group-text {
-    width: 105px;
+    width: 125px;
+    font-size: 16pt;
 }
 
 .form-control {
     background-color: azure;
+    font-size: 16pt;
 }
 
 #usernameCardInput {
@@ -167,20 +174,30 @@ body {
 }
 
 .form-check {
+    width: 50%;
     text-align: center;
-    width: 40%;
     margin: auto;
+}
+
+.form-check-input {
+    width: 60px !important;
+    height: 30px;
+}
+
+.form-check-label {
+    font-size: 16pt;
 }
 
 #addUserButton {
     width: 90%;
+    background-color: #DE2007;
+    border-color: #DE2007;
+    border-radius: 25px;
+    font-size: 16pt;
+    color: #FFF3DF;
     margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 25px;
-    background-color: #DE2007;
-    border-color: #DE2007;
-    color: #FFF3DF;
 }
 
 #addUserButton:hover {
@@ -195,25 +212,47 @@ body {
 }
 
 #dashboard {
-    margin: auto;
     width: 80%;
-    margin-top: 200px;
     align-self: start;
     overflow: auto;
+    margin: auto;
+    margin-top: 200px;
+}
+
+#userTableDIV {
+    text-align: center;
+    margin: auto;
+}
+
+#userTable {
+    margin: auto;
 }
 
 #incorrectDelete {
     font-size: 16pt;
 }
 
+td {
+    padding: 10px;
+}
+
+.dashboardInput {
+    width: 100px;
+}
+
+.userImg {
+    width: 50px;
+    height: 50px;
+}
+
 .btn-outline-info {
+    width: 60px;
+    text-align: center;
     background-color: #DE2007;
     color: #FFF3DF;
     padding: 5px;
     margin-bottom: 2px;
     margin-left: 2px;
-    text-align: center;
-    width: 60px;
 }
 
 .btn-outline-info:hover {
@@ -224,7 +263,124 @@ body {
     height: 50px;
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (max-width: 300px) {
+
+    body {
+        padding-bottom: 150px;
+    }
+
+    #welcome {
+        font-size: 24pt;
+        margin-top: 70px;
+    }
+
+    #avatarPath {
+        height: auto;
+    }
+
+    #avatar-upload {
+        width: 150px;
+        font-size: 12pt;
+    }
+
+    #avatar-submit {
+        font-size: 12pt;
+    }
+
+    .card {
+        width: 230px;
+    }
+
+    #editUserInfo {
+        font-size: 12pt;
+    }
+    
+    #updateUserInfo {
+        font-size: 12pt;
+    }
+
+    #adminAdd {
+        margin-bottom: 200px;
+    }
+
+    .form-group {
+        font-size: 12pt;
+        margin-bottom: 10px
+    }
+
+    .input-group-text {
+        width: 100px;
+        font-size: 12pt;
+    }
+
+    #buttonMenu {
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+        grid-template-rows: 15% 15% 12% 15% 12% 15% 12% 15% 12%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #question {
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
+        font-size: 24pt;
+    }
+
+    .buttonLabel {
+        font-size: 12pt;
+    }
+
+    .form-check {
+        width:65%;
+    }
+
+    .form-check-input {
+        width: 40px !important;
+        height: 20px;
+    }
+    
+    .form-check-label {
+        font-size: 12pt;
+    }
+
+    .form-control {
+        font-size: 12pt;
+    }
+
+    #addUserButton {
+        font-size: 12pt;
+    }
+
+    #dashboard {
+        width: 80%;
+        height: 100%;
+        margin: auto;
+        margin-top: -20px;
+        margin-bottom: 500px;
+        font-size: 7pt;
+    }
+
+    .dashboardInput {
+        width: 40px;
+    }
+
+    #incorrectDelete {
+        font-size: 12pt;
+    }
+
+    .userImg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .btn-outline-info {
+        width: 42px;
+        font-size: 7pt;
+    }
+}
+
+@media only screen and (min-width: 600px) {
 
     body {
         padding-bottom: 150px;
@@ -235,20 +391,16 @@ body {
         margin-top: 70px;
     }
 
-    #avatar {
-        width: 30%;
-    }
-
     #avatarPath {
         height: auto;
     }
 
     #avatar-upload {
-        width: 50%;
+        width: 300px;
     }
 
     .card {
-        width: 30%;
+        width: 456.4px;
     }
 
     .form-group {
@@ -257,24 +409,46 @@ body {
     }
 
     #buttonMenu {
-        width: 40%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 456.4px;
         display: grid;
         grid-template-columns: 10% 80% 10%;
-        grid-template-rows: 15% 15% 12% 15% 12% 15% 12% 15% 12%
+        grid-template-rows: 15% 15% 12% 15% 12% 15% 12% 15% 12%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     #question {
-        font-size: 30pt;
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
+        font-size: 32pt;
+    }
+    
+    #viewKitchens {
+        grid-column: 1 / span 3;
+    }
+    
+    #myCart {
+        grid-column: 1 / span 3;
+    }
+    
+    #registerKitchen {
+        grid-column: 1 / span 3;
+    }
+    
+    #kitchenOrders {
+        grid-column: 1 / span 3;
+    }
+    
+    #viewMyKitchen {
+        grid-column: 1 / span 3;
     }
 
     #adminAdd {
-        margin-bottom: 70px;
+        margin-bottom: 180px;
     }
 
     .buttonLabel {
-        font-size: 16pt;
+        font-size: 20pt;
     }
 
     .form-check {
@@ -282,8 +456,8 @@ body {
     }
 
     #dashboard {
+        width: 100%;
         height: 100%;
-        width: 80%;
         margin: auto;
         margin-top: -20px;
         margin-bottom: 500px;
@@ -298,7 +472,12 @@ body {
         align-items: start;
     }
 
-    td {
-        text-align: center;
+    .dashboardInput {
+        width: 180px;
+    }
+
+    .userImg {
+        width: 100px;
+        height: 100px;
     }
 }

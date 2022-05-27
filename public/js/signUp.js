@@ -9,7 +9,7 @@ ready(function () {
 
     let paramsData = typeof data == 'string' ? data : Object.keys(data).map(
       function (k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
       }
     ).join('&');
 
@@ -21,14 +21,14 @@ ready(function () {
       } else {
         console.log(this.status);
       }
-    }
+    };
     xmlHttp.open("POST", url);
     xmlHttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xmlHttp.send(paramsData);
   }
 
-  // Takes the form entry information and post to the server
+  // Takes the sign up form data and post to the server
   document.getElementById("createAccountButtonLabel").addEventListener("click", function (e) {
     e.preventDefault();
     let username = document.getElementById("inputUsername");
@@ -36,7 +36,7 @@ ready(function () {
     let firstName = document.getElementById("inputFName");
     let lastName = document.getElementById("inputLName");
 
-    if (username.value == "" || password.value == "" || firstName.value == "" || lastName == "") {
+    if (username.value == "" || password.value == "" || firstName.value == "" || lastName.value == "") {
       document.getElementById("invalidUser").innerHTML = "Please enter the required info";
 
     } else {
@@ -49,7 +49,7 @@ ready(function () {
           if (parsedData.status == "fail") {
             document.getElementById("invalidUser").innerHTML = parsedData.msg;
           } else {
-            location.replace('/login');
+            location.replace('/');
           }
         }
       }, queryStr);
@@ -60,7 +60,9 @@ ready(function () {
 
 });
 
-// This function checks whether page is loaded
+//-------------------------------------------------------------------------------------------
+// This function is called to check whether the page is loaded.
+//-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();

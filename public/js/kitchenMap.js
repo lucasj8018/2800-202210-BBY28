@@ -6,10 +6,12 @@ var google;
 
 //----------------------------------------------------------------------------------------
 // This function is called when the kitchenMap.html page finishes loading. It sends a
-// request to the server to retrieve the addresses of the registrated pritvate kitchen
+// request to the server to retrieve the addresses of the registrated private kitchen
 // from the database
 //----------------------------------------------------------------------------------------
 ready(function () {
+
+  window.initMap = initMap;
 
   fetch("/map-data")
     .then((response) => {
@@ -21,13 +23,13 @@ ready(function () {
     })
     .catch(function (error) {
       console.log(error);
-    })
+    });
 
 });
 
 //-------------------------------------------------------------------------------------------
-// This initMap() function template cames from Google's maps javascript API document example.
-// This function is called when the Find Private Kitchen page loads and it add a google map
+// This initMap() function template cames from Google's Map JavaScript API document example.
+// This function is called when the Find Private Kitchen page loads and it add a Google map
 // that is centered based on the geolocation of the user's device.
 //-------------------------------------------------------------------------------------------
 async function initMap() {
@@ -50,7 +52,7 @@ async function initMap() {
       location.lng = loc.coords.longitude;
       map = new google.maps.Map(document.getElementById("map"), options);
 
-    })
+    });
   } else {
     console.log("geolocation not supported");
     map = new google.maps.Map(document.getElementById("map"), options);
@@ -58,13 +60,11 @@ async function initMap() {
 
 }
 
-window.initMap = initMap;
-
 //-------------------------------------------------------------------------------------------
-// This function is called when the function initMap() is executed.  It reads the registered 
+// This function is called when the function initMap() is executed. It reads the registered 
 // private kitchen address of the user and geocode it into the latitude and longtitude value 
-// with Google's geocoder API.  It then sets a marker on the app and a popup window event 
-// listerner is also added to display the kitchen info when clicked on.
+// with Google's geocoder API. It then sets a marker on the app and a popup window event 
+// listener is also added to display the kitchen info when clicked on.
 //-------------------------------------------------------------------------------------------
 function geocodeAddress() {
 
@@ -78,7 +78,7 @@ function geocodeAddress() {
           var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
-          })
+          });
   
           // Display some popup info for each location marker
           const contentString =
@@ -87,7 +87,7 @@ function geocodeAddress() {
                 <div class="card-body">
                   <h5 class="card-title">` + addressData[i].kitchenName + `</h5>
                   <p class="card-text">` + addressData[i].location + `</p>
-                  <a href="/kitchenDetails?id=` + addressData[i].id + `" class="btn btn-primary">View Kitchen</a>
+                  <a href="/kitchenDetails?id=` + addressData[i].id + `" class="btn btn-danger">View Kitchen</a>
                 </div>
                 </div>`;
   
@@ -102,17 +102,15 @@ function geocodeAddress() {
               shouldFocus: false,
             });
           });
-  
-        } else {
         }
-      })
-    } else {
+      });
     }
   }
 }
 
-
-// This function checks whether page is loaded
+//-------------------------------------------------------------------------------------------
+// This function is called to check whether the page is loaded.
+//-------------------------------------------------------------------------------------------
 function ready(callbackFunc) {
   if (document.readyState != "loading") {
     callbackFunc();

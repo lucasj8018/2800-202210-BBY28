@@ -7,6 +7,19 @@ body {
   background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: red;
+}
+
+::-webkit-scrollbar-track {
+  background-color: azure;
+}
+
 #navbar {
   grid-column: 1 / span 3;
   grid-row: 1 / span 1;
@@ -17,6 +30,20 @@ body {
   grid-row: 2 / span 1;
   padding: 2vh;
   text-align: center;
+  font-size: 28pt;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#locationServices {
+  grid-column: 1 / span 3;
+  grid-row: 2 / span 1;
+  width: 100%;
+  padding: 2vh;
+  text-align: center;
+  font-size: 16pt;
+  margin-top: 160px;
+  margin-bottom: 60px;
 }
 
 #map {
@@ -30,6 +57,15 @@ body {
   border-radius: 10px;
 }
 
+.btn-danger {
+  background-color: #DE2007 !important;
+  color: #FFF3DF !important;
+}
+
+.btn-danger:hover {
+  background-color: #BB1B05 !important;
+}
+
 #footer-extender {
   grid-column: 1 / span 3;
   grid-row: 4 / span 1;
@@ -41,3 +77,30 @@ body {
   grid-row: 5 / span 1;
   height: 8vh;
 }
+
+@media only screen and (max-width: 300px) {
+
+  #title {
+    font-size: 20pt;
+    margin-top: 25px;
+  }
+
+  #locationServices {
+    font-size: 12pt;
+    margin-top: 100px;
+    margin-bottom: 30px;
+  }
+} 
+
+@media only screen and (min-width: 600px) {
+
+  #title {
+    font-size: 32pt;
+  }
+
+  #locationServices {
+    font-size: 20pt;
+    margin-top: 120px;
+    margin-bottom: 80px;
+  }
+} 
